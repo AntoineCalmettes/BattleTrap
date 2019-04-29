@@ -83,7 +83,7 @@ PlayState.preload = function () {
     this.game.load.image('grass:2x1', 'images/grass_2x1.png');
     this.game.load.image('grass:2x1:noborder', 'images/grass_2x1_noborder.png');
     this.game.load.image('lava', 'images/lava.png');
-    this.game.load.image('lava_bouncing', 'images/lava.png');
+    this.game.load.image('lava_bouncing', 'images/lava_bouncing.png');
     this.game.load.image('doorClosed', 'images/door-closed.png');
     this.game.load.image('echelle', 'images/echelle.png');
     this.game.load.image('mage', 'images/mage_stopped.png');
@@ -101,9 +101,8 @@ var echelle1;
 var echelle2;
 var block;
 var lava;
-var lavaBouncing;
+var platformH;
 PlayState.create = function () {
-
     // create sound entities
     this.sfx = {
         jump: this.game.add.audio(''),
@@ -143,9 +142,9 @@ PlayState.update = function () {
 };
 
 function spriteVsMovinPlatformY(mage, platForm) {
-    mage.body.y = platForm.body.y - mage.body.height;
-    console.log("mage y: " + mage.body.y);
-    console.log("platform y: " + platForm.body.y);
+    if ((mage.body.y < platForm.body.y)) {
+        mage.body.y = platForm.body.y - mage.body.height;
+    }
 }
 
 function spriteVsMovinPlatformX(mage, platForm) {
@@ -156,10 +155,11 @@ function spriteVsMovinPlatformX(mage, platForm) {
 PlayState._handleCollisions = function () {
 
     this.game.physics.arcade.collide(mage, this.platforms);
-    this.game.physics.arcade.overlap(mage, this.coins, this._onHeroVsCoin,
+    this.game.physics.arcade.collide(mage, platformH);
+    this.game.physics.arcade.collide(mage, this.lava);
+    this.game.physics.arcade.overlap(mage, this.lava, this._onHeroVsCoin,
         null, this);
     this.physics.arcade.collide(mage, movingGrasseY, spriteVsMovinPlatformY, null, this);
-    this.physics.arcade.collide(mage, movingGrasseX, spriteVsMovinPlatformX, null, this);
     this.physics.arcade.collide(mage, movingGrasseXCastle, spriteVsMovinPlatformX, null, this);
 };
 
@@ -177,11 +177,11 @@ PlayState._loadLevel = function (data) {
     // create all the groups/layers that we need
     this.platforms = this.game.add.group();
 
-    this.coins = this.game.add.group();
+    this.lava = this.game.add.physicsGroup();
+
     this.platformsMovable = this.add.physicsGroup();
 
     movingGrasseY = this.platformsMovable.create(105, 560, 'grass:2x1');
-    movingGrasseX = this.platformsMovable.create(250, 250, 'grass:2x1');
     movingGrasseXCastle = this.platformsMovable.create(760, 570, 'grass:2x1');
 
     echelle1 = this.game.add.sprite(40, 304, 'echelle');
@@ -196,12 +196,7 @@ PlayState._loadLevel = function (data) {
     movingGrasseY.body.setSize(movingGrasseY.width, movingGrasseY.height);
 
 
-    movingGrasseX.body.setSize(movingGrasseX.width, movingGrasseX.height);
-    this.game.add.tween(movingGrasseX).to({
-        x: movingGrasseX.position.x + 130
-    }, 2000, Phaser.Easing.Linear.None, true, 0, -1, true);
-
-    movingGrasseX.body.setSize(movingGrasseXCastle.width, movingGrasseXCastle.height);
+    movingGrasseXCastle.body.setSize(movingGrasseXCastle.width, movingGrasseXCastle.height);
     this.game.add.tween(movingGrasseXCastle).to({
         x: movingGrasseXCastle.position.x + 250
     }, 4000, Phaser.Easing.Linear.None, true, 0, -1, true);
@@ -216,7 +211,13 @@ PlayState._loadLevel = function (data) {
     });
 
     // spawn important objects
-    data.coins.forEach(this._spawnCoin, this);
+    data.lava.forEach(this._spawnLava, this);
+    this.platformsMovabl = this.add.physicsGroup();
+    platformH = this.platformsMovabl.create(240, 250, 'grass:2x1');
+    this.platformsMovabl.setAll('body.allowGravity', false);
+    this.platformsMovabl.setAll('body.immovable', true);
+    platformH.body.kinematic = true;
+    this.game.add.tween(platformH.body).to({x: '+150'}, 2000, Phaser.Easing.Linear.None).to({x: '-150'}, 2000, Phaser.Easing.Linear.None).yoyo().loop().start();
 
     // enable gravity
     const GRAVITY = 1500;
@@ -258,20 +259,16 @@ PlayState._spawnCharacters = function (data) {
 
 };
 
-PlayState._spawnCoin = function (coin) {
-    let sprite = this.coins.create(coin.x, coin.y, 'coin');
-    sprite.anchor.set(0.5, 0.5);
-
+PlayState._spawnLava = function (coin) {
+    let sprite = this.lava.create(coin.x, coin.y, 'lava');
     this.game.physics.enable(sprite);
     sprite.body.allowGravity = false;
-
-    sprite.animations.add('rotate', [0, 1, 2, 1], 6, true); // 6fps, looped
-    sprite.animations.play('rotate');
+    sprite.body.immovable = true;
 };
 
 PlayState._onHeroVsCoin = function (hero, coin) {
     this.sfx.coin.play();
-    coin.kill();
+    //coin.kill();
 };
 
 // =============================================================================
