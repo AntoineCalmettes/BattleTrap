@@ -83,6 +83,7 @@ PlayState.preload = function () {
     this.game.load.image('grass:2x1', 'images/grass_2x1.png');
     this.game.load.image('grass:2x1:noborder', 'images/grass_2x1_noborder.png');
     this.game.load.image('lava', 'images/lava.png');
+    this.game.load.image('plant', 'images/Plant.png');
     this.game.load.image('lava_bouncing', 'images/lava_bouncing.png');
     this.game.load.image('doorClosed', 'images/door-closed.png');
     this.game.load.image('echelle', 'images/echelle.png');
@@ -151,6 +152,19 @@ function spriteVsMovinPlatformX(mage, platForm) {
     mage.body.y = platForm.body.y - mage.body.height;
     mage.body.x = platForm.body.x;
 }
+
+    // PLANT--------------------------------------------------
+
+    // POSITION PLANT IN EARTH
+    plant = this.platformsMovable.create(600,600,'plant');
+ 
+    // PLANT MOVE 
+    this.game.add.tween(plant).to({
+        y: plant.position.y - 50
+    }, 1000, Phaser.Easing.Linear.None, true, 0, -1, true);
+    plant.body.setSize(plant.width, plant.height);
+    // END PLANT-------------------------------------------
+
 
 PlayState._handleCollisions = function () {
 
