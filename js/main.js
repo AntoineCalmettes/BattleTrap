@@ -191,8 +191,15 @@ function spriteVsMovinPlatformX(mage, platForm) {
 
 // Fonction propre au colline physic
 function spriteMovinPlant(mage, platForm) {
+    if(mage.body.x >= 550){
+        mage.body.y = 550;
+        mage.body.x = 650;
+
+    } else {
         mage.body.y = 535;
-        mage.body.x = 5;
+        mage.body.x = 500;
+    }
+        
     
 }
 
@@ -255,7 +262,6 @@ PlayState._loadLevel = function(data) {
     }, 2000, Phaser.Easing.Linear.None, true, 0, -1, true);
     movingGrasseY.body.setSize(movingGrasseY.width, movingGrasseY.height);
 
-    // C DE LA MERDE 
     movingGrasseXCastle.body.setSize(movingGrasseXCastle.width, movingGrasseXCastle.height);
     this.game.add.tween(movingGrasseXCastle).to({
         x: movingGrasseXCastle.position.x + 250
