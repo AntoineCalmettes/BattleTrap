@@ -249,7 +249,7 @@ PlayState._loadLevel = function(data) {
     plant = this.platformsMovable.create(600, 600, 'plant');
     // PLANT MOVE 
     this.game.add.tween(plant).to({
-        y: plant.position.y - 50
+        y: plant.position.y - 35
     }, 1000, Phaser.Easing.Linear.None, true, 0, -1, true);
     plant.body.setSize(plant.width, plant.height);
     // END PLANT-------------------------------------------
