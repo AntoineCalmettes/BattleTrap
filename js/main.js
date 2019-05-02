@@ -48,12 +48,8 @@ Hero.prototype.constructor = Hero;
 
 Hero.prototype.move = function(direction) {
     const SPEED = 200;
-<<<<<<< Updated upstream
     //this.body.velocity.x = direction * SPEED;
-=======
-    this.body.velocity.x = direction*100;
 
->>>>>>> Stashed changes
     switch (direction) {
         case RIGHT:
             this.body.position.x += 3;
@@ -199,6 +195,7 @@ PlayState._handleCollisions = function() {
     this.game.physics.arcade.collide(mage, platformH);
     this.physics.arcade.collide(mage, movingGrasseY, spriteVsMovinPlatformY, null, this);
     this.physics.arcade.collide(mage, movingGrasseXCastle, spriteVsMovinPlatformX, null, this);
+    this.physics.arcade.collide(mage, plant, spriteVsMovinPlatformX, null, this);
 };
 
 PlayState._handleInput = function() {
@@ -249,7 +246,7 @@ PlayState._loadLevel = function(data) {
     }, 2000, Phaser.Easing.Linear.None, true, 0, -1, true);
     movingGrasseY.body.setSize(movingGrasseY.width, movingGrasseY.height);
 
-
+    // C DE LA MERDE 
     movingGrasseXCastle.body.setSize(movingGrasseXCastle.width, movingGrasseXCastle.height);
     this.game.add.tween(movingGrasseXCastle).to({
         x: movingGrasseXCastle.position.x + 250
