@@ -189,13 +189,25 @@ function spriteVsMovinPlatformX(mage, platForm) {
     mage.body.x = platForm.body.x;
 }
 
+function spriteMovinPlantY(mage, platForm) {
+    if ((mage.body.y < platForm.body.y)) {
+        mage.body.y = platForm.body.y - mage.body.height;
+    }
+}
+
+function spriteMovinPlantX(mage, platForm) {
+    mage.body.y = platForm.body.y - mage.body.height;
+    mage.body.x = platForm.body.x;
+}
+
 PlayState._handleCollisions = function() {
 
     this.game.physics.arcade.collide(mage, this.platforms);
     this.game.physics.arcade.collide(mage, platformH);
     this.physics.arcade.collide(mage, movingGrasseY, spriteVsMovinPlatformY, null, this);
     this.physics.arcade.collide(mage, movingGrasseXCastle, spriteVsMovinPlatformX, null, this);
-    this.physics.arcade.collide(mage, plant, spriteVsMovinPlatformX, null, this);
+    this.physics.arcade.collide(mage, plant, spriteMovinPlantX, null, this);
+    this.physics.arcade.collide(mage, plant, spriteMovinPlantY, null, this);
 };
 
 PlayState._handleInput = function() {
