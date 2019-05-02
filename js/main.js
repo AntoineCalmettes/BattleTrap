@@ -189,6 +189,7 @@ function spriteVsMovinPlatformX(mage, platForm) {
     mage.body.x = platForm.body.x;
 }
 
+// Fonction propre au colline physic
 function spriteMovinPlantY(mage, platForm) {
     if ((mage.body.y < platForm.body.y)) {
         mage.body.y = platForm.body.y - mage.body.height;
