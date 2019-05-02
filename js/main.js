@@ -48,7 +48,12 @@ Hero.prototype.constructor = Hero;
 
 Hero.prototype.move = function(direction) {
     const SPEED = 200;
+<<<<<<< Updated upstream
     //this.body.velocity.x = direction * SPEED;
+=======
+    this.body.velocity.x = direction*100;
+
+>>>>>>> Stashed changes
     switch (direction) {
         case RIGHT:
             this.body.position.x += 3;
