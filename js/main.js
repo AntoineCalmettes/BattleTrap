@@ -190,16 +190,13 @@ function spriteVsMovinPlatformX(mage, platForm) {
 }
 
 // Fonction propre au colline physic
-function spriteMovinPlantY(mage, platForm) {
-    if ((mage.body.y < platForm.body.y)) {
-        mage.body.y = platForm.body.y - mage.body.height;
-    }
+function spriteMovinPlant(mage, platForm) {
+        mage.body.y = 535;
+        mage.body.x = 5;
+    
 }
 
-function spriteMovinPlantX(mage, platForm) {
-    mage.body.y = platForm.body.y - mage.body.height;
-    mage.body.x = platForm.body.x;
-}
+
 
 PlayState._handleCollisions = function() {
 
@@ -207,8 +204,7 @@ PlayState._handleCollisions = function() {
     this.game.physics.arcade.collide(mage, platformH);
     this.physics.arcade.collide(mage, movingGrasseY, spriteVsMovinPlatformY, null, this);
     this.physics.arcade.collide(mage, movingGrasseXCastle, spriteVsMovinPlatformX, null, this);
-    this.physics.arcade.collide(mage, plant, spriteMovinPlantX, null, this);
-    this.physics.arcade.collide(mage, plant, spriteMovinPlantY, null, this);
+    this.game.physics.arcade.collide(mage, plant, spriteMovinPlant, null, this);
 };
 
 PlayState._handleInput = function() {
