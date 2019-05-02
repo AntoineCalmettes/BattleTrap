@@ -48,15 +48,17 @@ Hero.prototype.constructor = Hero;
 
 Hero.prototype.move = function(direction) {
     const SPEED = 200;
-    this.body.velocity.x = direction * SPEED;
+    //this.body.velocity.x = direction * SPEED;
     switch (direction) {
         case RIGHT:
+            this.body.position.x += 3;
             this.animations.play('right');
             break;
         case UP:
             this.animations.play('up');
             break;
         case LEFT:
+            this.body.position.x -= 3;
             this.animations.play('left');
             break
         default:
@@ -198,17 +200,12 @@ PlayState._handleInput = function() {
     if (this.keys.left.isDown) { // move hero left
         mage.move(-1);
         heroWarriorSprite.animations.play('left');
-        console.log("move left");
-
     } else if (this.keys.right.isDown) { // move hero right
         mage.move(1);
-
         heroWarriorSprite.animations.play('right');
-        console.log("move right");
     } else if (this.keys.up.isDown) { // move hero up
         mage.move(0);
         heroWarriorSprite.animations.play('up');
-        console.log("move up");
     } else { // stop
         heroWarriorSprite.animations.play('stand');
     }
@@ -219,6 +216,7 @@ PlayState._loadLevel = function(data) {
     this.platforms = this.game.add.group();
 
     this.flags = this.game.add.group();
+
     this.platformsMovable = this.add.physicsGroup();
 
     movingGrasseY = this.platformsMovable.create(105, 560, 'grass:2x1');
@@ -231,7 +229,6 @@ PlayState._loadLevel = function(data) {
 
     // POSITION PLANT IN EARTH
     plant = this.platformsMovable.create(600, 600, 'plant');
-
     // PLANT MOVE 
     this.game.add.tween(plant).to({
         y: plant.position.y - 50
@@ -293,18 +290,7 @@ PlayState._spawnCharacters = function(data) {
     // spawn hero
     mage = new Hero(this.game, data.hero.x, data.hero.y, 'heroWarrior');
     mage.body.setSize(mage.width, mage.height);
-    setInterval(() => {
-        if (timeMage !== 0) {
-            timeMage -= 1;
-            mageMovin()
-            this.game.add.existing(mage);
-        }
-    }, 300)
-
-    function mageMovin() {
-        mage.body.setSize(mage.width, mage.height);
-    };
-
+    this.game.add.existing(mage);
 };
 
 PlayState._spawnflag = function(flag) {
