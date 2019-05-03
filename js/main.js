@@ -1,9 +1,18 @@
+/*
+Constante pour les mouvements de personnages
+ */
+
 const RIGHT = 1;
 const LEFT = -1;
 const UP = 0;
 const STAND = 0;
 const FIGHT = 2;
+
+// Variable pour detecter si le joueur viens de sauter
 var jumpin = false;
+
+
+// Configuration de l'environement de jeux (taille du canvas etc..)
 var config = {
     type: Phaser.AUTO,
     width: 1200,
@@ -25,7 +34,7 @@ var config = {
 // sprites
 // =============================================================================
 //
-// hero sprite
+// Cree un nouveaux Hero
 //
 function Hero(game, x, y, sprites) {
     this.sprites = sprites;
@@ -48,6 +57,7 @@ function Hero(game, x, y, sprites) {
 Hero.prototype = Object.create(Phaser.Sprite.prototype);
 Hero.prototype.constructor = Hero;
 
+// Mouvement du Hero
 Hero.prototype.move = function (direction) {
     const SPEED = 200;
     //this.body.velocity.x = direction * SPEED;
@@ -67,7 +77,7 @@ Hero.prototype.move = function (direction) {
 
     }
 };
-
+// Saut du hero
 Hero.prototype.jump = function () {
     const JUMP_SPEED = 500;
     let canJump = this.body.touching.down;
@@ -84,7 +94,9 @@ Hero.prototype.jump = function () {
 // =============================================================================
 
 PlayState = {};
-
+// ==============================================
+// Initialisation du jeux
+// ==============================================
 PlayState.init = function () {
     this.game.renderer.renderSession.roundPixels = true;
 
@@ -95,13 +107,15 @@ PlayState.init = function () {
     });
 
     this.keys.up.onDown.add(function () {
-        let didJump = mage.jump();
+        let didJump = Warrior.jump();
         if (didJump) {
             this.sfx.jump.play();
         }
     }, this);
 };
-
+// ==============================================
+// Image pour les platforms, sprites etc..
+// ==============================================
 PlayState.preload = function () {
     this.game.load.json('level:1', 'data/level01.json');
     this.game.load.image('background', 'images/background.png');
@@ -126,6 +140,9 @@ PlayState.preload = function () {
     this.game.load.audio('sfx:jump', 'audio/jump.wav');
     this.game.load.audio('sfx:coin', 'audio/coin.wav');
 };
+// ==============================================
+// Var initialization
+// ==============================================
 var map;
 var movingGrasseY;
 var movingGrasseX;
@@ -134,19 +151,23 @@ var portalBottomRight;
 var portalTopRight;
 var block;
 var lava;
-var lavaBouncing;
-var heroWarriorSprite;
+var timeMap = 10000;
+var mage;
+var Warrior;
 
+// ==============================================
+// Crée le jeux
+// ==============================================
 PlayState.create = function () {
 
-
-    // create sound entities
+    // creation des sons du jeux
     this.sfx = {
         jump: this.game.add.audio(''),
         coin: this.game.add.audio(''),
     };
-
+    // Creation de la map
     map = this.game.add.image(0, 0, 'background');
+    // Changement de la map toute les 300ms
     setInterval(() => {
         if (timeMap !== 0) {
             timeMap -= 1;
@@ -154,7 +175,7 @@ PlayState.create = function () {
         }
     }, 300)
 
-
+    // Change la map pour faire bouger les etoiles
     function stars() {
         if (timeMap % 2 == 0) {
             map.loadTexture('background1', 0);
@@ -162,72 +183,99 @@ PlayState.create = function () {
             map.loadTexture('background', 0);
         }
     };
-
+    // Charge le fichier JSON du niveaux 1
     this._loadLevel(this.game.cache.getJSON('level:1'));
 };
-
-var timeMap = 10000;
+// ==============================================
+// Fontion qui s'active toute les 1ms pour update le jeux
+// ==============================================
 PlayState.update = function () {
 
     this._handleCollisions();
     this._handleInput();
-    if ((mage.position.y > 390 && mage.position.y < 450) && (mage.position.x > 30 && mage.position.x < 85)) {
-        mage.position.y = 200;
-        mage.position.x = 50;
+
+    // Si le mange touche le portail dimemensionel il est teleporter a celui du dessus
+    if ((Warrior.position.y > 390 && Warrior.position.y < 450) && (Warrior.position.x > 30 && Warrior.position.x < 85)) {
+        Warrior.position.y = 200;
+        Warrior.position.x = 50;
     }
 };
-
-function spriteVsPlatform(mage, platForm) {
+// ==============================================
+// Fonction qui remet l'etat de base si la personne viens de sauter et atterie sur une platform
+// ==============================================
+function spriteVsPlatform(hero) {
     if (jumpin) {
-        mage.animations.play('stand');
+        hero.animations.play('stand');
         jumpin = false;
     }
 }
 
-// Fonction propre au colline physic
-function spriteMovinPlant(mage, platForm) {
-    if(mage.body.x >= 550){
-        mage.body.y = 550;
-        mage.body.x = 650;
+// ==============================================
+// Fonction au contact de la plante
+// ==============================================
+function spriteMovinPlant(hero) {
+    if (hero.body.x >= 550) {
+        hero.body.y = 550;
+        hero.body.x = 650;
     } else {
-        mage.body.y = 535;
-        mage.body.x = 500;
+        hero.body.y = 535;
+        hero.body.x = 500;
     }
 }
 
+// ==============================================
+// Fonction qui calcule les collisions
+// ==============================================
 PlayState._handleCollisions = function () {
-    this.game.physics.arcade.collide(mage, this.platforms, spriteVsPlatform, null, this);
-    this.game.physics.arcade.collide(mage, movingGrasseX, spriteVsPlatform, null, this);
-    this.physics.arcade.collide(mage, movingGrasseY);
-    this.physics.arcade.collide(mage, movingGrasseXCastle);
-    this.game.physics.arcade.collide(mage, this.portal)
-    this.game.physics.arcade.collide(mage, plant, spriteMovinPlant, null, this);
+    // ==============================================
+    // Ajout de tout les collider
+    // ==============================================
+    this.game.physics.arcade.collide(Warrior, this.platforms, spriteVsPlatform, null, this);
+    this.game.physics.arcade.collide(Warrior, movingGrasseX, spriteVsPlatform, null, this);
+    this.physics.arcade.collide(Warrior, movingGrasseY);
+    this.physics.arcade.collide(Warrior, movingGrasseXCastle);
+    this.game.physics.arcade.collide(Warrior, this.portal);
+    this.game.physics.arcade.collide(Warrior, plant, spriteMovinPlant, null, this);
 };
-
+// ==============================================
+// Ecouteur d'evenement sur la touche du clavier pressé
+// ==============================================
 PlayState._handleInput = function () {
-    let spaceBar = this.game.input.keyboard.addKey(32); // Get key object
+    let spaceBar = this.game.input.keyboard.addKey(32); // Recupere le ASCI de la barre d'espace
     let isDown = spaceBar.isDown;
     if (this.keys.left.isDown) { // move hero left
-        mage.move(-1);
+        Warrior.move(-1);
     } else if (this.keys.right.isDown) { // move hero right
-        mage.move(1);
-    } else if (isDown) {
-        mage.move(2);
+        Warrior.move(1);
+    } else if (isDown) { // move hero up
+        Warrior.move(2);
     } else if (this.keys.up.isDown) { // move hero up
-        mage.move(0);
+        Warrior.move(0);
     } else { // stop
-        mage.animations.play('stand');
+        Warrior.animations.play('stand');
     }
 };
-
+// ==============================================
+// Genere le niveau
+// ==============================================
 PlayState._loadLevel = function (data) {
+    // Selectionne le niveau de gravité
+    const GRAVITY = 1500;
+    // Ajoute la gravité
+    this.game.physics.arcade.gravity.y = GRAVITY;
+    // ==============================================
     // create all the groups/layers that we need
+    // ==============================================
     this.platforms = this.game.add.group();
+    this.flag = this.game.add.group();
     this.portal = this.game.add.physicsGroup();
     this.flags = this.game.add.group();
     this.platformsMovable = this.add.physicsGroup();
     this.lavaData = this.game.add.group();
-
+    this.platformsMovabl = this.add.physicsGroup();
+    // ==============================================
+    // Creation de toute les platforms/decoration/pieges
+    // ==============================================
     movingGrasseY = this.platformsMovable.create(105, 560, 'grass:2x1');
     portalTopRight = this.portal.create(30, 140, 'portalTop');
     portalBottomRight = this.portal.create(30, 420, 'portalBottom');
@@ -236,71 +284,48 @@ PlayState._loadLevel = function (data) {
     fireBall3 = this.platformsMovable.create(1000, 600, 'fireBall');
     fireBall4 = this.platformsMovable.create(210, 600, 'fireBall');
     fireBall5 = this.platformsMovable.create(430, 600, 'fireBall');
-    // PLANT--------------------------------------------------
-
-    // POSITION PLANT IN EARTH
     plant = this.platformsMovable.create(600, 600, 'plant');
+    movingGrasseX = this.platformsMovabl.create(240, 250, 'grass:2x1');
+    movingGrasseXCastle = this.platformsMovable.create(760, 565, 'grass:2x1');
+    // ==============================================
+    // Animations
+    // ==============================================
     // PLANT MOVE 
     this.game.add.tween(plant).to({
         y: plant.position.y - 50
     }, 1000, Phaser.Easing.Linear.None, true, 0, -1, true);
     plant.body.setSize(plant.width, plant.height);
-
+    // FireBall Moves
     this.game.add.tween(fireBall1).to({
         y: fireBall1.position.y - 10
     }, 300, Phaser.Easing.Linear.None, true, 0, -1, true);
     fireBall1.body.setSize(fireBall1.width, fireBall1.height);
-
+    // FireBall Moves
     this.game.add.tween(fireBall2).to({
         y: fireBall2.position.y - 10
     }, 400, Phaser.Easing.Linear.None, true, 0, -1, true);
     fireBall2.body.setSize(fireBall2.width, fireBall2.height);
-
+    // FireBall Moves
     this.game.add.tween(fireBall3).to({
         y: fireBall3.position.y - 10
     }, 450, Phaser.Easing.Linear.None, true, 0, -1, true);
     fireBall3.body.setSize(fireBall3.width, fireBall3.height);
-
+    // FireBall Moves
     this.game.add.tween(fireBall4).to({
         y: fireBall4.position.y - 10
     }, 300, Phaser.Easing.Linear.None, true, 0, -1, true);
     fireBall4.body.setSize(fireBall4.width, fireBall4.height);
-
+    // FireBall Moves
     this.game.add.tween(fireBall5).to({
         y: fireBall5.position.y - 10
     }, 500, Phaser.Easing.Linear.None, true, 0, -1, true);
     fireBall5.body.setSize(fireBall5.width, fireBall5.height);
-
-    // END PLANT-------------------------------------------
-    this.portal.setAll('body.allowGravity', false);
-    this.portal.setAll('body.immovable', true);
-    this.platformsMovable.setAll('body.allowGravity', false);
-    this.platformsMovable.setAll('body.immovable', true);
-
+    // Platforme de haut en bas a coter du portail Moves
     this.game.add.tween(movingGrasseY).to({
         y: movingGrasseY.position.y - 140
     }, 2000, Phaser.Easing.Linear.None, true, 0, -1, true);
     movingGrasseY.body.setSize(movingGrasseY.width, movingGrasseY.height);
-
-    // spawn all platforms
-    data.platforms.forEach(this._spawnPlatform, this);
-
-    // spawn hero and enemies
-    this._spawnCharacters({
-        hero: data.hero
-    });
-
-    // spawn important objects
-    this.platformsMovabl = this.add.physicsGroup();
-    movingGrasseX = this.platformsMovabl.create(240, 250, 'grass:2x1');
-    movingGrasseXCastle = this.platformsMovable.create(760, 565, 'grass:2x1');
-    this.platformsMovabl.setAll('body.allowGravity', false);
-    this.platformsMovabl.setAll('body.immovable', true);
-    // platforme qui bouge sur l'axe x a coter du portail animation
-    movingGrasseX.body.kinematic = true;
-    movingGrasseXCastle.body.kinematic = true;
-    movingGrasseXCastle.body.allowGravity = false;
-    movingGrasseXCastle.body.immovable = true;
+    // Platforme en haut de gauche a droite a coter du soleil Moves
     this.game.add.tween(movingGrasseX.body).to({
         x: '+150'
     }, 2000, Phaser.Easing.Linear.None).to({
@@ -313,12 +338,37 @@ PlayState._loadLevel = function (data) {
     }, 3000, Phaser.Easing.Linear.None).to({
         x: '-250'
     }, 3000, Phaser.Easing.Linear.None).yoyo().loop().start();
-    // enable gravity
-    const GRAVITY = 1500;
-    this.game.physics.arcade.gravity.y = GRAVITY;
-}
-;
 
+    // Desactive la gravité sur les platforms (pour eviter quelle tombe
+    this.portal.setAll('body.allowGravity', false);
+    this.platformsMovable.setAll('body.allowGravity', false);
+    this.platformsMovabl.setAll('body.allowGravity', false);
+    movingGrasseXCastle.body.allowGravity = false;
+
+    // Desactive le fait de pouvoir bouger les platformes avec le perso
+    this.portal.setAll('body.immovable', true);
+    this.platformsMovable.setAll('body.immovable', true);
+    this.platformsMovabl.setAll('body.immovable', true);
+    movingGrasseXCastle.body.immovable = true;
+
+    // platforme qui bouge sur l'axe x a coter du portail animation (je sais pas a quoi sa sert mais c'est important)
+    movingGrasseX.body.kinematic = true;
+    movingGrasseXCastle.body.kinematic = true;
+
+    // Appelle la fonction qui spawn toute les platforms contenue dans le JSON passé en parametre de la fonction loadLevel
+    data.platforms.forEach(this._spawnPlatform, this);
+
+    // spawn hero and enemies
+    this._spawnCharacters({
+        hero: data.hero
+    });
+    data.flag.forEach(this._spawnflag, this);
+
+};
+
+// ======================
+// Spawn toute les platformes passé en parametre ( du json level)
+// ======================
 PlayState._spawnPlatform = function (platform) {
     let sprite = this.platforms.create(
         platform.x, platform.y, platform.image);
@@ -326,29 +376,29 @@ PlayState._spawnPlatform = function (platform) {
     sprite.body.allowGravity = false;
     sprite.body.immovable = true;
 };
-
-var mage;
-var timeMage = 10000;
-
+// ======================
+// Crée le/les perso passé en parametre
+// ======================
 PlayState._spawnCharacters = function (data) {
     // spawn hero
-    mage = new Hero(this.game, data.hero.x, data.hero.y, 'heroWarrior');
-    mage.body.setSize(mage.width, mage.height);
-    this.game.add.existing(mage);
+    Warrior = new Hero(this.game, data.hero.x, data.hero.y, 'heroWarrior');
+    Warrior.body.setSize(Warrior.width, Warrior.height);
+    this.game.add.existing(Warrior);
 };
-
+// ==========================
+// Crée les drapeaux
+// ==========================
 PlayState._spawnflag = function (flag) {
     let sprite = this.flags.create(flag.x, flag.y, 'flag');
     sprite.anchor.set(0.5, 0.5);
-
     this.game.physics.enable(sprite);
     sprite.body.allowGravity = false;
-
-    sprite.animations.add('rotate', [0, 1, 2, 1], 6, true); // 6fps, looped
-    sprite.animations.play('rotate');
+    this.game.physics.arcade.collide(Warrior,flag,this._onHeroVsflag, null, this);
+   // sprite.animations.add('rotate', [0, 1, 2, 1], 6, true); // 6fps, looped
+   // sprite.animations.play('rotate');
 };
 
-
+// Quand le hero touche un drapeau
 PlayState._onHeroVsflag = function (hero, flag) {
     this.sfx.flag.play();
     flag.kill();
@@ -362,114 +412,4 @@ window.onload = function () {
     var game = new Phaser.Game(config);
     game.state.add('play', PlayState);
     game.state.start('play');
-
-//MUSIC
-
-    var music = document.getElementById('music'); // id for audio element
-    var duration = music.duration; // Duration of audio clip, calculated here for embedding purposes
-    var pButton = document.getElementById('pButton'); // play button
-    var playhead = document.getElementById('playhead'); // playhead
-    var timeline = document.getElementById('timeline'); // timeline
-
-// timeline width adjusted for playhead
-    var timelineWidth = timeline.offsetWidth - playhead.offsetWidth;
-
-// play button event listenter
-    pButton.addEventListener("click", play);
-
-// timeupdate event listener
-    music.addEventListener("timeupdate", timeUpdate, false);
-
-// makes timeline clickable
-    timeline.addEventListener("click", function(event) {
-        moveplayhead(event);
-        music.currentTime = duration * clickPercent(event);
-    }, false);
-
-// returns click as decimal (.77) of the total timelineWidth
-    function clickPercent(event) {
-        return (event.clientX - getPosition(timeline)) / timelineWidth;
-    }
-
-// makes playhead draggable
-    playhead.addEventListener('mousedown', mouseDown, false);
-    window.addEventListener('mouseup', mouseUp, false);
-
-// Boolean value so that audio position is updated only when the playhead is released
-    var onplayhead = false;
-
-// mouseDown EventListener
-    function mouseDown() {
-        onplayhead = true;
-        window.addEventListener('mousemove', moveplayhead, true);
-        music.removeEventListener('timeupdate', timeUpdate, false);
-    }
-
-// mouseUp EventListener
-// getting input from all mouse clicks
-    function mouseUp(event) {
-        if (onplayhead == true) {
-            moveplayhead(event);
-            window.removeEventListener('mousemove', moveplayhead, true);
-            // change current time
-            music.currentTime = duration * clickPercent(event);
-            music.addEventListener('timeupdate', timeUpdate, false);
-        }
-        onplayhead = false;
-    }
-// mousemove EventListener
-// Moves playhead as user drags
-    function moveplayhead(event) {
-        var newMargLeft = event.clientX - getPosition(timeline);
-
-        if (newMargLeft >= 0 && newMargLeft <= timelineWidth) {
-            playhead.style.marginLeft = newMargLeft + "px";
-        }
-        if (newMargLeft < 0) {
-            playhead.style.marginLeft = "0px";
-        }
-        if (newMargLeft > timelineWidth) {
-            playhead.style.marginLeft = timelineWidth + "px";
-        }
-    }
-
-// timeUpdate
-// Synchronizes playhead position with current point in audio
-    function timeUpdate() {
-        var playPercent = timelineWidth * (music.currentTime / duration);
-        playhead.style.marginLeft = playPercent + "px";
-        if (music.currentTime == duration) {
-            pButton.className = "";
-            pButton.className = "play";
-        }
-    }
-
-//Play and Pause
-    function play() {
-        // start music
-        if (music.paused) {
-            music.play();
-            // remove play, add pause
-            pButton.className = "";
-            pButton.className = "pause";
-        } else { // pause music
-            music.pause();
-            // remove pause, add play
-            pButton.className = "";
-            pButton.className = "play";
-        }
-    }
-
-// Gets audio file duration
-    music.addEventListener("canplaythrough", function() {
-        duration = music.duration;
-    }, false);
-
-// getPosition
-// Returns elements left position relative to top-left of viewport
-    function getPosition(el) {
-        return el.getBoundingClientRect().left;
-    }
-// ---------------------------------------------------------------------------------------
-
 };
