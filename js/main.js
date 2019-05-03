@@ -89,6 +89,44 @@ Hero.prototype.jump = function () {
     return canJump;
 };
 
+//================== monster
+// Create new monster
+// ==================
+function Monster(game, x, y, sprites) {
+    this.sprites = sprites;
+    Phaser.Sprite.call(this, game, x, y, sprites);
+    this.anchor.set(0.5, 0.5);
+    //this.animations.add('stand', [0, 1], 3, true);
+    this.animations.add('left', [0, 1], 3, true);
+    //this.animations.add('up', [6], 3, true);
+    //this.animations.add('fight', [8], 3, true);
+    this.animations.add('right', [2, 3], 3, true);
+    this.animations.play('right');
+    // physic properties
+    this.game.physics.enable(this);
+    this.body.collideWorldBounds = true;
+}
+
+
+// inherit from Phaser.Sprite
+Monster.prototype = Object.create(Phaser.Sprite.prototype);
+Monster.prototype.constructor = Monster;
+
+Monster.prototype.move = function (monster) {
+    monster.animations.play('right');
+    this.game.add.tween(monster.body).to({
+        x: '+450'
+    }, 6000).start();
+    setTimeout(() => {
+        monster.animations.play('left');
+        this.game.add.tween(monster.body).to({
+            x: '-450'
+        }, 6000).start();
+        setTimeout(() => {
+            monsterMoveFinish = true
+        }, 6000)
+    }, 6000);
+};
 // =============================================================================
 // game states
 // =============================================================================
@@ -137,6 +175,7 @@ PlayState.preload = function () {
     this.game.load.image('plant', 'images/plant.png');
     this.game.load.spritesheet('heroWarrior', 'images/playerWar/warrior_animated.png', 49, 45, 10);
     this.game.load.image('flag', 'images/flag.png');
+    this.game.load.spritesheet('flameMonster', 'images/flameMonster2.png', 100, 50, 4);
     this.game.load.audio('sfx:jump', 'audio/jump.wav');
     this.game.load.audio('sfx:coin', 'audio/coin.wav');
 };
@@ -154,7 +193,7 @@ var lava;
 var timeMap = 10000;
 var mage;
 var Warrior;
-
+var flameMonster;
 // ==============================================
 // Crée le jeux
 // ==============================================
@@ -186,11 +225,15 @@ PlayState.create = function () {
     // Charge le fichier JSON du niveaux 1
     this._loadLevel(this.game.cache.getJSON('level:1'));
 };
+var monsterMoveFinish = false;
 // ==============================================
 // Fontion qui s'active toute les 1ms pour update le jeux
 // ==============================================
 PlayState.update = function () {
-
+    if (monsterMoveFinish) {
+        monsterMoveFinish = false;
+        flameMonster.move(flameMonster);
+    }
     this._handleCollisions();
     this._handleInput();
 
@@ -223,6 +266,18 @@ function spriteMovinPlant(hero) {
     }
 }
 
+function heroVsMonster(hero, monster) {
+    if (hero.body.position.x < monster.body.position.x) {
+        this.game.add.tween(hero.body).to({
+            x: '-50'
+        }, 100).start();
+    } else {
+        this.game.add.tween(hero.body).to({
+            x: '50'
+        }, 100).start();
+    }
+}
+
 // ==============================================
 // Fonction qui calcule les collisions
 // ==============================================
@@ -230,6 +285,7 @@ PlayState._handleCollisions = function () {
     // ==============================================
     // Ajout de tout les collider
     // ==============================================
+    this.game.physics.arcade.collide(Warrior, flameMonster, heroVsMonster, null, this);
     this.game.physics.arcade.collide(Warrior, this.platforms, spriteVsPlatform, null, this);
     this.game.physics.arcade.collide(Warrior, movingGrasseX, spriteVsPlatform, null, this);
     this.physics.arcade.collide(Warrior, movingGrasseY);
@@ -276,7 +332,7 @@ PlayState._loadLevel = function (data) {
     // ==============================================
     // Creation de toute les platforms/decoration/pieges
     // ==============================================
-    movingGrasseY = this.platformsMovable.create(105, 560, 'grass:2x1');
+    movingGrasseY = this.platformsMovable.create(105, 535, 'grass:2x1');
     portalTopRight = this.portal.create(30, 140, 'portalTop');
     portalBottomRight = this.portal.create(30, 420, 'portalBottom');
     fireBall1 = this.platformsMovable.create(800, 600, 'fireBall');
@@ -327,9 +383,9 @@ PlayState._loadLevel = function (data) {
     movingGrasseY.body.setSize(movingGrasseY.width, movingGrasseY.height);
     // Platforme en haut de gauche a droite a coter du soleil Moves
     this.game.add.tween(movingGrasseX.body).to({
-        x: '+150'
+        x: '+140'
     }, 2000, Phaser.Easing.Linear.None).to({
-        x: '-150'
+        x: '-140'
     }, 2000, Phaser.Easing.Linear.None).yoyo().loop().start();
     // platforme qui bouge sur l'axe x a coter du chateau animation
     movingGrasseXCastle.body.kinematic = true;
@@ -360,7 +416,8 @@ PlayState._loadLevel = function (data) {
 
     // spawn hero and enemies
     this._spawnCharacters({
-        hero: data.hero
+        hero: data.hero,
+        monster: data.monster
     });
     data.flag.forEach(this._spawnflag, this);
 
@@ -384,6 +441,13 @@ PlayState._spawnCharacters = function (data) {
     Warrior = new Hero(this.game, data.hero.x, data.hero.y, 'heroWarrior');
     Warrior.body.setSize(Warrior.width, Warrior.height);
     this.game.add.existing(Warrior);
+
+    flameMonster = new Monster(this.game, data.monster.x, data.monster.y, 'flameMonster');
+    flameMonster.body.setSize(flameMonster.width, flameMonster.height);
+    this.game.add.existing(flameMonster);
+    flameMonster.body.allowGravity = false;
+    flameMonster.body.immovable = true;
+    flameMonster.move(flameMonster);
 };
 // ==========================
 // Crée les drapeaux
@@ -393,9 +457,9 @@ PlayState._spawnflag = function (flag) {
     sprite.anchor.set(0.5, 0.5);
     this.game.physics.enable(sprite);
     sprite.body.allowGravity = false;
-    this.game.physics.arcade.collide(Warrior,flag,this._onHeroVsflag, null, this);
-   // sprite.animations.add('rotate', [0, 1, 2, 1], 6, true); // 6fps, looped
-   // sprite.animations.play('rotate');
+    this.game.physics.arcade.collide(Warrior, flag, this._onHeroVsflag, null, this);
+    // sprite.animations.add('rotate', [0, 1, 2, 1], 6, true); // 6fps, looped
+    // sprite.animations.play('rotate');
 };
 
 // Quand le hero touche un drapeau
