@@ -89,19 +89,6 @@ Hero.prototype.jump = function () {
     return canJump;
 };
 
-// Prise de degats du hero
-Hero.prototype.damage = function(amount) {
-  if (this.alive) {
-    this.health -= amount;
-    if (this.health <= 0) {
-      this.kill();
-      this.game.state.restart();
-    }
-  }
-  return this;
-};
-
-
 //================== monster
 // Create new monster
 // ==================
@@ -281,14 +268,11 @@ function spriteMovinPlant(hero) {
     }
 }
 
-function spriteDamagePlant(hero) {
-    hero.damage(1);
-}
-
 function spriteDegatLava(hero, platform) {
-    hero.body.y = 540;
+    hero.body.y = 540;  
+  
 }
-
+ 
 function heroVsMonster(hero, monster) {
     if (hero.body.position.x < monster.body.position.x) {
         this.game.add.tween(hero.body).to({
@@ -315,7 +299,7 @@ PlayState._handleCollisions = function () {
     this.physics.arcade.collide(Warrior, movingGrasseY);
     this.physics.arcade.collide(Warrior, movingGrasseXCastle);
     this.game.physics.arcade.collide(Warrior, this.portal);
-    this.game.physics.arcade.collide(Warrior, plant, spriteMovinPlant, spriteDamagePlant, null, this);
+    this.game.physics.arcade.collide(Warrior, plant, spriteMovinPlant, null, this);
 };
 // ==============================================
 // Ecouteur d'evenement sur la touche du clavier pressé
@@ -372,7 +356,7 @@ PlayState._loadLevel = function (data) {
     // ==============================================
     // Animations
     // ==============================================
-    // PIZZA MOVE
+    // PIZZA MOVE 
     this.game.add.tween(pizza).to({
         y: pizza.position.y - 50
     }, 1000, Phaser.Easing.Linear.None, true, 0, -1, true);
@@ -384,7 +368,7 @@ PlayState._loadLevel = function (data) {
     pizza2.body.setSize(pizza2.width, pizza2.height);
 
 
-    // PLANT MOVE
+    // PLANT MOVE 
     this.game.add.tween(plant).to({
         y: plant.position.y - 50
     }, 1000, Phaser.Easing.Linear.None, true, 0, -1, true);
@@ -447,20 +431,20 @@ PlayState._loadLevel = function (data) {
     // platforme qui bouge sur l'axe x a coter du portail animation (je sais pas a quoi sa sert mais c'est important)
     movingGrasseX.body.kinematic = true;
     movingGrasseXCastle.body.kinematic = true;
-
-    // appel les donnée "lavaData" dans JSON
-    data.lavaData.forEach(this._spawnLava, this);
-
+   
+    // appel les donnée "lavaData" dans JSON 
+    data.lavaData.forEach(this._spawnLava, this);   
+    
     // Appelle la fonction qui spawn toute les platforms contenue dans le JSON passé en parametre de la fonction loadLevel
     data.platforms.forEach(this._spawnPlatform, this);
-
+    
 
     // spawn hero and enemies
     this._spawnCharacters({
         hero: data.hero,
         monster: data.monster
     });
-
+    
 
     data.flag.forEach(this._spawnflag, this);
 
@@ -476,8 +460,8 @@ PlayState._loadLevel = function (data) {
     this.game.physics.enable(sprite);
     sprite.body.allowGravity = false;
     sprite.body.immovable = true;
-
-};
+      
+}; 
 // ======================
 // Spawn toute les platformes passé en parametre ( du json level)
 // ======================
@@ -495,9 +479,7 @@ PlayState._spawnCharacters = function (data) {
     // spawn hero
     Warrior = new Hero(this.game, data.hero.x, data.hero.y, 'heroWarrior');
     Warrior.body.setSize(Warrior.width, Warrior.height);
-    Warrior.health = 5;
     this.game.add.existing(Warrior);
-
 
     flameMonster = new Monster(this.game, data.monster.x, data.monster.y, 'flameMonster');
     flameMonster.body.setSize(flameMonster.width, flameMonster.height);
