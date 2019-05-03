@@ -129,15 +129,14 @@ Monster.prototype.move = function (monster) {
     monster.animations.play('right');
     this.game.add.tween(monster.body).to({
         x: '+450'
-    }, 6000).start();
+    }, 6000, Phaser.Easing.Linear.None).to({
+        x: '-450'
+    }, 6000, Phaser.Easing.Linear.None).yoyo().loop().start();
+    setTimeout(() => {
+        monsterMoveFinish = true
+    }, 12000)
     setTimeout(() => {
         monster.animations.play('left');
-        this.game.add.tween(monster.body).to({
-            x: '-450'
-        }, 6000).start();
-        setTimeout(() => {
-            monsterMoveFinish = true
-        }, 6000)
     }, 6000);
 };
 // =============================================================================
