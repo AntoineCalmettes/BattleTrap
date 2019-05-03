@@ -214,12 +214,12 @@ function spriteVsPlatform(hero) {
 // Fonction au contact de la plante
 // ==============================================
 function spriteMovinPlant(hero) {
-    if (hero.body.x >= 550) {
+    if (hero.body.x >= 600) {
         hero.body.y = 550;
         hero.body.x = 650;
     } else {
         hero.body.y = 535;
-        hero.body.x = 500;
+        hero.body.x = 540;
     }
 }
 
