@@ -1,46 +1,6 @@
 {
   "platforms": [
     {
-      "image": "lava",
-      "x": 180,
-      "y": 592
-    },
-    {
-      "image": "lava",
-      "x": 400,
-      "y": 592
-    },
-    {
-      "image": "lava",
-      "x": 760,
-      "y": 592
-    },
-    {
-      "image": "lava",
-      "x": 780,
-      "y": 592
-    },
-    {
-      "image": "lava",
-      "x": 840,
-      "y": 592
-    },
-    {
-      "image": "lava",
-      "x": 900,
-      "y": 592
-    },
-    {
-      "image": "lava",
-      "x": 960,
-      "y": 592
-    },
-    {
-      "image": "lava",
-      "x": 1020,
-      "y": 592
-    },
-    {
       "image": "grass:2x1",
       "x": 0,
       "y": 600
@@ -244,6 +204,47 @@
       "image": "grass:2x1",
       "x": 1160,
       "y": 600
+    }
+  ],
+    "lavaData": [   {
+    "image": "lava",
+    "x": 174,
+    "y": 595
+  },
+    {
+      "image": "lava",
+      "x": 395,
+      "y": 595
+    },
+    {
+      "image": "lava",
+      "x": 760,
+      "y": 595
+    },
+    {
+      "image": "lava",
+      "x": 780,
+      "y": 595
+    },
+    {
+      "image": "lava",
+      "x": 840,
+      "y": 595
+    },
+    {
+      "image": "lava",
+      "x": 900,
+      "y": 595
+    },
+    {
+      "image": "lava",
+      "x": 960,
+      "y": 595
+    },
+    {
+      "image": "lava",
+      "x": 1020,
+      "y": 595
     }
   ],
   "decoration": [
