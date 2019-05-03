@@ -150,7 +150,6 @@ var movingGrasseXCastle;
 var portalBottomRight;
 var portalTopRight;
 var block;
-var lava;
 var timeMap = 10000;
 var mage;
 var Warrior;
@@ -223,6 +222,11 @@ function spriteMovinPlant(hero) {
     }
 }
 
+function spriteDegatLava(hero, platform) {
+    hero.body.y = 540;  
+  
+}
+ 
 // ==============================================
 // Fonction qui calcule les collisions
 // ==============================================
@@ -230,7 +234,8 @@ PlayState._handleCollisions = function () {
     // ==============================================
     // Ajout de tout les collider
     // ==============================================
-    this.game.physics.arcade.collide(Warrior, this.platforms, spriteVsPlatform, null, this);
+    this.game.physics.arcade.collide(Warrior, this.platforms, spriteVsPlatform, null, this); 
+    this.game.physics.arcade.collide(Warrior, this.lavaData, spriteDegatLava, null, this);
     this.game.physics.arcade.collide(Warrior, movingGrasseX, spriteVsPlatform, null, this);
     this.physics.arcade.collide(Warrior, movingGrasseY);
     this.physics.arcade.collide(Warrior, movingGrasseXCastle);
@@ -354,18 +359,36 @@ PlayState._loadLevel = function (data) {
     // platforme qui bouge sur l'axe x a coter du portail animation (je sais pas a quoi sa sert mais c'est important)
     movingGrasseX.body.kinematic = true;
     movingGrasseXCastle.body.kinematic = true;
-
+   
+    // appel les donnée "lavaData" dans JSON 
+    data.lavaData.forEach(this._spawnLava, this);   
+    
     // Appelle la fonction qui spawn toute les platforms contenue dans le JSON passé en parametre de la fonction loadLevel
     data.platforms.forEach(this._spawnPlatform, this);
+    
 
     // spawn hero and enemies
     this._spawnCharacters({
         hero: data.hero
     });
+    
+
     data.flag.forEach(this._spawnflag, this);
 
 };
 
+
+
+// ======================
+// Spawn toute les lave passé en parametre ( du json level)
+// ======================
+  PlayState._spawnLava = function(lava) {
+    let sprite = this.lavaData.create(lava.x, lava.y, lava.image);
+    this.game.physics.enable(sprite);
+    sprite.body.allowGravity = false;
+    sprite.body.immovable = true;
+      
+}; 
 // ======================
 // Spawn toute les platformes passé en parametre ( du json level)
 // ======================
