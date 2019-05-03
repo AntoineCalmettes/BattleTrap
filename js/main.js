@@ -173,6 +173,7 @@ PlayState.preload = function () {
     this.game.load.image('mage1', 'images/mage1_stopped.png');
     this.game.load.image('castle', 'images/castle.png');
     this.game.load.image('plant', 'images/plant.png');
+    this.game.load.image('pizza', 'images/pizza.png');
     this.game.load.spritesheet('heroWarrior', 'images/playerWar/warrior_animated.png', 49, 45, 10);
     this.game.load.image('flag', 'images/flag.png');
     this.game.load.spritesheet('flameMonster', 'images/flameMonster2.png', 100, 50, 4);
@@ -192,6 +193,8 @@ var block;
 var timeMap = 10000;
 var mage;
 var Warrior;
+var pizza;
+
 var flameMonster;
 // ==============================================
 // Crée le jeux
@@ -328,7 +331,7 @@ PlayState._loadLevel = function (data) {
     // create all the groups/layers that we need
     // ==============================================
     this.platforms = this.game.add.group();
-    this.flag = this.game.add.group();
+
     this.portal = this.game.add.physicsGroup();
     this.flags = this.game.add.group();
     this.platformsMovable = this.add.physicsGroup();
@@ -346,11 +349,25 @@ PlayState._loadLevel = function (data) {
     fireBall4 = this.platformsMovable.create(210, 600, 'fireBall');
     fireBall5 = this.platformsMovable.create(430, 600, 'fireBall');
     plant = this.platformsMovable.create(600, 600, 'plant');
+    pizza = this.platformsMovable.create(310, 150, 'pizza');
+    pizza2 = this.platformsMovable.create(930, 490, 'pizza');
     movingGrasseX = this.platformsMovabl.create(240, 250, 'grass:2x1');
     movingGrasseXCastle = this.platformsMovable.create(760, 565, 'grass:2x1');
     // ==============================================
     // Animations
     // ==============================================
+    // PIZZA MOVE 
+    this.game.add.tween(pizza).to({
+        y: pizza.position.y - 50
+    }, 1000, Phaser.Easing.Linear.None, true, 0, -1, true);
+    pizza.body.setSize(pizza.width, pizza.height);
+
+    this.game.add.tween(pizza2).to({
+        x: pizza2.position.x + 150
+    }, 2500, Phaser.Easing.Linear.None, true, 0, -1, true);
+    pizza2.body.setSize(pizza2.width, pizza2.height);
+
+
     // PLANT MOVE 
     this.game.add.tween(plant).to({
         y: plant.position.y - 50
@@ -405,7 +422,6 @@ PlayState._loadLevel = function (data) {
     this.platformsMovable.setAll('body.allowGravity', false);
     this.platformsMovabl.setAll('body.allowGravity', false);
     movingGrasseXCastle.body.allowGravity = false;
-
     // Desactive le fait de pouvoir bouger les platformes avec le perso
     this.portal.setAll('body.immovable', true);
     this.platformsMovable.setAll('body.immovable', true);
@@ -490,6 +506,8 @@ PlayState._onHeroVsflag = function (hero, flag) {
     this.sfx.flag.play();
     flag.kill();
 };
+
+
 
 // =============================================================================
 // entry point
