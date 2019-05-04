@@ -344,7 +344,7 @@ function spriteDamagePlant(hero) {
     }
 }
 
-function spriteVsPasserelle(hero,passerelle) {
+function spriteVsPasserelle(hero, passerelle) {
     this.game.add.tween(hero.body).to({
         y: '-10',
     }, 10).start();
@@ -357,15 +357,15 @@ function spriteVsPasserelle(hero,passerelle) {
 }
 
 function spriteDegatLava(hero) {
-        this.game.add.tween(hero.body).to({
-            y: '-10',
-        }, 10).start();
-        this.sfx.lava.play();
-        hero.damage(0.10);
-        if (dead) {
-            this.sfx.die.play();
-            dead = false;
-        }
+    this.game.add.tween(hero.body).to({
+        y: '-10',
+    }, 10).start();
+    this.sfx.lava.play();
+    hero.damage(0.10);
+    if (dead) {
+        this.sfx.die.play();
+        dead = false;
+    }
 }
 
 function heroVsBoss(hero, boss) {
@@ -419,6 +419,7 @@ PlayState._handleCollisions = function () {
     this.game.physics.arcade.collide(Warrior, this.lavaData, spriteDegatLava, null, this);
     this.game.physics.arcade.collide(Warrior, boss, heroVsBoss, null, this);
     this.game.physics.arcade.collide(Warrior, this.platforms, spriteVsPlatform, null, this);
+    this.game.physics.arcade.collide(Warrior, this.passerelles, spriteVsPlatform, null, this);
     this.game.physics.arcade.collide(Warrior, movingGrasseX, spriteVsPlatform, null, this);
     this.physics.arcade.collide(Warrior, movingGrasseY);
     this.physics.arcade.collide(Warrior, slime, this._onSpriteVsSLime, null, this);
@@ -495,7 +496,7 @@ PlayState._loadLevel = function (data) {
     this.enemyWalls.visible = false;
     this.fireBalls = this.game.add.physicsGroup();
     this.doors = this.game.add.physicsGroup();
-    this.passerelles = this.game.add.physicsGroup();
+    this.passerelles = this.game.add.group();
     // ==============================================
     // Creation de toute les platforms/decoration/pieges
     // ==============================================
@@ -564,7 +565,6 @@ PlayState._loadLevel = function (data) {
     this.stars.setAll('body.allowGravity', false);
     this.castle.setAll('body.allowGravity', false);
     this.doors.setAll('body.allowGravity', false);
-    this.passerelles.setAll('body.allowGravity', false);
     movingGrasseXCastle.body.allowGravity = false;
     // Desactive le fait de pouvoir bouger les platformes avec le perso
     this.portal.setAll('body.immovable', true);
@@ -574,7 +574,6 @@ PlayState._loadLevel = function (data) {
     this.stars.setAll('body.immovable', true);
     this.castle.setAll('body.immovable', true);
     this.doors.setAll('body.immovable', true);
-    this.passerelles.setAll('body.immovable', true);
     movingGrasseXCastle.body.immovable = true;
 
     // platforme qui bouge sur l'axe x a coter du portail animation (je sais pas a quoi sa sert mais c'est important)
@@ -639,7 +638,6 @@ PlayState._spawnCharacters = function (data) {
     Warrior.body.setSize(Warrior.width, Warrior.height);
     this.game.add.existing(Warrior);
 
-
     boss = new Boss(this.game, data.boss.x, data.boss.y, 'boss');
     boss.body.setSize(boss.width, boss.height);
     this.game.add.existing(boss);
@@ -651,7 +649,6 @@ PlayState._spawnCharacters = function (data) {
     this.game.add.existing(slime);
     slime.body.allowGravity = false;
     slime.body.immovable = true;*/
-
 };
 // ==========================
 // Crée les drapeaux
