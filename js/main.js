@@ -241,7 +241,7 @@ PlayState.preload = function () {
     this.game.load.image('flag', 'images/flag.png');
     this.game.load.spritesheet('boss', 'images/boss.png', 80.75, 43, 4);
     this.game.load.spritesheet('slime', 'images/slime.png', 16, 16, 9);
-    this.game.load.image('star', 'images/star.png');
+    this.game.load.image('star', 'images/diament.png');
     this.game.load.audio('sfx:jump', 'audio/jump.wav');
     this.game.load.audio('sfx:coin', 'audio/coin.wav');
     this.game.load.audio('sfx:flag', 'audio/key.wav');
