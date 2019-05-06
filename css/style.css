@@ -6,6 +6,13 @@ a:hover{
     color: white;
     text-decoration: none;
 }
+p{
+  font-family: "pixel";
+}
+
+.mt-6{
+  margin-top: 70px;
+}
 @font-face {
     font-family: "pixel";
     src :url("../police/pixelmania/Pixelmania.ttf");
