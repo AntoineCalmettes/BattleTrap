@@ -226,7 +226,7 @@ Slime.prototype.damage = function (amount) {
             if (deadSlime === 0) {
                 deadSlime = 1;
                 PlayState._spawnSlime(5);
-                spriteDmg = 0.10;
+                spriteDmg = 0.25;
             }
         }
     }
@@ -298,6 +298,7 @@ PlayState.preload = function () {
     this.game.load.spritesheet('warrior', 'images/playerWarrior/warrior_animated.png', 49, 45, 10);
     this.game.load.spritesheet('assasin', 'images/playerAssasin/assasin.png', 49, 45, 10);
     this.game.load.spritesheet('key', 'images/decorations/key.png', 25, 25, 8);
+    this.game.load.spritesheet('sharper', 'images/decorations/sharper.png', 62, 68, 6);
     this.game.load.image('arrow', 'images/decorations/arrow.png');
     this.game.load.spritesheet('boss', 'images/monstres/boss.png', 80.75, 43, 4);
     this.game.load.spritesheet('slime', 'images/monstres/slime.png', 15.8, 16, 25);
@@ -340,7 +341,7 @@ var pizza;
 var walking = false;
 var hiting = false;
 var boss;
-var spriteDmg = 0.25;
+var spriteDmg = 0.50;
 // ==============================================
 // Crée le jeux
 // ==============================================
@@ -478,6 +479,7 @@ PlayState._handleCollisions = function () {
     this.game.physics.arcade.collide(hero, movingGrasseX, spriteVsPlatform, null, this);
     this.physics.arcade.collide(hero, this.platformsMovable);
     this.physics.arcade.overlap(hero, this.slims, this._onSpriteVsSLime, null, this);
+    this.physics.arcade.overlap(hero, this.sharpers, this._onSpriteVsSharper, null, this);
     this.physics.arcade.collide(hero, movingGrasseXCastle);
     this.game.physics.arcade.collide(hero, this.portal);
     this.game.physics.arcade.collide(hero, this.trampos, this._onHerovsTrampos, null, this);
@@ -538,6 +540,7 @@ PlayState._loadLevel = function (data) {
     // ==============================================
     // create all the groups/layers that we need
     // ==============================================
+    this.sharpers = this.game.add.group();
     this.platforms = this.game.add.group();
     this.castle = this.game.add.physicsGroup();
     this.portal = this.game.add.physicsGroup();
@@ -647,6 +650,7 @@ PlayState._loadLevel = function (data) {
     // platforme qui bouge sur l'axe x a coter du portail animation (je sais pas a quoi sa sert mais c'est important)
     movingGrasseX.body.kinematic = true;
     movingGrasseXCastle.body.kinematic = true;
+    data.sharpers.forEach(this._spawnSharper, this);
     // Appelle la fonction qui spawn toute les platforms contenue dans le JSON passé en parametre de la fonction loadLevel
     data.platforms.forEach(this._spawnPlatform, this);
     // appel les donnée "fireBalls" dans JSON
@@ -754,6 +758,21 @@ PlayState._spawnTrampo = function (trampo) {
     sprite.body.allowGravity = false;
     sprite.body.immovable = true;
     sprite.animations.add('upDown', [0, 1, 0], 6, false)
+};
+
+PlayState._spawnSharper = function (sharper) {
+    let sprite = this.sharpers.create(sharper.x, sharper.y, 'sharper');
+    sprite.anchor.set(0.5, 0.5);
+    this.game.physics.enable(sprite);
+    sprite.body.allowGravity = false;
+    sprite.animations.add('rotate', [0, 1, 2, 3, 4, 5], 30, true);
+    sprite.animations.play('rotate');
+    this.game.add.tween(sprite.body).to({
+        x: '+200'
+    }, 1000, Phaser.Easing.Linear.None).to({
+        x: '-200'
+    }, 1000, Phaser.Easing.Linear.None).yoyo().loop().start();
+    sprite.scale.setTo(0.8, 0.8);
 };
 
 PlayState._spawnFireBalls = function (fireBall) {

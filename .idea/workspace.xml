@@ -4,72 +4,6 @@
     <list default="true" id="adefe66b-ca4f-4d21-bb4a-7a0264a6d6e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/level01.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/level01.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/2048x48-ground.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/arrow.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/background-finish.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/background.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/background1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/banana.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/beer.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/boss.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/castle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/coin_animated.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/coin_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/decor.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/diament.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/door-closed.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/door.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/echelle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/fireBall.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/fireBallSingle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/flag.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/grass_1x1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/grass_1x1_noborder.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/grass_2x1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/grass_2x1_noborder.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/ground.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/guerrier-static.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/hero.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/invisible_wall.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/key.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/key_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/lava.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/mage1_stopped.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/magePlayer1.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/magePlayer1/Mage-attack-player1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/magePlayer1/Mage-droite-player1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/magePlayer1/Mage-droite2-player1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/magePlayer1/Mage-jump-player1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/magePlayer1/hero_stopped.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/magePlayer1/hero_stopped1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/magePlayer1/lava_bouncing.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/mage_stopped.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/numbers.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/passerelle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/pizza.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/plant.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/platforme/New Piskel (1).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/platforme/New Piskel (10).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/platforme/New Piskel (3).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/platforme/New Piskel (4).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/platforme/New Piskel (5).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/platforme/New Piskel (6).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/platforme/New Piskel (7).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/platforme/New Piskel (8).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/platforme/New Piskel (9).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/platforme/New Piskel.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/playerWar/warrior_animated.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/playerWar/warrior_animated2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/portalBottom.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/portalLeft.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/portalRight.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/portalTop.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/shot.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/slime.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/slime1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/spider.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/star.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/trampo.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -95,8 +29,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="295" column="66" lean-forward="true" selection-start-line="295" selection-start-column="66" selection-end-line="295" selection-end-column="66" />
+            <state relative-caret-position="75">
+              <caret line="224" column="24" lean-forward="true" selection-start-line="224" selection-start-column="24" selection-end-line="224" selection-end-column="24" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -107,8 +41,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/level01.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="413" column="4" lean-forward="true" selection-start-line="413" selection-start-column="4" selection-end-line="413" selection-end-column="4" />
+            <state relative-caret-position="308">
+              <caret line="464" column="14" lean-forward="true" selection-start-line="464" selection-start-column="14" selection-end-line="464" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -117,8 +51,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>hand</find>
-      <find>pizza</find>
       <find>spider</find>
       <find>move</find>
       <find>flameMonster</find>
@@ -145,6 +77,10 @@
       <find>Warrior</find>
       <find>flags</find>
       <find>flag</find>
+      <find>this.sharpers</find>
+      <find>setScale</find>
+      <find>setS</find>
+      <find>spriteDmg</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -155,12 +91,12 @@
       <list>
         <option value="$PROJECT_DIR$/js/music.js" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/js/main.js" />
         <option value="$PROJECT_DIR$/data/level01.json" />
+        <option value="$PROJECT_DIR$/js/main.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="292" />
     <option name="y" value="23" />
     <option name="width" value="988" />
@@ -239,12 +175,12 @@
       <workItem from="1556981615774" duration="8980000" />
       <workItem from="1557068982881" duration="7623000" />
       <workItem from="1557084295672" duration="5318000" />
-      <workItem from="1557125276870" duration="6646000" />
+      <workItem from="1557125276870" duration="10200000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60894000" />
+    <option name="totallyTimeSpent" value="64448000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="292" y="23" width="988" height="698" extended-state="0" />
@@ -292,15 +228,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data/level01.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="413" column="4" lean-forward="true" selection-start-line="413" selection-start-column="4" selection-end-line="413" selection-end-column="4" />
+        <state relative-caret-position="308">
+          <caret line="464" column="14" lean-forward="true" selection-start-line="464" selection-start-column="14" selection-end-line="464" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="295" column="66" lean-forward="true" selection-start-line="295" selection-start-column="66" selection-end-line="295" selection-end-column="66" />
+        <state relative-caret-position="75">
+          <caret line="224" column="24" lean-forward="true" selection-start-line="224" selection-start-column="24" selection-end-line="224" selection-end-column="24" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
