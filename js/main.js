@@ -411,7 +411,7 @@ function spriteDegatLava(hero) {
         lavaDamage = true;
         setTimeout(() => {
             lavaDamage = false;
-        }, 100)
+        }, 100);
         hero.damage(0.25, 'up');
         this.sfx.lava.play();
         if (dead) {
@@ -552,7 +552,7 @@ PlayState._loadLevel = function (data) {
     // Creation de toute les platforms/decoration/pieges
     // ==============================================
     this.castle.create(890, 70, 'castle');
-    let arrowDown = this.game.add.image(45, 360, 'arrow');
+   // let arrowDown = this.game.add.image(45, 360, 'arrow');
     movingGrasseYLeft = this.platformsMovable.create(115, 535, 'grass:2x1');
     movingGrasseYRight = this.platformsMovable.create(475, 535, 'grass:2x1');
     portalTopRight = this.portal.create(30, 140, 'portalTop');
@@ -567,10 +567,11 @@ PlayState._loadLevel = function (data) {
     // ==============================================
     // Animations
     // ==============================================
-    // arrow down
+    /* arrow down
     this.game.add.tween(arrowDown).to({
         y: arrowDown.position.y - 25
     }, 800, Phaser.Easing.Linear.None, true, 0, -1, true);
+    */
     // PIZZA MOVE
     this.game.add.tween(pizza).to({
         y: pizza.position.y - 50
