@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="adefe66b-ca4f-4d21-bb4a-7a0264a6d6e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/level01.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/level01.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/playerMage/mage-sheet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/playerMage/shot.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -29,8 +30,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="224" column="24" lean-forward="true" selection-start-line="224" selection-start-column="24" selection-end-line="224" selection-end-column="24" />
+            <state relative-caret-position="158">
+              <caret line="557" column="24" lean-forward="true" selection-start-line="557" selection-start-column="24" selection-end-line="557" selection-end-column="24" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -41,8 +42,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/level01.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="464" column="14" lean-forward="true" selection-start-line="464" selection-start-column="14" selection-end-line="464" selection-end-column="14" />
+            <state relative-caret-position="10672">
+              <caret line="464" column="14" selection-start-line="464" selection-start-column="14" selection-end-line="464" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -51,10 +52,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>spider</find>
-      <find>move</find>
-      <find>flameMonster</find>
-      <find>enemy</find>
       <find>invisi</find>
       <find>velocity</find>
       <find>damage</find>
@@ -67,7 +64,6 @@
       <find>monster</find>
       <find>fireB</find>
       <find>this.platforms</find>
-      <find>update</find>
       <find>movingGrasseY</find>
       <find>star</find>
       <find>hero.body.velocity.y</find>
@@ -81,6 +77,11 @@
       <find>setScale</find>
       <find>setS</find>
       <find>spriteDmg</find>
+      <find>update</find>
+      <find>bullets</find>
+      <find>fireL</find>
+      <find>bullet</find>
+      <find>fireLa</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -96,7 +97,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="292" />
     <option name="y" value="23" />
     <option name="width" value="988" />
@@ -107,6 +108,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -128,7 +130,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -175,12 +176,13 @@
       <workItem from="1556981615774" duration="8980000" />
       <workItem from="1557068982881" duration="7623000" />
       <workItem from="1557084295672" duration="5318000" />
-      <workItem from="1557125276870" duration="10200000" />
+      <workItem from="1557125276870" duration="10427000" />
+      <workItem from="1557172607259" duration="3434000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="64448000" />
+    <option name="totallyTimeSpent" value="68109000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="292" y="23" width="988" height="698" extended-state="0" />
@@ -228,15 +230,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data/level01.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="464" column="14" lean-forward="true" selection-start-line="464" selection-start-column="14" selection-end-line="464" selection-end-column="14" />
+        <state relative-caret-position="10672">
+          <caret line="464" column="14" selection-start-line="464" selection-start-column="14" selection-end-line="464" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="224" column="24" lean-forward="true" selection-start-line="224" selection-start-column="24" selection-end-line="224" selection-end-column="24" />
+        <state relative-caret-position="158">
+          <caret line="557" column="24" lean-forward="true" selection-start-line="557" selection-start-column="24" selection-end-line="557" selection-end-column="24" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
