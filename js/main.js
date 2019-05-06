@@ -75,6 +75,9 @@ Hero.prototype.move = function (direction) {
                 this.animations.play('left');
                 break;
             case FIGHT:
+                this.game.add.tween(this).to({
+                    x: this.body.position.x + 50
+                }, 100, Phaser.Easing.Linear.None, true, 100);
                 this.animations.play('fight');
                 break;
             default:
@@ -160,6 +163,7 @@ Boss.prototype = Object.create(Phaser.Sprite.prototype);
 Boss.prototype.constructor = Boss;
 Boss.prototype.update = function () {
     // check against walls and reverse direction if necessary
+    if (heroTouchBoss === false){
     if (this.body.touching.right || this.body.blocked.right) {
         this.animations.play('left');
         this.body.velocity.x = -Boss.SPEED; // turn left
@@ -167,9 +171,11 @@ Boss.prototype.update = function () {
         this.animations.play('right');
         this.body.velocity.x = Boss.SPEED; // turn right
     }
+    }
 };
 
 Boss.prototype.damage = function (amount) {
+    console.log(amount);
     if (this.alive) {
         this.health -= amount;
         if (this.health <= 0) {
@@ -208,7 +214,9 @@ Slime.prototype.damage = function (amount) {
             this.kill();
             if (deadSlime === 0) {
                 deadSlime = 1;
-                PlayState._spawnSlime(5);
+                setTimeout(()=> {
+                   PlayState._spawnSlime(5); 
+                }, 200);                
                 spriteDmg = 0.10;
             }
         }
@@ -314,7 +322,9 @@ var heroDamage = false;
 var slimeDamage = false;
 var plantDamage = false;
 var heroJumpinOnTrampo = false;
+var heroTouchBoss = false;
 var lavaDamage = false;
+var bossDamage = false;
 var deadSlime = 0;
 var mage;
 var Warrior;
@@ -422,9 +432,11 @@ function spriteDegatLava(hero) {
 }
 
 function heroVsBoss(hero, boss) {
-    if (hiting) {
-        boss.damage(1);
-    }
+            heroTouchBoss = true 
+        setTimeout(()=> {
+            heroTouchBoss = false;
+        }, 100);
+    if (hiting === false) {
     this.sfx.bossHit.play();
     if (hero.body.position.x < boss.body.position.x) {
         hero.damage(0.5, 'left');
@@ -435,6 +447,15 @@ function heroVsBoss(hero, boss) {
     if (dead) {
         this.sfx.die.play();
         dead = false;
+    }
+    } else {
+    if (!bossDamage) {
+        bossDamage = true;
+        setTimeout(() => {
+            bossDamage = false;
+        }, 500);    
+     boss.damage(1);   
+    }
     }
 }
 
@@ -783,6 +804,7 @@ PlayState._onHeroVsStars = function (hero, star) {
     star.kill();
 };
 PlayState._onSpriteVsSLime = function (hero, slime) {
+    if (hiting === false) {
     if (slimeDamage === false) {
         slimeDamage = true;
         setTimeout(() => {
@@ -793,10 +815,12 @@ PlayState._onSpriteVsSLime = function (hero, slime) {
         } else if (hero.body.x <= slime.body.position.x - 40) {
             hero.damage(spriteDmg, 'left');
         }
-        if (hiting) {
-            slime.damage(1);
-        }
+       
         this.sfx.punch.play();
+    }
+    }
+        else{
+         slime.damage(1);
     }
 };
 
