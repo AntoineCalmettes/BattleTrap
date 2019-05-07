@@ -1,7 +1,7 @@
 let player1 = document.getElementById("iframeAudio");
 let player2 = document.getElementById("playAudio");
 
-player2.volume = 0.3;
+player2.volume = 0.2;
 
 
 

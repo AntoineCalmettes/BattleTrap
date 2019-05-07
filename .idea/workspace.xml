@@ -3,9 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="adefe66b-ca4f-4d21-bb4a-7a0264a6d6e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/playerMage/mage-sheet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/playerMage/shot.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/playerAssasin/assasin.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/playerAssasin/assasin.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/playerMage/mage.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/playerMage/mage.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/playerWarrior/warrior_animated.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/music.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/music.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,8 +24,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="20" column="10" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
+            <state relative-caret-position="69">
+              <caret line="4" column="26" lean-forward="true" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -30,8 +33,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="557" column="24" lean-forward="true" selection-start-line="557" selection-start-column="24" selection-end-line="557" selection-end-column="24" />
+            <state relative-caret-position="138">
+              <caret line="6" column="16" lean-forward="true" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -52,36 +55,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>invisi</find>
-      <find>velocity</find>
-      <find>damage</find>
-      <find>health</find>
-      <find>alive</find>
-      <find>castle</find>
-      <find>visible</find>
-      <find>flg</find>
-      <find>Monster</find>
-      <find>monster</find>
-      <find>fireB</find>
-      <find>this.platforms</find>
-      <find>movingGrasseY</find>
-      <find>star</find>
-      <find>hero.body.velocity.y</find>
-      <find>.body.velocity.y</find>
-      <find>body.velocity.y</find>
-      <find>spriteDegatLava</find>
-      <find>Warrior</find>
-      <find>flags</find>
       <find>flag</find>
       <find>this.sharpers</find>
       <find>setScale</find>
       <find>setS</find>
       <find>spriteDmg</find>
       <find>update</find>
-      <find>bullets</find>
-      <find>fireL</find>
       <find>bullet</find>
+      <find>hit</find>
+      <find>laser</find>
+      <find>animations</find>
+      <find>explode</find>
+      <find>bullets</find>
+      <find>Bul</find>
+      <find>boss</find>
+      <find>collide</find>
+      <find>space</find>
+      <find>fireLas</find>
+      <find>direction</find>
+      <find>fire</find>
+      <find>hero.move</find>
       <find>fireLa</find>
+      <find>fightRight</find>
+      <find>fireL</find>
+      <find>fight</find>
+      <find>left</find>
+      <find>canJum</find>
+      <find>stand</find>
+      <find>boss.damage</find>
+      <find>.setSize</find>
+      <find>hero.body.set</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -90,16 +93,16 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/data/level01.json" />
         <option value="$PROJECT_DIR$/js/music.js" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/data/level01.json" />
         <option value="$PROJECT_DIR$/js/main.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="292" />
-    <option name="y" value="23" />
+    <option name="y" value="24" />
     <option name="width" value="988" />
     <option name="height" value="698" />
   </component>
@@ -177,18 +180,20 @@
       <workItem from="1557068982881" duration="7623000" />
       <workItem from="1557084295672" duration="5318000" />
       <workItem from="1557125276870" duration="10427000" />
-      <workItem from="1557172607259" duration="3434000" />
+      <workItem from="1557172607259" duration="3516000" />
+      <workItem from="1557210716112" duration="1068000" />
+      <workItem from="1557225685500" duration="12493000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="68109000" />
+    <option name="totallyTimeSpent" value="81752000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="292" y="23" width="988" height="698" extended-state="0" />
+    <frame x="292" y="24" width="988" height="698" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24922441" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24922441" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -211,20 +216,13 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js/music.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="5" lean-forward="true" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/style.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/js/music.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="20" column="10" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
+        <state relative-caret-position="46">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
@@ -235,10 +233,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="4" column="26" lean-forward="true" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="557" column="24" lean-forward="true" selection-start-line="557" selection-start-column="24" selection-end-line="557" selection-end-column="24" />
+        <state relative-caret-position="138">
+          <caret line="6" column="16" lean-forward="true" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
