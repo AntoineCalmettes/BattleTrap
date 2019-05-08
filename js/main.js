@@ -53,12 +53,15 @@ function Hero(game, x, y, sprites) {
     if (sprites === 'warrior') {
         this.health = 5;
         frameSpeed = 6;
+        this.maxHealth=5;
         this.scale.setTo(1.2, 1)
     } else if (sprites === 'assasin') {
         this.health = 3;
+        this.maxHealth=3;
         frameSpeed = 8;
     } else {
         this.health = 2;
+        this.maxHealth=2;
         frameSpeed = 2;
     }
     this.animations.add('right', [4, 5], 3, true);
@@ -157,7 +160,9 @@ Hero.prototype.damage = function (amount, direction) {
         if (this.health <= 0) {
             dead = true;
             this.alive = false;
-            this.game.add.tween(this).from({alpha: 0}, 200, Phaser.Easing.Cubic.Out, true, 0, -1, true);
+            this.game.add.tween(this).from({
+                alpha: 0
+            }, 200, Phaser.Easing.Cubic.Out, true, 0, -1, true);
             setTimeout(() => {
                 this.kill();
                 this.game.state.restart();
@@ -363,6 +368,8 @@ PlayState.preload = function () {
     this.game.load.audio('sfx:explosion', 'audio/explosion1.wav');
     this.game.load.audio('sfx:sharpe', 'audio/sharpe.wav');
     this.game.load.audio('sfx:getingHit', 'audio/getingHit.wav');
+    this.game.load.image('green-bar', 'images/health-green.png');
+    this.game.load.image('red-bar', 'images/health-red.png');
 };
 // ==============================================
 // Var initialization
@@ -388,6 +395,7 @@ var bulletDamage = false;
 var deadSlime = 0;
 var mage;
 var hero;
+var healthBar;
 var pizza;
 var walking = false;
 var hiting = false;
@@ -404,6 +412,8 @@ var bossCloseOfHero = false;
 // Crée le jeux
 // ==============================================
 PlayState.create = function () {
+
+   
 
     // creation des sons du jeux
     this.sfx = {
@@ -434,6 +444,22 @@ PlayState.create = function () {
     enemyWeapon.onFire.add(function () {
         //
     });
+
+     // change position if needed (but use same position for both images)
+     var backgroundBar = this.game.add.image(100, 20, 'red-bar');
+     backgroundBar.fixedToCamera = true;
+ 
+     healthBar = this.game.add.image(100, 20, 'green-bar');
+     healthBar.fixedToCamera = true;
+ 
+     // add text label to left of bar
+     var healthLabel = this.game.add.text(10, 20, 'Health', {
+         fontSize: '20px',
+         fill: '#ffffff'
+     });
+     healthLabel.fixedToCamera = true;
+ 
+   
 };
 // ==============================================
 // Fontion qui s'active toute les 1ms pour update le jeux
@@ -454,6 +480,7 @@ PlayState.update = function () {
         hero.position.x = 50;
         this.sfx.portal.play();
     }
+    healthBar.scale.setTo(hero.health / hero.maxHealth, 1);
 };
 // ==============================================
 // Fonction qui remet l'etat de base si la personne viens de sauter et atterie sur une platform
