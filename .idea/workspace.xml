@@ -19,8 +19,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="5" column="52" lean-forward="true" selection-start-line="5" selection-start-column="52" selection-end-line="5" selection-end-column="52" />
+            <state relative-caret-position="138">
+              <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -28,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="74" column="30" lean-forward="true" selection-start-line="74" selection-start-column="30" selection-end-line="74" selection-end-column="30" />
+            <state relative-caret-position="120">
+              <caret line="200" column="37" lean-forward="true" selection-start-line="200" selection-start-column="37" selection-end-line="200" selection-end-column="37" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -50,18 +50,15 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>this.sharpers</find>
       <find>setScale</find>
       <find>setS</find>
       <find>spriteDmg</find>
-      <find>update</find>
       <find>hit</find>
       <find>laser</find>
       <find>animations</find>
       <find>explode</find>
       <find>bullets</find>
       <find>Bul</find>
-      <find>boss</find>
       <find>collide</find>
       <find>space</find>
       <find>fireLas</find>
@@ -80,6 +77,9 @@
       <find>hero.body.set</find>
       <find>bullet</find>
       <find>pizza</find>
+      <find>fireB</find>
+      <find>update</find>
+      <find>boss</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -95,7 +95,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="292" />
     <option name="y" value="24" />
     <option name="width" value="988" />
@@ -177,12 +177,12 @@
       <workItem from="1557125276870" duration="10427000" />
       <workItem from="1557172607259" duration="3516000" />
       <workItem from="1557210716112" duration="1068000" />
-      <workItem from="1557225685500" duration="13522000" />
+      <workItem from="1557225685500" duration="16117000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="82781000" />
+    <option name="totallyTimeSpent" value="85376000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="292" y="24" width="988" height="698" extended-state="0" />
@@ -240,15 +240,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="52" lean-forward="true" selection-start-line="5" selection-start-column="52" selection-end-line="5" selection-end-column="52" />
+        <state relative-caret-position="138">
+          <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="74" column="30" lean-forward="true" selection-start-line="74" selection-start-column="30" selection-end-line="74" selection-end-column="30" />
+        <state relative-caret-position="120">
+          <caret line="200" column="37" lean-forward="true" selection-start-line="200" selection-start-column="37" selection-end-line="200" selection-end-column="37" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
