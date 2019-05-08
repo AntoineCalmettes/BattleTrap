@@ -10,7 +10,7 @@ var leftOrRight = 1;
 /*
 Constante pour le personnage choisie
  */
-const HEROCHOSEN = 'mage';
+var HEROCHOSEN = 'mage';
 // Variable pour detecter si le joueur est mort
 var dead = false;
 
@@ -299,6 +299,9 @@ PlayState = {};
 PlayState.init = function () {
     this.game.renderer.renderSession.roundPixels = true;
 
+    KeyPickupCount = 0;
+
+
     this.keys = this.game.input.keyboard.addKeys({
         left: Phaser.KeyCode.LEFT,
         right: Phaser.KeyCode.RIGHT,
@@ -408,7 +411,8 @@ var sharperDamage = false;
 var bullets;
 var enemyWeapon;
 var bossCloseOfHero = false;
-var currentHealth;
+var keynumber;
+var KeyPickupCount;
 // ==============================================
 // Crée le jeux
 // ==============================================
@@ -446,18 +450,23 @@ PlayState.create = function () {
     });
 
     // change position if needed (but use same position for both images)
-    var backgroundBar = this.game.add.image(50, 20, 'red-bar');
+    var backgroundBar = this.game.add.image(100, 20, 'red-bar');
     backgroundBar.fixedToCamera = true;
 
-    healthBar = this.game.add.image(50, 20, 'green-bar');
+    healthBar = this.game.add.image(100, 20, 'green-bar');
     healthBar.fixedToCamera = true;
 
     // add text label to left of bar
-    var healthLabel = this.game.add.text(10, 20, 'Vie', {
+    var healthLabel = this.game.add.text(10, 20, 'Health', {
         fontSize: '20px',
         fill: '#ffffff'
     });
     healthLabel.fixedToCamera = true;
+    keynumber = this.game.add.text(50, 60, KeyPickupCount, {
+        fontSize: '20px',
+        fill: '#ffffff'
+    });
+
 };
 // ==============================================
 // Fontion qui s'active toute les 1ms pour update le jeux
@@ -467,6 +476,7 @@ PlayState.update = function () {
     this._handleInput();
     this._mapStars();
     this._handleBullet();
+    keynumber.text = KeyPickupCount;
     enemyWeapon.trackSprite(boss); // give weapon to this enemy
     enemyWeapon.fireAngle = 0; // if necessary, change fire angle
     if (bossCloseOfHero) {
@@ -556,6 +566,10 @@ function heroVsBoss(hero, boss) {
             }, 500);
             boss.body.velocity.x *= -1;
             boss.damage(1);
+            console.log(boss.health)
+            if (boss.health === 0) {
+                this.key.create(boss.x, boss.y, 'key');
+            }
         }
     }
 }
@@ -715,6 +729,12 @@ PlayState._loadLevel = function (data) {
     const GRAVITY = 1500;
     // Ajoute la gravité
     this.game.physics.arcade.gravity.y = GRAVITY;
+
+    let keyIcon = this.game.make.image(10, 50, 'key');
+
+    this.hud = this.game.add.group();
+    this.hud.add(keyIcon);
+    this.hud.position.set(10, 10);
 
     // ...
     // spawn hero and enemies
@@ -990,6 +1010,7 @@ PlayState._spawnFireBalls = function (fireBall) {
 
 // Quand le hero touche un drapeau
 PlayState._onHeroVsKey = function (hero, key) {
+    KeyPickupCount++;
     this.sfx.key.play();
     key.kill();
 };
@@ -1002,11 +1023,11 @@ PlayState._onHeroVsStars = function (hero, star) {
     this.sfx.stars.play();
     SPEED = 1.5;
     let heroHealtBefore = hero.health;
-    hero.health = 9999999999;
+    hero.health = 3;
     setTimeout(() => {
         SPEED = 1;
         hero.health = heroHealtBefore;
-    }, 2000);
+    }, 4000);
     star.kill();
 };
 PlayState._onSpriteVsSharper = function (hero, sharper) {
@@ -1098,7 +1119,8 @@ PlayState._spawnEnemyWall = function (x, y, side) {
 // =============================================================================
 
 
-function runGame() {
+function runGame(persoChoose) {
+    HEROCHOSEN = persoChoose;
     var game = new Phaser.Game(config);
     game.state.add('play', PlayState);
     game.state.start('play');
