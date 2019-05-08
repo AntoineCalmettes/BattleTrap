@@ -19,8 +19,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="559" column="9" lean-forward="true" selection-start-line="559" selection-start-column="9" selection-end-line="559" selection-end-column="9" />
+            <state relative-caret-position="183">
+              <caret line="98" column="22" lean-forward="true" selection-start-line="98" selection-start-column="22" selection-end-line="98" selection-end-column="22" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Downloads/step15.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="168">
+              <caret line="27" selection-start-line="27" selection-end-line="35" selection-end-column="5" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -41,11 +53,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>hit</find>
-      <find>laser</find>
-      <find>animations</find>
-      <find>explode</find>
-      <find>bullets</find>
       <find>Bul</find>
       <find>collide</find>
       <find>space</find>
@@ -69,8 +76,13 @@
       <find>update</find>
       <find>play</find>
       <find>key</find>
-      <find>this.key</find>
       <find>boss</find>
+      <find>this.key</find>
+      <find>door-clo</find>
+      <find>door</find>
+      <find>velocity</find>
+      <find>SPEED</find>
+      <find>attackSpeed</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -180,7 +192,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88840000" />
+    <option name="totallyTimeSpent" value="94438000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="292" y="24" width="988" height="698" extended-state="0" />
@@ -267,10 +279,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Downloads/step06.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="16" column="29" lean-forward="true" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/step15.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="27" selection-start-line="27" selection-end-line="35" selection-end-column="5" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="559" column="9" lean-forward="true" selection-start-line="559" selection-start-column="9" selection-end-line="559" selection-end-column="9" />
+        <state relative-caret-position="183">
+          <caret line="98" column="22" lean-forward="true" selection-start-line="98" selection-start-column="22" selection-end-line="98" selection-end-column="22" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
