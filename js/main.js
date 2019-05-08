@@ -1,13 +1,19 @@
 /*
 Constante pour les mouvements de personnages
  */
-
 const RIGHT = 1;
 const LEFT = -1;
 const UP = 0;
 const STAND = 0;
 const FIGHT = 2;
+var leftOrRight = 1;
+/*
+Constante pour le personnage choisie
+ */
+const HEROCHOSEN = 'mage';
+// Variable pour detecter si le joueur est mort
 var dead = false;
+
 // Variable pour detecter si le joueur viens de sauter
 var jumpin = false;
 
@@ -40,17 +46,30 @@ var config = {
 // Cree un nouveaux Hero
 //
 function Hero(game, x, y, sprites) {
+    let frameSpeed = 0;
     this.sprites = sprites;
     Phaser.Sprite.call(this, game, x, y, sprites);
     this.anchor.set(0.5, 0.5);
-    this.health = 5;
-    this.animations.add('right', [2, 3], 3, true);
-    this.animations.add('stand', [0, 1], 3, true);
-    this.animations.add('left', [4, 5], 3, true);
-    this.animations.add('up', [6], 3, true);
-    this.animations.add('fight', [8, 0], 6, true);
-    // heroWarriorSprite.animations.add('right', [4, 5], 10, true);
-    this.animations.play('stand');
+    if (sprites === 'warrior') {
+        this.health = 5;
+        frameSpeed = 6;
+        this.scale.setTo(1.2, 1)
+    } else if (sprites === 'assasin') {
+        this.health = 3;
+        frameSpeed = 8;
+    } else {
+        this.health = 2;
+        frameSpeed = 2;
+    }
+    this.animations.add('right', [4, 5], 3, true);
+    this.animations.add('standRight', [0, 1], 3, true);
+    this.animations.add('standLeft', [2, 3], 3, true);
+    this.animations.add('left', [6, 7], 3, true);
+    this.animations.add('up', [8], 3, true);
+    this.animations.add('fightRight', [10, 0], frameSpeed, true);
+    this.animations.add('fightLeft', [11, 2], frameSpeed, true);
+    // hero heroSprite.animations.add('right', [4, 5], 10, true);
+    this.animations.play('standRight');
     // physic properties
     this.game.physics.enable(this);
     this.body.collideWorldBounds = true;
@@ -60,7 +79,16 @@ function Hero(game, x, y, sprites) {
 // inherit from Phaser.Sprite
 Hero.prototype = Object.create(Phaser.Sprite.prototype);
 Hero.prototype.constructor = Hero;
-var SPEED = 1;
+if (HEROCHOSEN === 'warrior') {
+    var SPEED = 1;
+    var attackSpeed = 500;
+} else if (HEROCHOSEN === 'assasin') {
+    var SPEED = 1.3;
+    var attackSpeed = 300;
+} else {
+    var SPEED = 1.2;
+    var attackSpeed = 400;
+}
 // Mouvement du Hero
 Hero.prototype.move = function (direction) {
     if (this.alive) {
@@ -75,7 +103,11 @@ Hero.prototype.move = function (direction) {
                 this.animations.play('left');
                 break;
             case FIGHT:
-                this.animations.play('fight');
+                if (leftOrRight === 1) {
+                    this.animations.play('fightRight');
+                } else {
+                    this.animations.play('fightLeft');
+                }
                 break;
             default:
 
@@ -103,13 +135,9 @@ Hero.prototype.damage = function (amount, direction) {
         }, 300);
         switch (direction) {
             case 'left':
-                console.log('left');
-                this.game.add.tween(this).to({
-                    x: this.body.position.x - 30
-                }, 100, Phaser.Easing.Linear.None, true, 100);
+                this.body.bounce.x -= 10;
                 break;
             case 'right':
-                console.log('right');
                 this.game.add.tween(this).to({
                     x: this.body.position.x + 70
                 }, 100, Phaser.Easing.Linear.None, true, 100);
@@ -159,13 +187,19 @@ Slime.SPEED = 70;
 Boss.prototype = Object.create(Phaser.Sprite.prototype);
 Boss.prototype.constructor = Boss;
 Boss.prototype.update = function () {
-    // check against walls and reverse direction if necessary
-    if (this.body.touching.right || this.body.blocked.right) {
-        this.animations.play('left');
-        this.body.velocity.x = -Boss.SPEED; // turn left
-    } else if (this.body.touching.left || this.body.blocked.left) {
-        this.animations.play('right');
-        this.body.velocity.x = Boss.SPEED; // turn right
+    if (bossIsChangingFrame === false) {
+        bossIsChangingFrame = true
+        setTimeout(() => {
+            bossIsChangingFrame = false;
+        }, 10);
+        // check against walls and reverse direction if necessary
+        if (this.body.touching.right || this.body.blocked.right) {
+            this.animations.play('left');
+            this.body.velocity.x = -Boss.SPEED; // turn left
+        } else if (this.body.touching.left || this.body.blocked.left) {
+            this.animations.play('right');
+            this.body.velocity.x = Boss.SPEED; // turn right
+        }
     }
 };
 
@@ -196,7 +230,6 @@ function Slime(game, x, y, sprites) {
     this.body.velocity.x = Slime.SPEED;
 }
 
-
 // inherit from Phaser.Sprite
 Slime.prototype = Object.create(Phaser.Sprite.prototype);
 Slime.prototype.constructor = Slime;
@@ -208,7 +241,9 @@ Slime.prototype.damage = function (amount) {
             this.kill();
             if (deadSlime === 0) {
                 deadSlime = 1;
-                PlayState._spawnSlime(5);
+                setTimeout(() => {
+                    PlayState._spawnSlime(5);
+                }, 200);
                 spriteDmg = 0.10;
             }
         }
@@ -220,10 +255,10 @@ Slime.prototype.update = function () {
     // check against walls and reverse direction if necessary
     if (this.body.touching.right || this.body.blocked.right) {
         this.animations.play('left');
-        this.body.velocity.x = -Boss.SPEED; // turn left
+        this.body.velocity.x = -Slime.SPEED; // turn left
     } else if (this.body.touching.left || this.body.blocked.left) {
         this.animations.play('right');
-        this.body.velocity.x = Boss.SPEED; // turn right
+        this.body.velocity.x = Slime.SPEED; // turn right
     }
 };
 
@@ -242,13 +277,19 @@ PlayState.init = function () {
     this.keys = this.game.input.keyboard.addKeys({
         left: Phaser.KeyCode.LEFT,
         right: Phaser.KeyCode.RIGHT,
-        up: Phaser.KeyCode.UP
+        up: Phaser.KeyCode.UP,
+        spaceBar: Phaser.KeyCode.SPACEBAR
     });
 
     this.keys.up.onDown.add(function () {
-        let didJump = Warrior.jump();
+        let didJump = hero.jump();
         if (didJump) {
             this.sfx.jump.play();
+        }
+    }, this);
+    this.keys.spaceBar.onDown.add(function () {
+        if (HEROCHOSEN === 'mage') {
+            fireLaser()
         }
     }, this);
 };
@@ -257,36 +298,38 @@ PlayState.init = function () {
 // ==============================================
 PlayState.preload = function () {
     this.game.load.json('level:1', 'data/level01.json');
-    this.game.load.image('background', 'images/background.png');
-    this.game.load.image('background1', 'images/background1.png');
-    this.game.load.image('grass:1x1', 'images/grass_1x1.png');
-    this.game.load.image('grass:1x1:noborder', 'images/grass_1x1_noborder.png');
-    this.game.load.image('grass:2x1', 'images/grass_2x1.png');
-    this.game.load.image('grass:2x1:noborder', 'images/grass_2x1_noborder.png');
-    this.game.load.image('lava', 'images/lava.png');
-    this.game.load.image('invisible-wall', 'images/invisible_wall.png');
-    this.game.load.spritesheet('fireBall', 'images/fireBall.png', 13.33, 15, 3);
-    this.game.load.spritesheet('trampo', 'images/trampo.png', 60, 51, 2);
-    this.game.load.image('door-closed', 'images/door-closed.png');
-    this.game.load.image('passerelle', 'images/passerelle.png');
-    this.game.load.image('portalLeft', 'images/portalLeft.png');
-    this.game.load.image('portalRight', 'images/portalRight.png');
-    this.game.load.image('portalTop', 'images/portalTop.png');
-    this.game.load.image('portalBottom', 'images/portalBottom.png');
-    this.game.load.image('mage', 'images/mage_stopped.png');
-    this.game.load.image('mage1', 'images/mage1_stopped.png');
-    this.game.load.image('castle', 'images/castle.png');
-    this.game.load.image('plant', 'images/plant.png');
-    this.game.load.image('pizza', 'images/pizza.png');
-    this.game.load.spritesheet('heroWarrior', 'images/playerWar/warrior_animated.png', 49, 45, 10);
-    this.game.load.image('flag', 'images/flag.png');
-    this.game.load.image('arrow', 'images/arrow.png');
-    this.game.load.spritesheet('boss', 'images/boss.png', 80.75, 43, 4);
-    this.game.load.spritesheet('slime', 'images/slime.png', 15.8, 16, 25);
-    this.game.load.image('star', 'images/beer.png');
+    this.game.load.image('background', 'images/backgrounds/background.png');
+    this.game.load.image('background1', 'images/backgrounds/background1.png');
+    this.game.load.image('grass:1x1', 'images/platforms/grass_1x1.png');
+    this.game.load.image('grass:1x1:noborder', 'images/platforms/grass_1x1_noborder.png');
+    this.game.load.image('grass:2x1', 'images/platforms/grass_2x1.png');
+    this.game.load.image('grass:2x1:noborder', 'images/platforms/grass_2x1_noborder.png');
+    this.game.load.image('lava', 'images/decorations/lava.png');
+    this.game.load.image('invisible-wall', 'images/platforms/invisible_wall.png');
+    this.game.load.spritesheet('fireBall', 'images/decorations/fireBall.png', 13.33, 15, 3);
+    this.game.load.spritesheet('trampo', 'images/decorations/trampo.png', 60, 51, 2);
+    this.game.load.image('door-closed', 'images/decorations/door-closed.png');
+    this.game.load.image('passerelle', 'images/platforms/passerelle.png');
+    this.game.load.image('portalLeft', 'images/decorations/portalLeft.png');
+    this.game.load.image('portalRight', 'images/decorations/portalRight.png');
+    this.game.load.image('portalTop', 'images/decorations/portalTop.png');
+    this.game.load.image('portalBottom', 'images/decorations/portalBottom.png');
+    this.game.load.image('castle', 'images/decorations/castle.png');
+    this.game.load.image('plant', 'images/decorations/plant.png');
+    this.game.load.image('pizza', 'images/bonus/pizza.png');
+    this.game.load.spritesheet('warrior', 'images/playerWarrior/warrior.png', 49, 48, 13);
+    this.game.load.spritesheet('assasin', 'images/playerAssasin/assasin.png', 54.54, 48, 13);
+    this.game.load.spritesheet('mage', 'images/playerMage/mage.png', 48.6, 48, 13);
+    this.game.load.spritesheet('key', 'images/decorations/key.png', 25, 25, 8);
+    this.game.load.spritesheet('sharper', 'images/decorations/sharper.png', 62, 68, 6);
+    this.game.load.image('arrow', 'images/decorations/arrow.png');
+    this.game.load.spritesheet('boss', 'images/monstres/boss.png', 80.75, 43, 4);
+    this.game.load.spritesheet('slime', 'images/monstres/slime.png', 15.8, 16, 25);
+    this.game.load.spritesheet('bullet', 'images/playerMage/bullet.png', 20, 14, 4);
+    this.game.load.image('star', 'images/bonus/beer.png');
     this.game.load.audio('sfx:jump', 'audio/jump.wav');
     this.game.load.audio('sfx:coin', 'audio/coin.wav');
-    this.game.load.audio('sfx:flag', 'audio/key.wav');
+    this.game.load.audio('sfx:key', 'audio/key.wav');
     this.game.load.audio('sfx:lava', 'audio/lava.wav');
     this.game.load.audio('sfx:walking', 'audio/walking.wav');
     this.game.load.audio('sfx:hit', 'audio/hit.wav');
@@ -296,6 +339,8 @@ PlayState.preload = function () {
     this.game.load.audio('sfx:die', 'audio/die.wav');
     this.game.load.audio('sfx:stars', 'audio/stars.wav');
     this.game.load.audio('sfx:portal', 'audio/portal.wav');
+    this.game.load.audio('sfx:bullet', 'audio/bullet.wav');
+    this.game.load.audio('sfx:explosion', 'audio/explosion.wav');
 };
 // ==============================================
 // Var initialization
@@ -314,15 +359,23 @@ var heroDamage = false;
 var slimeDamage = false;
 var plantDamage = false;
 var heroJumpinOnTrampo = false;
+var heroTouchBoss = false;
 var lavaDamage = false;
+var bossDamage = false;
+var bulletDamage = false;
 var deadSlime = 0;
 var mage;
-var Warrior;
+var hero;
 var pizza;
 var walking = false;
 var hiting = false;
 var boss;
-var spriteDmg = 0.25;
+var spriteDmg = 0.50;
+var mouseTouchDown = false;
+var mageBulletReady = true;
+var bossIsChangingFrame = false;
+var sharperDamage = false;
+var bullets;
 // ==============================================
 // Crée le jeux
 // ==============================================
@@ -331,7 +384,7 @@ PlayState.create = function () {
     // creation des sons du jeux
     this.sfx = {
         jump: this.game.add.audio('sfx:jump'),
-        flag: this.game.add.audio('sfx:flag'),
+        key: this.game.add.audio('sfx:key'),
         lava: this.game.add.audio('sfx:lava'),
         walking: this.game.add.audio('sfx:walking'),
         hit: this.game.add.audio('sfx:hit'),
@@ -340,7 +393,9 @@ PlayState.create = function () {
         pizza: this.game.add.audio('sfx:pizza'),
         die: this.game.add.audio('sfx:die'),
         stars: this.game.add.audio('sfx:stars'),
-        portal: this.game.add.audio('sfx:portal')
+        portal: this.game.add.audio('sfx:portal'),
+        bullet: this.game.add.audio('sfx:bullet'),
+        explosion: this.game.add.audio('sfx:explosion')
     };
     // Creation de la map
     map = this.game.add.image(0, 0, 'background');
@@ -354,11 +409,11 @@ PlayState.update = function () {
     this._handleCollisions();
     this._handleInput();
     this._mapStars();
-
+    this._handleBullet()
     // Si le mange touche le portail dimemensionel il est teleporter a celui du dessus
-    if ((Warrior.position.y > 390 && Warrior.position.y < 450) && (Warrior.position.x > 30 && Warrior.position.x < 85)) {
-        Warrior.position.y = 200;
-        Warrior.position.x = 50;
+    if ((hero.position.y > 390 && hero.position.y < 450) && (hero.position.x > 30 && hero.position.x < 85)) {
+        hero.position.y = 200;
+        hero.position.x = 50;
         this.sfx.portal.play();
     }
 };
@@ -367,7 +422,11 @@ PlayState.update = function () {
 // ==============================================
 function spriteVsPlatform(hero) {
     if (jumpin) {
-        hero.animations.play('stand');
+        if (leftOrRight === 1) {
+            hero.animations.play('standRight');
+        } else {
+            hero.animations.play('standLeft');
+        }
         jumpin = false;
     }
 }
@@ -394,18 +453,6 @@ function spriteMovinPlant(hero, plant) {
     }
 }
 
-function spriteVsPasserelle(hero, passerelle) {
-    this.game.add.tween(hero.body).to({
-        y: '-10',
-    }, 10).start();
-    this.sfx.lava.play();
-    hero.damage(0.25);
-    if (dead) {
-        this.sfx.die.play();
-        dead = false;
-    }
-}
-
 function spriteDegatLava(hero) {
     if (!lavaDamage) {
         lavaDamage = true;
@@ -422,19 +469,30 @@ function spriteDegatLava(hero) {
 }
 
 function heroVsBoss(hero, boss) {
-    if (hiting) {
-        boss.damage(1);
-    }
-    this.sfx.bossHit.play();
-    if (hero.body.position.x < boss.body.position.x) {
-        hero.damage(0.5, 'left');
+    heroTouchBoss = true
+    setTimeout(() => {
+        heroTouchBoss = false;
+    }, 100);
+    if (hiting === false) {
+        this.sfx.bossHit.play();
+        if (hero.body.position.x < boss.body.position.x) {
+            hero.damage(0.5, 'left');
+        } else {
+            hero.damage(0.5, 'right');
+        }
+        hero.body.velocity.x = 0;
+        if (dead) {
+            this.sfx.die.play();
+            dead = false;
+        }
     } else {
-        hero.damage(0.5, 'right');
-    }
-    hero.body.velocity.x = 0;
-    if (dead) {
-        this.sfx.die.play();
-        dead = false;
+        if (!bossDamage) {
+            bossDamage = true;
+            setTimeout(() => {
+                bossDamage = false;
+            }, 500);
+            boss.damage(1);
+        }
     }
 }
 
@@ -456,29 +514,85 @@ PlayState._mapStars = function () {
 }
 // ==============================================
 // Fonction qui calcule les collisions
-// ==============================================
+// ==============================================f
 PlayState._handleCollisions = function () {
     // ==============================================
     // Ajout de tout les collider
     // ==============================================
-    this.game.physics.arcade.collide(Warrior, this.flags, this._onHeroVsflag, null, this);
-    this.game.physics.arcade.collide(Warrior, this.pizzas, this._onHeroVsPizzas, null, this);
-    this.game.physics.arcade.collide(Warrior, this.stars, this._onHeroVsStars, null, this);
-    this.game.physics.arcade.collide(Warrior, this.lavaData, spriteDegatLava, null, this);
-    this.game.physics.arcade.overlap(Warrior, boss, heroVsBoss, null, this);
-    this.game.physics.arcade.collide(Warrior, this.platforms, spriteVsPlatform, null, this);
-    this.game.physics.arcade.collide(Warrior, this.passerelles, spriteVsPlatform, null, this);
-    this.game.physics.arcade.collide(Warrior, movingGrasseX, spriteVsPlatform, null, this);
-    this.physics.arcade.collide(Warrior, this.platformsMovable);
-    this.physics.arcade.overlap(Warrior, this.slims, this._onSpriteVsSLime, null, this);
-    this.physics.arcade.collide(Warrior, movingGrasseXCastle);
-    this.game.physics.arcade.collide(Warrior, this.portal);
-    this.game.physics.arcade.collide(Warrior, this.passerelles);
-    this.game.physics.arcade.collide(Warrior, this.trampos, this._onHerovsTrampos, null, this);
-    this.game.physics.arcade.collide(Warrior, plant, spriteMovinPlant, null, this);
+    this.game.physics.arcade.collide(hero, this.key, this._onHeroVsKey, null, this);
+    this.game.physics.arcade.collide(hero, this.pizzas, this._onHeroVsPizzas, null, this);
+    this.game.physics.arcade.collide(hero, this.stars, this._onHeroVsStars, null, this);
+    this.game.physics.arcade.collide(hero, this.lavaData, spriteDegatLava, null, this);
+    this.game.physics.arcade.overlap(hero, boss, heroVsBoss, null, this);
+    this.game.physics.arcade.collide(hero, this.platforms, spriteVsPlatform, null, this);
+    this.game.physics.arcade.collide(hero, this.passerelles, this._onHerovsPasserelle, null, this);
+    this.game.physics.arcade.collide(hero, movingGrasseX, spriteVsPlatform, null, this);
+    this.physics.arcade.collide(hero, this.platformsMovable);
+    this.physics.arcade.overlap(hero, this.slims, this._onSpriteVsSLime, null, this);
+    this.physics.arcade.overlap(hero, this.sharpers, this._onSpriteVsSharper, null, this);
+    this.physics.arcade.collide(hero, movingGrasseXCastle);
+    this.game.physics.arcade.collide(hero, this.portal);
+    this.game.physics.arcade.overlap(bullets, this.slims, this._onBulletVsMonster, null, this);
+    this.game.physics.arcade.overlap(bullets, this.boss, this._onBulletVsMonster, null, this);
+    this.game.physics.arcade.collide(hero, this.trampos, this._onHerovsTrampos, null, this);
+    this.game.physics.arcade.collide(hero, plant, spriteMovinPlant, null, this);
     this.game.physics.arcade.collide(boss, this.enemyWalls);
     this.game.physics.arcade.collide(this.slims, this.enemyWalls);
 };
+
+PlayState._handleBullet = function () {
+    if (this.game.input.activePointer.isDown) {
+        // We'll manually keep track if the pointer wasn't already down
+        if (!mouseTouchDown) {
+            touchDown();
+        }
+    } else {
+        if (mouseTouchDown) {
+            touchUp();
+        }
+    }
+
+}
+
+function touchDown() {
+    // Set touchDown to true, so we only trigger this once
+    mouseTouchDown = true;
+}
+
+function touchUp() {
+    // Set touchDown to false, so we can trigger touchDown on the next click
+    mouseTouchDown = false;
+}
+
+function fireLaser() {
+    if (mageBulletReady === true) {
+        mageBulletReady = false;
+        setTimeout(() => {
+            mageBulletReady = true;
+        }, attackSpeed);
+        // Get the first laser that's inactive, by passing 'false' as a parameter
+        let laser = bullets.getFirstExists(false);
+        if (laser) {
+            laser.animations.add('explode', [0, 3], 10, true);
+            laser.animations.add('fire', [0, 1, 2], 10, true);
+            laser.animations.play('fire');
+            laser.body.setCircle(10, 5, 5);
+            if (leftOrRight === 1) {
+                // If we have a laser, set it to the starting position
+                laser.reset(hero.x + 20, hero.y + 25);
+                // Give it a velocity of -500 so it starts shooting
+                laser.body.velocity.x = +400;
+            } else {
+                // If we have a laser, set it to the starting position
+                laser.reset(hero.x - 20, hero.y + 25);
+                // Give it a velocity of -500 so it starts shooting
+                laser.body.velocity.x = -400;
+            }
+            laser.scale.setTo(1.8, 1.8);
+        }
+    }
+}
+
 // ==============================================
 // Ecouteur d'evenement sur la touche du clavier pressé
 // ==============================================
@@ -486,7 +600,8 @@ PlayState._handleInput = function () {
     let spaceBar = this.game.input.keyboard.addKey(32); // Recupere le ASCI de la barre d'espace
     let isDown = spaceBar.isDown;
     if (this.keys.left.isDown) { // move hero left
-        Warrior.move(-1);
+        leftOrRight = -1;
+        hero.move(-1);
         if (walking === false) {
             walking = true;
             this.sfx.walking.play();
@@ -495,7 +610,8 @@ PlayState._handleInput = function () {
             }, 500)
         }
     } else if (this.keys.right.isDown) { // move hero right
-        Warrior.move(1);
+        leftOrRight = 1;
+        hero.move(1);
         if (walking === false) {
             walking = true;
             this.sfx.walking.play();
@@ -506,17 +622,26 @@ PlayState._handleInput = function () {
     } else if (isDown) { // fighting
         if (hiting === false) {
             hiting = true;
-            this.sfx.hit.play();
-            Warrior.move(2);
+            if (HEROCHOSEN === 'mage') {
+                this.sfx.bullet.play();
+            } else {
+                this.sfx.hit.play();
+            }
+            hero.move(2);
             setTimeout(() => {
                 hiting = false;
-            }, 500)
+            }, attackSpeed)
         }
     } else if (this.keys.up.isDown) { // move hero up
-        Warrior.move(0);
+        hero.move(0);
     } else { // stop
-        Warrior.animations.play('stand');
+        if (leftOrRight === 1) {
+            hero.animations.play('standRight');
+        } else {
+            hero.animations.play('standLeft');
+        }
     }
+
 };
 // ==============================================
 // Genere le niveau
@@ -532,10 +657,11 @@ PlayState._loadLevel = function (data) {
     // ==============================================
     // create all the groups/layers that we need
     // ==============================================
+    this.sharpers = this.game.add.group();
     this.platforms = this.game.add.group();
     this.castle = this.game.add.physicsGroup();
     this.portal = this.game.add.physicsGroup();
-    this.flags = this.game.add.group();
+    this.key = this.game.add.group();
     this.platformsMovable = this.add.physicsGroup();
     this.lavaData = this.game.add.group();
     this.platformsMovabl = this.add.physicsGroup();
@@ -548,11 +674,29 @@ PlayState._loadLevel = function (data) {
     this.passerelles = this.game.add.group();
     this.slims = this.game.add.group();
     this.trampos = this.game.add.group();
+    bullets = this.game.add.group();
+    this.boss = this.game.add.group();
+    bullets.enableBody = true;
+    bullets.physicsBodyType = Phaser.Physics.ARCADE;
+    bullets.createMultiple(20, 'bullet');
+    bullets
+    bullets.callAll('events.onOutOfBounds.add', 'events.onOutOfBounds', resetBullet);
+
+    function resetBullet(bullet) {
+        // Destroy the bullet
+        bullet.kill();
+    }
+
+    // Same as above, set the anchor of every sprite to 0.5, 1.0
+    bullets.callAll('anchor.setTo', 'anchor', 0.5, 1.0);
+
+    // This will set 'checkWorldBounds' to true on all sprites in the group
+    bullets.setAll('checkWorldBounds', true);
     // ==============================================
     // Creation de toute les platforms/decoration/pieges
     // ==============================================
     this.castle.create(890, 70, 'castle');
-   // let arrowDown = this.game.add.image(45, 360, 'arrow');
+    // let arrowDown = this.game.add.image(45, 360, 'arrow');
     movingGrasseYLeft = this.platformsMovable.create(115, 535, 'grass:2x1');
     movingGrasseYRight = this.platformsMovable.create(475, 535, 'grass:2x1');
     portalTopRight = this.portal.create(30, 140, 'portalTop');
@@ -627,6 +771,7 @@ PlayState._loadLevel = function (data) {
     this.stars.setAll('body.allowGravity', false);
     this.castle.setAll('body.allowGravity', false);
     this.doors.setAll('body.allowGravity', false);
+    bullets.setAll('body.allowGravity', false);
     movingGrasseXCastle.body.allowGravity = false;
     // Desactive le fait de pouvoir bouger les platformes avec le perso
     this.portal.setAll('body.immovable', true);
@@ -641,6 +786,7 @@ PlayState._loadLevel = function (data) {
     // platforme qui bouge sur l'axe x a coter du portail animation (je sais pas a quoi sa sert mais c'est important)
     movingGrasseX.body.kinematic = true;
     movingGrasseXCastle.body.kinematic = true;
+    data.sharpers.forEach(this._spawnSharper, this);
     // Appelle la fonction qui spawn toute les platforms contenue dans le JSON passé en parametre de la fonction loadLevel
     data.platforms.forEach(this._spawnPlatform, this);
     // appel les donnée "fireBalls" dans JSON
@@ -649,8 +795,8 @@ PlayState._loadLevel = function (data) {
     data.lavaData.forEach(this._spawnLava, this);
     // appel les donnée "passerelles" dans JSON
     data.passerelles.forEach(this._spawnPasserelles, this);
-    // appel les donnée "flags" dans JSON
-    data.flags.forEach(this._spawnflag, this);
+    // appel les donnée "keys" dans JSON
+    data.keys.forEach(this._spawnKeys, this);
     // appel les donnée "trampos" dans JSON
     data.trampos.forEach(this._spawnTrampo, this);
     // spawn hero and enemies
@@ -673,7 +819,7 @@ PlayState._spawnLava = function (lava) {
 };
 
 PlayState._spawnPasserelles = function (passerelle) {
-    let sprite = this.lavaData.create(passerelle.x, passerelle.y, 'passerelle');
+    let sprite = this.passerelles.create(passerelle.x, passerelle.y, 'passerelle');
     this.game.physics.enable(sprite);
     sprite.body.allowGravity = false;
     sprite.body.immovable = true;
@@ -710,15 +856,15 @@ PlayState._spawnSlime = function (nbr) {
 
 PlayState._spawnCharacters = function (data) {
     // spawn hero
-    Warrior = new Hero(this.game, data.hero.x, data.hero.y, 'heroWarrior');
-    Warrior.body.setSize(Warrior.width, Warrior.height);
-    this.game.add.existing(Warrior);
-
+    hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN);
+    hero.body.setSize(30, 50);
+    this.game.add.existing(hero);
     boss = new Boss(this.game, data.boss.x, data.boss.y, 'boss');
     boss.body.setSize(boss.width, boss.height);
     this.game.add.existing(boss);
     boss.body.allowGravity = false;
     boss.body.immovable = true;
+    this.boss.add(boss);
 
     let slime = new Slime(this.game, 330, 404, 'slime');
     slime.body.setSize(slime.width, slime.height);
@@ -731,14 +877,15 @@ PlayState._spawnCharacters = function (data) {
 // ==========================
 // Crée les drapeaux
 // ==========================
-PlayState._spawnflag = function (flag) {
-    let sprite = this.flags.create(flag.x, flag.y, 'flag');
+PlayState._spawnKeys = function (key) {
+    let sprite = this.key.create(key.x, key.y, 'key');
     sprite.anchor.set(0.5, 0.5);
     this.game.physics.enable(sprite);
     sprite.body.allowGravity = false;
-    this.game.physics.arcade.collide(Warrior, flag, this._onHeroVsflag, null, this);
+    sprite.animations.add('movin', [0, 1, 2, 3, 4, 5, 6], 4, true);
+    sprite.animations.play('movin');
+    this.game.physics.arcade.collide(hero, key, this._onHeroVskey, null, this);
 };
-
 PlayState._spawnTrampo = function (trampo) {
     let sprite = this.trampos.create(trampo.x, trampo.y, 'trampo');
     sprite.anchor.set(0.5, 0.5);
@@ -746,6 +893,21 @@ PlayState._spawnTrampo = function (trampo) {
     sprite.body.allowGravity = false;
     sprite.body.immovable = true;
     sprite.animations.add('upDown', [0, 1, 0], 6, false)
+};
+
+PlayState._spawnSharper = function (sharper) {
+    let sprite = this.sharpers.create(sharper.x, sharper.y, 'sharper');
+    sprite.anchor.set(0.5, 0.5);
+    this.game.physics.enable(sprite);
+    sprite.body.allowGravity = false;
+    sprite.animations.add('rotate', [0, 1, 2, 3, 4, 5], 30, true);
+    sprite.animations.play('rotate');
+    this.game.add.tween(sprite.body).to({
+        x: '+200'
+    }, 1000, Phaser.Easing.Linear.None).to({
+        x: '-200'
+    }, 1000, Phaser.Easing.Linear.None).yoyo().loop().start();
+    sprite.scale.setTo(0.8, 0.8);
 };
 
 PlayState._spawnFireBalls = function (fireBall) {
@@ -762,14 +924,14 @@ PlayState._spawnFireBalls = function (fireBall) {
 };
 
 // Quand le hero touche un drapeau
-PlayState._onHeroVsflag = function (hero, flag) {
-    this.sfx.flag.play();
-    flag.kill();
+PlayState._onHeroVsKey = function (hero, key) {
+    this.sfx.key.play();
+    key.kill();
 };
 PlayState._onHeroVsPizzas = function (hero, pizza) {
     this.sfx.pizza.play();
     pizza.kill();
-    hero.healt += 1;
+    hero.heal(1);
 };
 PlayState._onHeroVsStars = function (hero, star) {
     this.sfx.stars.play();
@@ -782,21 +944,52 @@ PlayState._onHeroVsStars = function (hero, star) {
     }, 2000);
     star.kill();
 };
-PlayState._onSpriteVsSLime = function (hero, slime) {
-    if (slimeDamage === false) {
-        slimeDamage = true;
+PlayState._onSpriteVsSharper = function (hero, sharper) {
+    if (sharperDamage === false) {
+        console.log("test")
+        sharperDamage = true;
         setTimeout(() => {
-            slimeDamage = false;
-        }, 300);
-        if (hero.body.x >= slime.body.position.x - 40) {
-            hero.damage(spriteDmg, 'right');
-        } else if (hero.body.x <= slime.body.position.x - 40) {
-            hero.damage(spriteDmg, 'left');
+            sharperDamage = false;
+        }, 500);
+        if (hero.body.position.x < sharper.body.position.x) {
+            hero.damage(0.5, 'left');
+        } else {
+            hero.damage(0.5, 'right');
         }
-        if (hiting) {
-            slime.damage(1);
+    }
+};
+PlayState._onBulletVsMonster = function (bullet, monster) {
+    if (bulletDamage === false) {
+        bulletDamage = true;
+        bullet.body.velocity.x = 0;
+        monster.damage(0.5);
+        this.sfx.explosion.play();
+        bullet.animations.play('explode');
+        setTimeout(() => {
+            bullet.kill();
+        }, 200)
+        setTimeout(() => {
+            bulletDamage = false;
+        }, 200)
+    }
+};
+
+PlayState._onSpriteVsSLime = function (hero, slime) {
+    if (hiting === false) {
+        if (slimeDamage === false) {
+            slimeDamage = true;
+            setTimeout(() => {
+                slimeDamage = false;
+            }, 300);
+            if (hero.body.x >= slime.body.position.x - 40) {
+                hero.damage(spriteDmg, 'right');
+            } else if (hero.body.x <= slime.body.position.x - 40) {
+                hero.damage(spriteDmg, 'left');
+            }
+            this.sfx.punch.play();
         }
-        this.sfx.punch.play();
+    } else {
+        slime.damage(1);
     }
 };
 
@@ -811,6 +1004,11 @@ PlayState._onHerovsTrampos = function (hero, trampo) {
             }, 350)
         }, 350)
     }
+};
+PlayState._onHerovsPasserelle = function (hero, passerelle) {
+    setTimeout(() => {
+        passerelle.body.allowGravity = true;
+    }, 500);
 };
 PlayState._spawnEnemyWall = function (x, y, side) {
     let sprite = this.enemyWalls.create(x, y, 'invisible-wall');

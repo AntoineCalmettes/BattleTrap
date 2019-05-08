@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="adefe66b-ca4f-4d21-bb4a-7a0264a6d6e2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -18,8 +19,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="20" column="10" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
+            <state relative-caret-position="115">
+              <caret line="5" column="52" lean-forward="true" selection-start-line="5" selection-start-column="52" selection-end-line="5" selection-end-column="52" />
             </state>
           </provider>
         </entry>
@@ -27,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="573" column="6" selection-start-line="573" selection-start-column="6" selection-end-line="573" selection-end-column="6" />
+            <state relative-caret-position="92">
+              <caret line="74" column="30" lean-forward="true" selection-start-line="74" selection-start-column="30" selection-end-line="74" selection-end-column="30" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -39,8 +40,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/level01.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10465">
-              <caret line="455" column="15" selection-start-line="455" selection-start-column="15" selection-end-line="455" selection-end-column="15" />
+            <state relative-caret-position="10672">
+              <caret line="464" column="14" selection-start-line="464" selection-start-column="14" selection-end-line="464" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -49,31 +50,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Warrior</find>
-      <find>hand</find>
-      <find>pizza</find>
-      <find>spider</find>
-      <find>move</find>
-      <find>flameMonster</find>
-      <find>enemy</find>
-      <find>invisi</find>
-      <find>velocity</find>
-      <find>damage</find>
-      <find>health</find>
-      <find>alive</find>
-      <find>castle</find>
-      <find>visible</find>
-      <find>flg</find>
-      <find>Monster</find>
-      <find>monster</find>
-      <find>fireB</find>
-      <find>this.platforms</find>
+      <find>this.sharpers</find>
+      <find>setScale</find>
+      <find>setS</find>
+      <find>spriteDmg</find>
       <find>update</find>
-      <find>movingGrasseY</find>
-      <find>star</find>
-      <find>hero.body.velocity.y</find>
-      <find>.body.velocity.y</find>
-      <find>body.velocity.y</find>
+      <find>hit</find>
+      <find>laser</find>
+      <find>animations</find>
+      <find>explode</find>
+      <find>bullets</find>
+      <find>Bul</find>
+      <find>boss</find>
+      <find>collide</find>
+      <find>space</find>
+      <find>fireLas</find>
+      <find>direction</find>
+      <find>fire</find>
+      <find>hero.move</find>
+      <find>fireLa</find>
+      <find>fightRight</find>
+      <find>fireL</find>
+      <find>fight</find>
+      <find>left</find>
+      <find>canJum</find>
+      <find>stand</find>
+      <find>boss.damage</find>
+      <find>.setSize</find>
+      <find>hero.body.set</find>
+      <find>bullet</find>
+      <find>pizza</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -82,16 +88,16 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/data/level01.json" />
         <option value="$PROJECT_DIR$/js/music.js" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/data/level01.json" />
         <option value="$PROJECT_DIR$/js/main.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="292" />
-    <option name="y" value="23" />
+    <option name="y" value="24" />
     <option name="width" value="988" />
     <option name="height" value="698" />
   </component>
@@ -100,6 +106,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -121,7 +128,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -168,22 +174,25 @@
       <workItem from="1556981615774" duration="8980000" />
       <workItem from="1557068982881" duration="7623000" />
       <workItem from="1557084295672" duration="5318000" />
-      <workItem from="1557125276870" duration="58000" />
+      <workItem from="1557125276870" duration="10427000" />
+      <workItem from="1557172607259" duration="3516000" />
+      <workItem from="1557210716112" duration="1068000" />
+      <workItem from="1557225685500" duration="13522000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54306000" />
+    <option name="totallyTimeSpent" value="82781000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="292" y="23" width="988" height="698" extended-state="0" />
+    <frame x="292" y="24" width="988" height="698" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24922441" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24922441" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32881355" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -191,7 +200,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.1440678" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.1440678" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -202,34 +211,44 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js/music.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="3" column="5" lean-forward="true" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/style.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/js/music.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="20" column="10" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
+        <state relative-caret-position="46">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data/level01.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10465">
-          <caret line="455" column="15" selection-start-line="455" selection-start-column="15" selection-end-line="455" selection-end-column="15" />
+        <state relative-caret-position="10672">
+          <caret line="464" column="14" selection-start-line="464" selection-start-column="14" selection-end-line="464" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/phaser.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" column="34" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="52" lean-forward="true" selection-start-line="5" selection-start-column="52" selection-end-line="5" selection-end-column="52" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="573" column="6" selection-start-line="573" selection-start-column="6" selection-end-line="573" selection-end-column="6" />
+        <state relative-caret-position="92">
+          <caret line="74" column="30" lean-forward="true" selection-start-line="74" selection-start-column="30" selection-end-line="74" selection-end-column="30" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
