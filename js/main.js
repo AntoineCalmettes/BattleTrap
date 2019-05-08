@@ -53,15 +53,15 @@ function Hero(game, x, y, sprites) {
     if (sprites === 'warrior') {
         this.health = 5;
         frameSpeed = 6;
-        this.maxHealth=5;
+        this.maxHealth = 5;
         this.scale.setTo(1.2, 1)
     } else if (sprites === 'assasin') {
         this.health = 3;
-        this.maxHealth=3;
+        this.maxHealth = 3;
         frameSpeed = 8;
     } else {
         this.health = 2;
-        this.maxHealth=2;
+        this.maxHealth = 2;
         frameSpeed = 2;
     }
     this.animations.add('right', [4, 5], 3, true);
@@ -408,12 +408,12 @@ var sharperDamage = false;
 var bullets;
 var enemyWeapon;
 var bossCloseOfHero = false;
+var currentHealth;
 // ==============================================
 // Crée le jeux
 // ==============================================
 PlayState.create = function () {
 
-   
 
     // creation des sons du jeux
     this.sfx = {
@@ -445,21 +445,19 @@ PlayState.create = function () {
         //
     });
 
-     // change position if needed (but use same position for both images)
-     var backgroundBar = this.game.add.image(100, 20, 'red-bar');
-     backgroundBar.fixedToCamera = true;
- 
-     healthBar = this.game.add.image(100, 20, 'green-bar');
-     healthBar.fixedToCamera = true;
- 
-     // add text label to left of bar
-     var healthLabel = this.game.add.text(10, 20, 'Health', {
-         fontSize: '20px',
-         fill: '#ffffff'
-     });
-     healthLabel.fixedToCamera = true;
- 
-   
+    // change position if needed (but use same position for both images)
+    var backgroundBar = this.game.add.image(50, 20, 'red-bar');
+    backgroundBar.fixedToCamera = true;
+
+    healthBar = this.game.add.image(50, 20, 'green-bar');
+    healthBar.fixedToCamera = true;
+
+    // add text label to left of bar
+    var healthLabel = this.game.add.text(10, 20, 'Vie', {
+        fontSize: '20px',
+        fill: '#ffffff'
+    });
+    healthLabel.fixedToCamera = true;
 };
 // ==============================================
 // Fontion qui s'active toute les 1ms pour update le jeux
