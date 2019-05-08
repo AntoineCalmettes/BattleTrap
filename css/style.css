@@ -157,21 +157,21 @@ i.off {
     background-image: url('../images/mage1_stopped.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-color: red
+    background-color: #f50057
 }
 
 .twitter {
     background-image: url('../images/outGame/green-rogue-final.gif');
     background-repeat: no-repeat;
     background-position: center;
-    background-color: blue
+    background-color: #64ffda
 }
 
 .linkedin {
     background-image: url('../images/outGame/warrior-sheet.gif');
     background-repeat: no-repeat;
     background-position: center;
-    background-color: yellow
+    background-color: #eeff41
 }
 
 /* SCCREEN */
@@ -194,4 +194,8 @@ i.off {
 
 .bg-info {
     background-color: #64ffda !important;
+}
+
+.bg-warning {
+    background-color: #eeff41 !important;
 }
