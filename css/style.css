@@ -1,50 +1,55 @@
-*{
-  font-family: "pixel";
+* {
+    font-family: "pixel";
 }
 
 body {
-  background-color: black;
+    background-color: black;
 }
-  canvas {
-      margin: 0 auto;
-  }
+
+canvas {
+    margin: 0 auto;
+}
 
 /* ACCEUIL  */
-a{
+a {
     color: white;
 }
-a:hover{
+
+a:hover {
     color: white;
     text-decoration: none;
 }
-p{
-  font-family: "pixel";
+
+p {
+    font-family: "pixel";
 }
 
-.mt-6{
-  margin-top: 70px;
+.mt-6 {
+    margin-top: 70px;
 }
+
 @font-face {
     font-family: "pixel";
-    src :url("../police/pixelmania/Pixelmania.ttf");
-  }
+    src: url("../police/pixelmania/Pixelmania.ttf");
+}
+
 /* for the program page h1 and info */
 i {
-  font: normal 50px/ 50px 'pixel', Helvetica, Arial !important;
-	color: #EEDDE0;
-	text-shadow: 0 0 30px #EC637B,
-		0 0 10px rgba(230, 161, 173, 0.41),
-		0 0 100px #E6A1AD,
-		0 0 500px #F36780,
-		5px 9px 5px rgba(0, 0, 0, 0.5);
+    font: normal 50px/ 50px 'pixel', Helvetica, Arial !important;
+    color: #EEDDE0;
+    text-shadow: 0 0 30px #EC637B,
+    0 0 10px rgba(230, 161, 173, 0.41),
+    0 0 100px #E6A1AD,
+    0 0 500px #F36780,
+    5px 9px 5px rgba(0, 0, 0, 0.5);
 }
 
 i.off {
-	color: rgba(46, 46, 46, 0.61);
-	text-shadow: 7px 7px 5px rgba(0, 0, 0, 0.5);
+    color: rgba(46, 46, 46, 0.61);
+    text-shadow: 7px 7px 5px rgba(0, 0, 0, 0.5);
 }
 
-.background-out-game{
+.background-out-game {
     /* background-image: url('../images/outGame/background.jpg');
     background-repeat: no-repeat;
     background-repeat: no-repeat; /* Do not repeat the image */
@@ -57,50 +62,55 @@ i.off {
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
 
 .test {
-	float: left;
-	width: 100%;
-	height: 100%;
-	z-index: 5;
-	overflow-x: hidden;
+    float: left;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    overflow-x: hidden;
 }
+
 .pixel {
-	display: block;
-	position: relative;
-	width: 300px;
-	height: 120px;
-	color: white;
-	font-size: 30px;
-	text-transform: uppercase;
-	background-color: rgb(222, 6, 211);
-	border: none;
-	margin-top: 150px;
-	margin-left: auto;
-	margin-right: auto;
-	border-radius: 24px;
-	box-sizing: border-box;
-	cursor: pointer;
-	font-family: 'pixel', cursive;
-	outline: none;
+    display: block;
+    position: relative;
+    width: 300px;
+    height: 120px;
+    color: white;
+    font-size: 30px;
+    text-transform: uppercase;
+    background-color: rgb(222, 6, 211);
+    border: none;
+    margin-top: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 24px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: 'pixel', cursive;
+    outline: none;
 }
+
 .pixel::after {
-	content: "";
-	position: absolute;
-	width: 300px;
-	height: 120px;
-	top: 12px;
-	left: 0;
-	background-color: rgb(145, 4, 122);
-	border-radius: 24px;
-	z-index: -1;
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 120px;
+    top: 12px;
+    left: 0;
+    background-color: rgb(145, 4, 122);
+    border-radius: 24px;
+    z-index: -1;
 }
+
 .pixel:hover {
-	background-color: rgb(209, 6, 165);
+    background-color: rgb(209, 6, 165);
 }
+
 .pixel:active {
-	top: 10px;
+    top: 10px;
 }
+
 .pixel:active::after {
-	top: 2px;
+    top: 2px;
 }
 
 /* CHOIX PERSO */
@@ -111,17 +121,17 @@ i.off {
     float: left;
     margin: 0 0.625em;
     outline: solid 0.25em #000;
-    box-shadow: inset .313em .313em 0 rgba(0,0,0,0.4), inset -.313em -.313em 0 rgba(255,255,255,0.4), 0 1em 0.625em -.4em rgba(0,0,0,0.8);
+    box-shadow: inset .313em .313em 0 rgba(0, 0, 0, 0.4), inset -.313em -.313em 0 rgba(255, 255, 255, 0.4), 0 1em 0.625em -.4em rgba(0, 0, 0, 0.8);
     transition: linear .2s;
-  }
-  
-  .pisxel:hover {
-    box-shadow: inset .313em .313em 0 rgba(0,0,0,0.8), inset -.313em -.313em 0 rgba(255,255,255,0.6), 0 1em 0.625em -.4em rgba(255,255,255,0.8);
-  }
-  
-  .pisxel:before {
-     content: " ";
-     position: absolute;
+}
+
+.pisxel:hover {
+    box-shadow: inset .313em .313em 0 rgba(0, 0, 0, 0.8), inset -.313em -.313em 0 rgba(255, 255, 255, 0.6), 0 1em 0.625em -.4em rgba(255, 255, 255, 0.8);
+}
+
+.pisxel:before {
+    content: " ";
+    position: absolute;
     top: -.25em;
     left: -.25em;
     width: .625em;
@@ -129,11 +139,11 @@ i.off {
     background: #1b1b1b;
     border-bottom: solid .25em #000;
     border-right: solid .25em #000;
-  }
-  
-  .pisxel:after {
-     content: " ";
-     position: absolute;
+}
+
+.pisxel:after {
+    content: " ";
+    position: absolute;
     bottom: -.25em;
     right: -.25em;
     width: .625em;
@@ -141,27 +151,47 @@ i.off {
     background: #1b1b1b;
     border-top: solid .25em #000;
     border-left: solid .25em #000;
-  }
-  
-  .git {background-image: url('../images/mage1_stopped.png');
-        background-repeat: no-repeat;
+}
+
+.git {
+    background-image: url('../images/mage1_stopped.png');
+    background-repeat: no-repeat;
     background-position: center;
-background-color:red}
-  .twitter {background-image: url('../images/outGame/green-rogue-final.gif');
+    background-color: red
+}
+
+.twitter {
+    background-image: url('../images/outGame/green-rogue-final.gif');
     background-repeat: no-repeat;
-background-position: center;
-background-color: blue}
-  .linkedin {background-image: url('../images/outGame/warrior-sheet.gif');
+    background-position: center;
+    background-color: blue
+}
+
+.linkedin {
+    background-image: url('../images/outGame/warrior-sheet.gif');
     background-repeat: no-repeat;
-background-position: center;
-background-color: yellow}
+    background-position: center;
+    background-color: yellow
+}
 
 /* SCCREEN */
 
-#text-choose{
-  color: rgba(255, 255, 255, 0)
+#text-choose {
+    color: rgba(255, 255, 255, 0)
 }
 
-#titleCaracteristique{
-  font-size: 12px;
+#titleCaracteristique {
+    font-size: 12px;
+}
+
+.bg-success {
+    background-color: #76ff03 !important;
+}
+
+.bg-danger {
+    background-color: #f50057 !important;
+}
+
+.bg-info {
+    background-color: #64ffda !important;
 }

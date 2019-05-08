@@ -10,7 +10,7 @@ var leftOrRight = 1;
 /*
 Constante pour le personnage choisie
  */
-const HEROCHOSEN = 'mage';
+var HEROCHOSEN = 'mage';
 // Variable pour detecter si le joueur est mort
 var dead = false;
 
@@ -1115,7 +1115,8 @@ PlayState._spawnEnemyWall = function (x, y, side) {
 // =============================================================================
 
 
-function runGame() {
+function runGame(persoChoose) {
+    HEROCHOSEN = persoChoose;
     var game = new Phaser.Game(config);
     game.state.add('play', PlayState);
     game.state.start('play');

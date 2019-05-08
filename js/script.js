@@ -22,7 +22,7 @@ let textChoose = document.getElementById('text-choose');
 let mageChoose = document.getElementById('mageChoose')
 let voleurChoose = document.getElementById('voleurChoose')
 let guerrierChoose = document.getElementById('guerrierChoose')
-
+var persoChoose;
 let divCaracteristique = document.getElementById('caracteristique')
 let titleCaracteristique = document.getElementById('titleCaracteristique')
 let contenuCaracteristique = document.getElementById('contenuCaracteristique')
@@ -36,8 +36,8 @@ let historyPerso = document.getElementById('historyPerso')
 
 
 mageChoose.addEventListener("click", () => {
-    console.log('mageChoose')
     textChoose.innerHTML = "MAGE"
+    persoChoose = 'mage';
     textChoose.style.color = "rgba(255, 255, 255, 1)"
 
     progressLife.addariaValuenow="75";
@@ -66,7 +66,7 @@ mageChoose.addEventListener("click", () => {
 }, false)
 
 voleurChoose.addEventListener("click", () => {
-    console.log('VoleurChoose')
+    persoChoose = 'assasin';
     textChoose.innerHTML = "VOLEUR"
     textChoose.style.color = "rgba(255, 255, 255, 1)"
 
@@ -95,7 +95,7 @@ voleurChoose.addEventListener("click", () => {
 }, false)
 
 guerrierChoose.addEventListener("click", () => {
-    console.log('guerrierChoose')
+    persoChoose = 'warrior';
     textChoose.innerHTML = "GUERRIER"
     textChoose.style.color = "rgba(255, 255, 255, 1)"
 
