@@ -298,7 +298,10 @@ PlayState = {};
 // ==============================================
 PlayState.init = function () {
     this.game.renderer.renderSession.roundPixels = true;
+    
+    KeyPickupCount = 0;
 
+    
     this.keys = this.game.input.keyboard.addKeys({
         left: Phaser.KeyCode.LEFT,
         right: Phaser.KeyCode.RIGHT,
@@ -408,6 +411,8 @@ var sharperDamage = false;
 var bullets;
 var enemyWeapon;
 var bossCloseOfHero = false;
+var keynumber;
+var KeyPickupCount;
 // ==============================================
 // Crée le jeux
 // ==============================================
@@ -458,7 +463,10 @@ PlayState.create = function () {
          fill: '#ffffff'
      });
      healthLabel.fixedToCamera = true;
- 
+     keynumber = this.game.add.text(400, 20, KeyPickupCount, {
+        fontSize: '20px',
+        fill: '#ffffff'
+    });
    
 };
 // ==============================================
@@ -469,6 +477,7 @@ PlayState.update = function () {
     this._handleInput();
     this._mapStars();
     this._handleBullet();
+    keynumber.text=KeyPickupCount;
     enemyWeapon.trackSprite(boss); // give weapon to this enemy
     enemyWeapon.fireAngle = 0; // if necessary, change fire angle
     if (bossCloseOfHero) {
@@ -717,6 +726,12 @@ PlayState._loadLevel = function (data) {
     const GRAVITY = 1500;
     // Ajoute la gravité
     this.game.physics.arcade.gravity.y = GRAVITY;
+
+    let keyIcon = this.game.make.image(350, 10, 'key');
+
+    this.hud = this.game.add.group();
+    this.hud.add(keyIcon);
+    this.hud.position.set(10, 10);
 
     // ...
     // spawn hero and enemies
@@ -992,6 +1007,7 @@ PlayState._spawnFireBalls = function (fireBall) {
 
 // Quand le hero touche un drapeau
 PlayState._onHeroVsKey = function (hero, key) {
+    KeyPickupCount++;
     this.sfx.key.play();
     key.kill();
 };
@@ -1004,11 +1020,11 @@ PlayState._onHeroVsStars = function (hero, star) {
     this.sfx.stars.play();
     SPEED = 1.5;
     let heroHealtBefore = hero.health;
-    hero.health = 9999999999;
+    hero.health = 10;
     setTimeout(() => {
         SPEED = 1;
         hero.health = heroHealtBefore;
-    }, 2000);
+    }, 4000);
     star.kill();
 };
 PlayState._onSpriteVsSharper = function (hero, sharper) {
