@@ -462,7 +462,7 @@ PlayState.create = function () {
          fill: '#ffffff'
      });
      healthLabel.fixedToCamera = true;
-     keynumber = this.game.add.text(400, 20, KeyPickupCount, {
+     keynumber = this.game.add.text(50, 60, KeyPickupCount, {
         fontSize: '20px',
         fill: '#ffffff'
     });
@@ -726,7 +726,7 @@ PlayState._loadLevel = function (data) {
     // Ajoute la gravité
     this.game.physics.arcade.gravity.y = GRAVITY;
 
-    let keyIcon = this.game.make.image(350, 10, 'key');
+    let keyIcon = this.game.make.image(10, 50, 'key');
 
     this.hud = this.game.add.group();
     this.hud.add(keyIcon);
@@ -1019,7 +1019,7 @@ PlayState._onHeroVsStars = function (hero, star) {
     this.sfx.stars.play();
     SPEED = 1.5;
     let heroHealtBefore = hero.health;
-    hero.health = 10;
+    hero.health = 3;
     setTimeout(() => {
         SPEED = 1;
         hero.health = heroHealtBefore;
