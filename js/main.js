@@ -56,7 +56,6 @@ function Hero(game, x, y, sprites) {
         this.health = 5;
         frameSpeed = 6;
         this.maxHealth = 5;
-        this.scale.setTo(1.2, 1)
     } else if (sprites === 'assasin') {
         this.SPEED = 200;
         this.attackSpeed = 300;
@@ -466,7 +465,6 @@ PlayState.create = function () {
 // Fontion qui s'active toute les 1ms pour update le jeux
 // ==============================================
 PlayState.update = function () {
-    this.game.debug.spriteInfo(hero, 20, 32);
     this._handleCollisions();
     this._handleInput();
     this._mapStars();
@@ -925,7 +923,7 @@ PlayState._spawnSlime = function (nbr) {
 PlayState._spawnCharacters = function (data) {
     // spawn hero
     hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN);
-    hero.body.setSize(30, 50);
+    hero.body.setSize(40, 50);
     this.game.add.existing(hero);
     boss = new Boss(this.game, data.boss.x, data.boss.y, 'boss');
     boss.body.setSize(boss.width, boss.height);
