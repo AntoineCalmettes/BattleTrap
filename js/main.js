@@ -1024,8 +1024,9 @@ PlayState._spawnEnemyWall = function (x, y, side) {
 // entry point
 // =============================================================================
 
-window.onload = function () {
+
+function runGame(){
     var game = new Phaser.Game(config);
     game.state.add('play', PlayState);
     game.state.start('play');
-};
+}
