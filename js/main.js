@@ -576,6 +576,7 @@ function fireLaser() {
             laser.animations.add('explode', [0, 3], 10, true);
             laser.animations.add('fire', [0, 1, 2], 10, true);
             laser.animations.play('fire');
+            laser.body.setCircle(10, 5, 5);
             if (leftOrRight === 1) {
                 // If we have a laser, set it to the starting position
                 laser.reset(hero.x + 20, hero.y + 25);
@@ -678,6 +679,7 @@ PlayState._loadLevel = function (data) {
     bullets.enableBody = true;
     bullets.physicsBodyType = Phaser.Physics.ARCADE;
     bullets.createMultiple(20, 'bullet');
+    bullets
     bullets.callAll('events.onOutOfBounds.add', 'events.onOutOfBounds', resetBullet);
 
     function resetBullet(bullet) {
@@ -929,7 +931,7 @@ PlayState._onHeroVsKey = function (hero, key) {
 PlayState._onHeroVsPizzas = function (hero, pizza) {
     this.sfx.pizza.play();
     pizza.kill();
-    hero.healt += 1;
+    hero.heal(1);
 };
 PlayState._onHeroVsStars = function (hero, star) {
     this.sfx.stars.play();
