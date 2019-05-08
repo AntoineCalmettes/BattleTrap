@@ -298,10 +298,10 @@ PlayState = {};
 // ==============================================
 PlayState.init = function () {
     this.game.renderer.renderSession.roundPixels = true;
-    
+
     KeyPickupCount = 0;
 
-    
+
     this.keys = this.game.input.keyboard.addKeys({
         left: Phaser.KeyCode.LEFT,
         right: Phaser.KeyCode.RIGHT,
@@ -449,24 +449,24 @@ PlayState.create = function () {
         //
     });
 
-     // change position if needed (but use same position for both images)
-     var backgroundBar = this.game.add.image(100, 20, 'red-bar');
-     backgroundBar.fixedToCamera = true;
- 
-     healthBar = this.game.add.image(100, 20, 'green-bar');
-     healthBar.fixedToCamera = true;
- 
-     // add text label to left of bar
-     var healthLabel = this.game.add.text(10, 20, 'Health', {
-         fontSize: '20px',
-         fill: '#ffffff'
-     });
-     healthLabel.fixedToCamera = true;
-     keynumber = this.game.add.text(50, 60, KeyPickupCount, {
+    // change position if needed (but use same position for both images)
+    var backgroundBar = this.game.add.image(100, 20, 'red-bar');
+    backgroundBar.fixedToCamera = true;
+
+    healthBar = this.game.add.image(100, 20, 'green-bar');
+    healthBar.fixedToCamera = true;
+
+    // add text label to left of bar
+    var healthLabel = this.game.add.text(10, 20, 'Health', {
         fontSize: '20px',
         fill: '#ffffff'
     });
-   
+    healthLabel.fixedToCamera = true;
+    keynumber = this.game.add.text(50, 60, KeyPickupCount, {
+        fontSize: '20px',
+        fill: '#ffffff'
+    });
+
 };
 // ==============================================
 // Fontion qui s'active toute les 1ms pour update le jeux
@@ -476,7 +476,7 @@ PlayState.update = function () {
     this._handleInput();
     this._mapStars();
     this._handleBullet();
-    keynumber.text=KeyPickupCount;
+    keynumber.text = KeyPickupCount;
     enemyWeapon.trackSprite(boss); // give weapon to this enemy
     enemyWeapon.fireAngle = 0; // if necessary, change fire angle
     if (bossCloseOfHero) {
@@ -566,6 +566,10 @@ function heroVsBoss(hero, boss) {
             }, 500);
             boss.body.velocity.x *= -1;
             boss.damage(1);
+            console.log(boss.health)
+            if (boss.health === 0) {
+                this.key.create(boss.x, boss.y, 'key');
+            }
         }
     }
 }
