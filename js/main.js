@@ -53,15 +53,15 @@ function Hero(game, x, y, sprites) {
     if (sprites === 'warrior') {
         this.health = 5;
         frameSpeed = 6;
-        this.maxHealth=5;
+        this.maxHealth = 5;
         this.scale.setTo(1.2, 1)
     } else if (sprites === 'assasin') {
         this.health = 3;
-        this.maxHealth=3;
+        this.maxHealth = 3;
         frameSpeed = 8;
     } else {
         this.health = 2;
-        this.maxHealth=2;
+        this.maxHealth = 2;
         frameSpeed = 2;
     }
     this.animations.add('right', [4, 5], 3, true);
@@ -418,7 +418,6 @@ var KeyPickupCount;
 // ==============================================
 PlayState.create = function () {
 
-   
 
     // creation des sons du jeux
     this.sfx = {
