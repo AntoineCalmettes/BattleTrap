@@ -1,3 +1,14 @@
+*{
+  font-family: "pixel";
+}
+
+body {
+  background-color: black;
+}
+  canvas {
+      margin: 0 auto;
+  }
+
 /* ACCEUIL  */
 a{
     color: white;
@@ -136,15 +147,21 @@ i.off {
         background-repeat: no-repeat;
     background-position: center;
 background-color:red}
-  .twitter {background-image: url('../images/slime.png');
+  .twitter {background-image: url('../images/outGame/green-rogue-final.gif');
     background-repeat: no-repeat;
 background-position: center;
 background-color: blue}
-  .google {background-image: url('../images/banana.png');
-    background-repeat: no-repeat;
-background-position: center;
-background-color: green}
-  .linkedin {background-image: url('../images/guerrier-static.png');
+  .linkedin {background-image: url('../images/outGame/warrior-sheet.gif');
     background-repeat: no-repeat;
 background-position: center;
 background-color: yellow}
+
+/* SCCREEN */
+
+#text-choose{
+  color: rgba(255, 255, 255, 0)
+}
+
+#titleCaracteristique{
+  font-size: 12px;
+}
