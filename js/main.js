@@ -226,12 +226,70 @@ Boss.prototype.damage = function (amount) {
     if (this.alive) {
         this.health -= amount;
         if (this.health <= 0) {
-            PlayState._spawnKeys({x: this.body.x, y: this.body.y});
+            PlayState._spawnKeys({
+                x: this.body.x,
+                y: this.body.y
+            });
             this.kill();
         }
     }
     return this;
 };
+
+function Minotaur(game, x, y, sprites) {
+    this.sprites = sprites;
+    Phaser.Sprite.call(this, game, x, y, sprites);
+    this.anchor.set(0.5, 0.5);
+    this.health = 5;
+    this.animations.add('standingLeft', [0, 1, 2, 3], 4, true);
+    this.animations.add('movinLeft', [4, 5, 6, 7, 8, 9, 10, 11, 12], 12, true);
+    this.animations.add('movinRight', [13, 14, 15, 16, 17, 18, 19, 20, 21], 12, true);
+    this.animations.add('attackRight', [22, 23, 24, 25, 26, 27, 28, 29], 9, true);
+    this.animations.add('attackLeft', [30, 31, 32, 33, 34, 35, 36, 37], 9, true);
+    this.animations.play('standingLeft');
+    // physic properties
+    this.game.physics.enable(this);
+    this.body.collideWorldBounds = true;
+    this.body.velocity.x = Boss.SPEED;
+}
+
+Minotaur.prototype = Object.create(Phaser.Sprite.prototype);
+Minotaur.prototype.constructor = Minotaur;
+
+Minotaur.prototype.update = function () {
+    if (bossIsChangingFrame === false) {
+        bossIsChangingFrame = true;
+        setTimeout(() => {
+            bossIsChangingFrame = false;
+        }, 50);
+        if (this.game.physics.arcade.distanceBetween(this, hero) < 100) {
+            // if player to left of enemy AND enemy moving to right (or not moving)
+            if (hero.x < this.x && this.body.velocity.x >= 0) {
+                // move enemy to left
+                this.animations.play('movinLeft');
+                boss.body.velocity.x = -Boss.SPEED;
+            }
+            // if player to right of enemy AND enemy moving to left (or not moving)
+            else if (hero.x > boss.x && boss.body.velocity.x <= 0) {
+                // move enemy to right
+                this.animations.play('movinRight');
+                this.body.velocity.x = Boss.SPEED; // turn right
+            }
+            bossCloseOfHero = true
+        } else {
+            bossCloseOfHero = false;
+        }
+        // check against walls and reverse direction if necessary
+        if (this.body.touching.right || this.body.blocked.right) {
+            this.animations.play('movinLeft');
+            this.body.velocity.x = -Boss.SPEED; // turn left
+        } else if (this.body.touching.left || this.body.blocked.left) {
+            this.animations.play('movinRight');
+            this.body.velocity.x = Boss.SPEED; // turn right
+        }
+    }
+};
+
 //================== Slim
 // Create new slim
 // ==================
@@ -315,6 +373,7 @@ PlayState.init = function () {
             fireLaser()
         }
     }, this);
+
 };
 // ==============================================
 // Image pour les platforms, sprites etc..
@@ -331,9 +390,10 @@ PlayState.preload = function () {
     this.game.load.image('grass:2x1:noborder', 'images/platforms/grass_2x1_noborder.png');
     this.game.load.image('lava', 'images/decorations/lava.png');
     this.game.load.image('spike', 'images/decorations/spike.png');
+    this.game.load.image('grass_3', 'images/platforms/grass_3.png')
     this.game.load.image('invisible-wall', 'images/platforms/invisible_wall.png');
     this.game.load.spritesheet('fireBall', 'images/decorations/fireBall.png', 13.33, 15, 3);
-    this.game.load.image('rond', 'images/decorations/rond_line.png')
+    this.game.load.image('rond', 'images/platforms/rond_line.png')
     this.game.load.spritesheet('trampo', 'images/decorations/trampo.png', 60, 51, 2);
     this.game.load.image('door-closed', 'images/decorations/door-closed.png');
     this.game.load.spritesheet('door', 'images/decorations/door.png', 44, 51, 2);
@@ -352,6 +412,7 @@ PlayState.preload = function () {
     this.game.load.spritesheet('sharper', 'images/decorations/sharper.png', 62, 68, 6);
     this.game.load.image('arrow', 'images/decorations/arrow.png');
     this.game.load.spritesheet('boss', 'images/monstres/boss.png', 80.75, 43, 4);
+    this.game.load.spritesheet('minotaur', 'images/minotaur/minotaur.png', 76, 65, 40);
     this.game.load.spritesheet('slime', 'images/monstres/slime.png', 15.8, 16, 25);
     this.game.load.spritesheet('bullet', 'images/playerMage/bullet.png', 20, 14, 4);
     this.game.load.spritesheet('laserAsset', 'images/decorations/laser.png', 112, 64, 2);
@@ -419,10 +480,20 @@ var bossCloseOfHero = false;
 var keynumber;
 var KeyPickupCount;
 var door;
+var isDownX;
+var pad1;
+let upAXbox;
 // ==============================================
 // Crée le jeux
 // ==============================================
 PlayState.create = function () {
+
+    this.game.input.gamepad.start();
+
+    // To listen to buttons from a specific pad listen directly on that pad game.input.gamepad.padX, where X = pad 1-4
+    pad1 = this.game.input.gamepad.pad1;
+
+    this.game.input.onDown.add(dump, this);
 
 
     // creation des sons du jeux
@@ -444,7 +515,18 @@ PlayState.create = function () {
         getingHit: this.game.add.audio('sfx:getingHit'),
         blade: this.game.add.audio('sfx:blade'),
         splash: this.game.add.audio('sfx:splash')
+
     };
+
+    function dump() {
+/*
+        console.log(pad1._axes[0]);
+        console.log(pad1._rawPad.axes[0]);*/
+
+    }
+
+
+
 
 
     // Creation de la map en parallax
@@ -453,9 +535,14 @@ PlayState.create = function () {
     fontMap = this.add.tileSprite(0, 0, 3410, 620, "bg_front");
     building.fixedToCamera = true; // Creer le parallax    
     this.game.world.setBounds(0, 0, 3410, 620); // taille du monde
+    
+    // rond de deco pour platfome bascule
+    var rond_line = this.game.add.image(1907, 250, 'rond');
 
     // Charge le fichier JSON du niveaux 1
     this._loadLevel(this.game.cache.getJSON('level:1'));
+    
+    var grass_3 = this.game.add.image(1870, 400, 'grass_3')
 
     // change position if needed (but use same position for both images)
     var backgroundBar = this.game.add.image(100, 20, 'red-bar');
@@ -469,13 +556,14 @@ PlayState.create = function () {
         fontSize: '20px',
         fill: '#ffffff'
     });
+
     healthLabel.fixedToCamera = true;
     keynumber = this.game.add.text(50, 60, KeyPickupCount, {
         fontSize: '20px',
-        fill: '#ffffff'
+        fill: '#ffffff',
     });
-
 };
+
 // ==============================================
 // Fontion qui s'active toute les 1ms pour update le jeux
 // ==============================================
@@ -487,6 +575,7 @@ PlayState.update = function () {
     if (KeyPickupCount === 5) {
         door.animations.play('open')
     }
+            
 // ==============================================
 // Fonction qui tue le hero si il est en dehors de la map
 // ==============================================
@@ -497,13 +586,17 @@ PlayState.update = function () {
     }*/
     
     // Si le mange touche le portail dimemensionel il est teleporter a celui du dessus
-    if ((hero.position.y > 380 && hero.position.y < 450) && (hero.position.x > 380 && hero.position.x < 400)) {
+    if ((hero.position.y > 380 && hero.position.y < 450) && (hero.position.x > 380 && hero.position.x < 480)) {
         hero.position.y = 200;
         hero.position.x = 360;
         this.sfx.portal.play();
     }
     this.game.debug.spriteInfo(hero, 40, 50);
     healthBar.scale.setTo(hero.health / hero.maxHealth, 1);
+
+    if (HEROCHOSEN === 'mage' && isDownX) {
+        fireLaser();
+    }
         this.game.debug.spriteInfo(hero, 40,50)
 };
 // ==============================================
@@ -521,6 +614,7 @@ function spriteVsPlatform(hero) {
         jumpin = false;
     }
 }
+
 
 
 
@@ -554,7 +648,7 @@ function spriteDegatSpike(hero) {
             spikeDamage = false;
         }, 100);
         hero.damage(0.25, 'up');
-        this.sfx.punch.play();
+        this.sfx.lava.play();
         if (dead) {
             this.sfx.die.play();
             dead = false;
@@ -692,10 +786,24 @@ function fireLaser() {
 // ==============================================
 // Ecouteur d'evenement sur la touche du clavier pressé
 // ==============================================
+/*
+
+
+
+*/
 PlayState._handleInput = function () {
-    let spaceBar = this.game.input.keyboard.addKey(32); // Recupere le ASCI de la barre d'espace
+
+
+
+
+    let spaceBar = this.game.input.keyboard.addKey(32);
+    let attackAXbox = pad1.justPressed(Phaser.Gamepad.XBOX360_B)
+    let upAXbox= pad1.justPressed(Phaser.Gamepad.XBOX360_A);
+    let upAna = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+    // Recupere le ASCI de la barre d'espace
     let isDown = spaceBar.isDown;
-    if (this.keys.left.isDown) { // move hero left
+    isDownX = attackAXbox;
+    if (this.keys.left.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) { // move hero left
         leftOrRight = -1;
         this.game.camera.follow(hero)
         hero.move(-1);
@@ -706,7 +814,7 @@ PlayState._handleInput = function () {
                 walking = false;
             }, 500)
         }
-    } else if (this.keys.right.isDown) { // move hero right
+    } else if (this.keys.right.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) { // move hero right
         leftOrRight = 1;
         hero.move(1);
         this.game.camera.follow(hero) //camera suit le hero
@@ -717,7 +825,7 @@ PlayState._handleInput = function () {
                 walking = false;
             }, 500)
         }
-    } else if (isDown) { // fighting
+    } else if (isDown || isDownX) { // fighting
         if (hiting === false) {
             hiting = true;
             if (HEROCHOSEN === 'mage') {
@@ -732,7 +840,9 @@ PlayState._handleInput = function () {
                 hiting = false;
             }, hero.attackSpeed)
         }
-    } else if (this.keys.up.isDown) { // move hero up
+    } else if (this.keys.up.isDown || upAXbox || upAna) { // move hero up
+        console.log("je saute wllh ! ")
+        hero.jump();
         this.game.camera.y += 1;
         hero.move(0);
     } else { // stop
@@ -807,7 +917,7 @@ PlayState._loadLevel = function (data) {
     this.castle.create(3100, 70, 'castle');
     movingGrasseYLeft = this.platformsMovable.create(280, 540, 'grass:2x1');
     movingGrasseYRight = this.platformsMovable.create(520, 215, 'grass:2x1');
-    portalTopRight = this.portal.create(340, 100, 'portalTop');
+    portalTopRight = this.portal.create(270, 100, 'portalTop');
     portalBottomRight = this.portal.create(400, 410, 'portalBottom');
     door = this.doors.create(1000, 250, 'door');
     door.animations.add('open', [1], 1, true);
@@ -820,6 +930,11 @@ PlayState._loadLevel = function (data) {
     // ==============================================
     // Animations
     // ==============================================
+    
+    // platfome qui se balance
+/*    this.game.add.tween(target).to({ property: value }, duration, easing,
+    autostart, delay, repeat, yoyo);*/
+    
     // PIZZA MOVE
     this.game.add.tween(pizza).to({
         y: pizza.position.y - 50
@@ -971,7 +1086,16 @@ PlayState._spawnCharacters = function (data) {
     hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN);
     hero.body.setSize(40, 50);
     this.game.add.existing(hero);
-    boss = new Boss(this.game, data.boss.x, data.boss.y, 'boss');
+
+    /* boss = new Boss(this.game, data.boss.x, data.boss.y, 'boss');
+    boss.body.setSize(boss.width, boss.height);
+    this.game.add.existing(boss);
+    boss.body.allowGravity = false;
+    boss.body.immovable = true;
+    boss.body.bounce.x = 1;
+    this.boss.add(boss); */
+
+    boss = new Minotaur(this.game, data.boss.x, data.boss.y, 'minotaur');
     boss.body.setSize(boss.width, boss.height);
     this.game.add.existing(boss);
     boss.body.allowGravity = false;
