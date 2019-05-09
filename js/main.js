@@ -916,14 +916,14 @@ PlayState._spawnCharacters = function (data) {
     boss.body.allowGravity = false;
     boss.body.immovable = true;
     this.boss.add(boss);
-/*
+
     let slime = new Slime(this.game, 330, 404, 'slime');
     slime.body.setSize(slime.width, slime.height);
     this.game.add.existing(slime);
     slime.body.allowGravity = false;
     slime.body.immovable = true;
     slime.scale.setTo(1.8, 1.8);
-    this.slims.add(slime);*/
+    this.slims.add(slime);
 };
 // ==========================
 // Crée les drapeaux
