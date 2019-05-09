@@ -390,9 +390,10 @@ PlayState.preload = function () {
     this.game.load.image('grass:2x1:noborder', 'images/platforms/grass_2x1_noborder.png');
     this.game.load.image('lava', 'images/decorations/lava.png');
     this.game.load.image('spike', 'images/decorations/spike.png');
+    this.game.load.image('grass_3', 'images/platforms/grass_3.png')
     this.game.load.image('invisible-wall', 'images/platforms/invisible_wall.png');
     this.game.load.spritesheet('fireBall', 'images/decorations/fireBall.png', 13.33, 15, 3);
-    this.game.load.image('rond', 'images/decorations/rond_line.png')
+    this.game.load.image('rond', 'images/platforms/rond_line.png')
     this.game.load.spritesheet('trampo', 'images/decorations/trampo.png', 60, 51, 2);
     this.game.load.image('door-closed', 'images/decorations/door-closed.png');
     this.game.load.spritesheet('door', 'images/decorations/door.png', 44, 51, 2);
@@ -480,7 +481,6 @@ var keynumber;
 var KeyPickupCount;
 var door;
 var isDownX;
-
 var pad1;
 let upAXbox;
 // ==============================================
@@ -535,9 +535,14 @@ PlayState.create = function () {
     fontMap = this.add.tileSprite(0, 0, 3410, 620, "bg_front");
     building.fixedToCamera = true; // Creer le parallax    
     this.game.world.setBounds(0, 0, 3410, 620); // taille du monde
+    
+    // rond de deco pour platfome bascule
+    var rond_line = this.game.add.image(1907, 250, 'rond');
 
     // Charge le fichier JSON du niveaux 1
     this._loadLevel(this.game.cache.getJSON('level:1'));
+    
+    var grass_3 = this.game.add.image(1870, 400, 'grass_3')
 
     // change position if needed (but use same position for both images)
     var backgroundBar = this.game.add.image(100, 20, 'red-bar');
@@ -551,13 +556,14 @@ PlayState.create = function () {
         fontSize: '20px',
         fill: '#ffffff'
     });
+
     healthLabel.fixedToCamera = true;
     keynumber = this.game.add.text(50, 60, KeyPickupCount, {
         fontSize: '20px',
-        fill: '#ffffff'
+        fill: '#ffffff',
     });
-
 };
+
 // ==============================================
 // Fontion qui s'active toute les 1ms pour update le jeux
 // ==============================================
@@ -569,6 +575,7 @@ PlayState.update = function () {
     if (KeyPickupCount === 5) {
         door.animations.play('open')
     }
+            
 // ==============================================
 // Fonction qui tue le hero si il est en dehors de la map
 // ==============================================
@@ -579,7 +586,7 @@ PlayState.update = function () {
     }*/
     
     // Si le mange touche le portail dimemensionel il est teleporter a celui du dessus
-    if ((hero.position.y > 380 && hero.position.y < 450) && (hero.position.x > 380 && hero.position.x < 400)) {
+    if ((hero.position.y > 380 && hero.position.y < 450) && (hero.position.x > 380 && hero.position.x < 480)) {
         hero.position.y = 200;
         hero.position.x = 360;
         this.sfx.portal.play();
@@ -910,7 +917,7 @@ PlayState._loadLevel = function (data) {
     this.castle.create(3100, 70, 'castle');
     movingGrasseYLeft = this.platformsMovable.create(280, 540, 'grass:2x1');
     movingGrasseYRight = this.platformsMovable.create(520, 215, 'grass:2x1');
-    portalTopRight = this.portal.create(340, 100, 'portalTop');
+    portalTopRight = this.portal.create(270, 100, 'portalTop');
     portalBottomRight = this.portal.create(400, 410, 'portalBottom');
     door = this.doors.create(1000, 250, 'door');
     door.animations.add('open', [1], 1, true);
@@ -923,6 +930,11 @@ PlayState._loadLevel = function (data) {
     // ==============================================
     // Animations
     // ==============================================
+    
+    // platfome qui se balance
+/*    this.game.add.tween(target).to({ property: value }, duration, easing,
+    autostart, delay, repeat, yoyo);*/
+    
     // PIZZA MOVE
     this.game.add.tween(pizza).to({
         y: pizza.position.y - 50
