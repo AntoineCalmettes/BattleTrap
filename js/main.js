@@ -45,37 +45,21 @@ var config = {
 //
 // Cree un nouveaux Hero
 //
-function Hero(game, x, y, sprites) {
-    let frameSpeed = 0;
+function Hero(game, x, y, sprites, speed, attackSpeed, health, maxHealth) {
     this.sprites = sprites;
     Phaser.Sprite.call(this, game, x, y, sprites);
     this.anchor.set(0.5, 0.5);
-    if (sprites === 'warrior') {
-        this.SPEED = 150;
-        this.attackSpeed = 500;
-        this.health = 5;
-        frameSpeed = 6;
-        this.maxHealth = 5;
-    } else if (sprites === 'assasin') {
-        this.SPEED = 200;
-        this.attackSpeed = 300;
-        this.health = 3;
-        this.maxHealth = 3;
-        frameSpeed = 8;
-    } else {
-        this.SPEED = 180;
-        this.attackSpeed = 500;
-        this.health = 2;
-        this.maxHealth = 2;
-        frameSpeed = 2;
-    }
+    this.SPEED = speed;
+    this.attackSpeed = attackSpeed;
+    this.health = health;
+    this.maxHealth = maxHealth;
     this.animations.add('right', [4, 5], 3, true);
     this.animations.add('standRight', [0, 1], 3, true);
     this.animations.add('standLeft', [2, 3], 3, true);
     this.animations.add('left', [6, 7], 3, true);
     this.animations.add('up', [8], 3, true);
-    this.animations.add('fightRight', [10, 0], frameSpeed, true);
-    this.animations.add('fightLeft', [11, 2], frameSpeed, true);
+    this.animations.add('fightRight', [10, 0], this.attackSpeed / 100, true);
+    this.animations.add('fightLeft', [11, 2], this.attackSpeed / 100, true);
     // hero heroSprite.animations.add('right', [4, 5], 10, true);
     this.animations.play('standRight');
     // physic properties
@@ -165,6 +149,11 @@ Hero.prototype.damage = function (amount, direction) {
         }
     }
     return this;
+};
+Hero.prototype.hit = function () {
+    if (this.game.physics.arcade.distanceBetween(this, minotaur) < 500) {
+        console.log('test')
+    }
 };
 
 //==================
@@ -439,7 +428,7 @@ PlayState.preload = function () {
     this.game.load.image('spike', 'images/decorations/spike.png');
     this.game.load.image('invisible-wall', 'images/platforms/invisible_wall.png');
     this.game.load.spritesheet('fireBall', 'images/decorations/fireBall.png', 13.33, 15, 3);
-    this.game.load.spritesheet('trampo', 'images/decorations/trampo.png', 60, 51, 2);
+    this.game.load.spritesheet('trampo', 'images/decorations/trampo.png', 60, 51, 20);
     this.game.load.image('door-closed', 'images/decorations/door-closed.png');
     this.game.load.spritesheet('door', 'images/decorations/door.png', 44, 51, 2);
     this.game.load.image('passerelle', 'images/platforms/passerelle.png');
@@ -1035,8 +1024,19 @@ PlayState._spawnSlime = function (nbr) {
 
 PlayState._spawnCharacters = function (data) {
     // spawn hero
-    hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN);
-    hero.body.setSize(40, 50);
+    switch (HEROCHOSEN) {
+        case 'warrior':
+            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 150, 300, 5, 5);
+            break;
+        case'assasin':
+            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 200, 800, 3, 3);
+            break;
+        case 'mage':
+            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 180, 500, 2, 2);
+            break;
+        default:
+    }
+    hero.body.setSize(45, 45);
     this.game.add.existing(hero);
 
     /* boss = new Boss(this.game, data.boss.x, data.boss.y, 'boss');
@@ -1048,12 +1048,11 @@ PlayState._spawnCharacters = function (data) {
     this.boss.add(boss); */
 
     minotaur = new Minotaur(this.game, data.minotaur.x, data.minotaur.y, 'minotaur');
-    minotaur.body.setSize(minotaur.width, minotaur.height);
     this.game.add.existing(minotaur);
     minotaur.body.allowGravity = false;
     minotaur.body.immovable = true;
     minotaur.body.bounce.x = 1;
-    minotaur.body.setSize(50, 40);
+    minotaur.body.setSize(30, 40);
     this.boss.add(minotaur);
 
     let slime = new Slime(this.game, 330, 404, 'slime');
@@ -1063,7 +1062,8 @@ PlayState._spawnCharacters = function (data) {
     slime.body.immovable = true;
     slime.scale.setTo(1.8, 1.8);
     this.slims.add(slime);
-};
+}
+;
 // ==========================
 // Crée les drapeaux
 // ==========================
@@ -1082,7 +1082,7 @@ PlayState._spawnTrampo = function (trampo) {
     this.game.physics.enable(sprite);
     sprite.body.allowGravity = false;
     sprite.body.immovable = true;
-    sprite.animations.add('upDown', [0, 1, 0], 6, false)
+    sprite.animations.add('upDown', [1, 0], 6, false)
 };
 
 PlayState._spawnLaser = function (laser) {
@@ -1094,7 +1094,6 @@ PlayState._spawnLaser = function (laser) {
     sprite.animations.play('rotate');
     sprite.scale.setTo(1, 1);
 };
-
 
 PlayState._spawnSharper = function (sharper) {
     let sprite = this.sharpers.create(sharper.x, sharper.y, 'sharper');
@@ -1230,11 +1229,9 @@ PlayState._onHerovsTrampos = function (hero, trampo) {
     if (heroJumpinOnTrampo === false) {
         heroJumpinOnTrampo = true;
         trampo.animations.play('upDown');
+        hero.body.velocity.y -= 700;
         setTimeout(() => {
-            hero.body.velocity.y -= 600;
-            setTimeout(() => {
-                heroJumpinOnTrampo = false;
-            }, 350)
+            heroJumpinOnTrampo = false;
         }, 350)
     }
 };
