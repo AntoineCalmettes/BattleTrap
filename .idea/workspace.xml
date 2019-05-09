@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="adefe66b-ca4f-4d21-bb4a-7a0264a6d6e2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/level01.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/level01.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
     </list>
@@ -19,8 +20,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="83">
-              <caret line="236" column="27" lean-forward="true" selection-start-line="236" selection-start-column="27" selection-end-line="236" selection-end-column="27" />
+            <state relative-caret-position="98">
+              <caret line="601" column="30" lean-forward="true" selection-start-line="601" selection-start-column="30" selection-end-line="601" selection-end-column="30" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -31,8 +32,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/level01.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1066">
-              <caret line="422" column="4" lean-forward="true" selection-start-line="422" selection-start-column="4" selection-end-line="422" selection-end-column="4" />
+            <state relative-caret-position="55">
+              <caret line="406" column="6" lean-forward="true" selection-start-line="406" selection-start-column="6" selection-end-line="406" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -41,9 +42,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>fireLas</find>
-      <find>direction</find>
-      <find>fire</find>
       <find>hero.move</find>
       <find>fireLa</find>
       <find>fightRight</find>
@@ -60,8 +58,6 @@
       <find>fireB</find>
       <find>update</find>
       <find>play</find>
-      <find>key</find>
-      <find>boss</find>
       <find>this.key</find>
       <find>door-clo</find>
       <find>door</find>
@@ -71,6 +67,11 @@
       <find>mapStar</find>
       <find>portal</find>
       <find>Mi</find>
+      <find>Boss</find>
+      <find>boss</find>
+      <find>healthLabel</find>
+      <find>key</find>
+      <find>debug</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -83,12 +84,12 @@
         <option value="$PROJECT_DIR$/js/script.js" />
         <option value="$PROJECT_DIR$/css/style.css" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/js/main.js" />
         <option value="$PROJECT_DIR$/data/level01.json" />
+        <option value="$PROJECT_DIR$/js/main.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="292" />
     <option name="y" value="24" />
     <option name="width" value="988" />
@@ -176,12 +177,12 @@
       <workItem from="1557172607259" duration="3516000" />
       <workItem from="1557210716112" duration="1068000" />
       <workItem from="1557225685500" duration="16117000" />
-      <workItem from="1557384920586" duration="6327000" />
+      <workItem from="1557384920586" duration="19045000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="100765000" />
+    <option name="totallyTimeSpent" value="113483000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="292" y="24" width="988" height="698" extended-state="0" />
@@ -283,15 +284,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data/level01.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1066">
-          <caret line="422" column="4" lean-forward="true" selection-start-line="422" selection-start-column="4" selection-end-line="422" selection-end-column="4" />
+        <state relative-caret-position="55">
+          <caret line="406" column="6" lean-forward="true" selection-start-line="406" selection-start-column="6" selection-end-line="406" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="83">
-          <caret line="236" column="27" lean-forward="true" selection-start-line="236" selection-start-column="27" selection-end-line="236" selection-end-column="27" />
+        <state relative-caret-position="98">
+          <caret line="601" column="30" lean-forward="true" selection-start-line="601" selection-start-column="30" selection-end-line="601" selection-end-column="30" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
