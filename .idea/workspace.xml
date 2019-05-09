@@ -16,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="793" column="39" lean-forward="true" selection-start-line="793" selection-start-column="39" selection-end-line="793" selection-end-column="39" />
+            <state relative-caret-position="83">
+              <caret line="236" column="27" lean-forward="true" selection-start-line="236" selection-start-column="27" selection-end-line="236" selection-end-column="27" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -29,22 +29,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Downloads/step15.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="575">
-              <caret line="27" selection-start-line="27" selection-end-line="35" selection-end-column="5" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/data/level01.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="351" column="14" selection-start-line="351" selection-start-column="14" selection-end-line="351" selection-end-column="14" />
+            <state relative-caret-position="1066">
+              <caret line="422" column="4" lean-forward="true" selection-start-line="422" selection-start-column="4" selection-end-line="422" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -53,7 +41,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>space</find>
       <find>fireLas</find>
       <find>direction</find>
       <find>fire</find>
@@ -83,6 +70,7 @@
       <find>attackSpeed</find>
       <find>mapStar</find>
       <find>portal</find>
+      <find>Mi</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -100,7 +88,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="292" />
     <option name="y" value="24" />
     <option name="width" value="988" />
@@ -188,12 +176,12 @@
       <workItem from="1557172607259" duration="3516000" />
       <workItem from="1557210716112" duration="1068000" />
       <workItem from="1557225685500" duration="16117000" />
-      <workItem from="1557384920586" duration="1642000" />
+      <workItem from="1557384920586" duration="6327000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="96080000" />
+    <option name="totallyTimeSpent" value="100765000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="292" y="24" width="988" height="698" extended-state="0" />
@@ -283,20 +271,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="793" column="39" lean-forward="true" selection-start-line="793" selection-start-column="39" selection-end-line="793" selection-end-column="39" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Downloads/step15.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="27" selection-start-line="27" selection-end-line="35" selection-end-column="5" />
+        <state relative-caret-position="30">
+          <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -305,8 +283,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data/level01.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="351" column="14" selection-start-line="351" selection-start-column="14" selection-end-line="351" selection-end-column="14" />
+        <state relative-caret-position="1066">
+          <caret line="422" column="4" lean-forward="true" selection-start-line="422" selection-start-column="4" selection-end-line="422" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="236" column="27" lean-forward="true" selection-start-line="236" selection-start-column="27" selection-end-line="236" selection-end-column="27" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

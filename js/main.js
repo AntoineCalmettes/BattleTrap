@@ -232,6 +232,61 @@ Boss.prototype.damage = function (amount) {
     }
     return this;
 };
+
+function Minotaur(game, x, y, sprites) {
+    this.sprites = sprites;
+    Phaser.Sprite.call(this, game, x, y, sprites);
+    this.anchor.set(0.5, 0.5);
+    this.health = 5;
+    this.animations.add('standingLeft', [0, 1, 2, 3], 4, true);
+    this.animations.add('movinLeft', [4, 5, 6, 7, 8, 9, 10, 11, 12], 12, true);
+    this.animations.add('movinRight', [13, 14, 15, 16, 17, 18, 19, 20, 21], 12, true);
+    this.animations.add('attackRight', [22, 23, 24, 25, 26, 27, 28, 29], 9, true);
+    this.animations.add('attackLeft', [30, 31, 32, 33, 34, 35, 36, 37], 9, true);
+    this.animations.play('standingLeft');
+    // physic properties
+    this.game.physics.enable(this);
+    this.body.collideWorldBounds = true;
+    this.body.velocity.x = Boss.SPEED;
+}
+
+Minotaur.prototype = Object.create(Phaser.Sprite.prototype);
+Minotaur.prototype.constructor = Minotaur;
+
+Minotaur.prototype.update = function () {
+    if (bossIsChangingFrame === false) {
+        bossIsChangingFrame = true;
+        setTimeout(() => {
+            bossIsChangingFrame = false;
+        }, 50);
+        if (this.game.physics.arcade.distanceBetween(this, hero) < 100) {
+            // if player to left of enemy AND enemy moving to right (or not moving)
+            if (hero.x < this.x && this.body.velocity.x >= 0) {
+                // move enemy to left
+                this.animations.play('movinLeft');
+                boss.body.velocity.x = -Boss.SPEED;
+            }
+            // if player to right of enemy AND enemy moving to left (or not moving)
+            else if (hero.x > boss.x && boss.body.velocity.x <= 0) {
+                // move enemy to right
+                this.animations.play('movinRight');
+                this.body.velocity.x = Boss.SPEED; // turn right
+            }
+            bossCloseOfHero = true
+        } else {
+            bossCloseOfHero = false;
+        }
+        // check against walls and reverse direction if necessary
+        if (this.body.touching.right || this.body.blocked.right) {
+            this.animations.play('movinLeft');
+            this.body.velocity.x = -Boss.SPEED; // turn left
+        } else if (this.body.touching.left || this.body.blocked.left) {
+            this.animations.play('movinRight');
+            this.body.velocity.x = Boss.SPEED; // turn right
+        }
+    }
+};
+
 //================== Slim
 // Create new slim
 // ==================
@@ -351,6 +406,7 @@ PlayState.preload = function () {
     this.game.load.spritesheet('sharper', 'images/decorations/sharper.png', 62, 68, 6);
     this.game.load.image('arrow', 'images/decorations/arrow.png');
     this.game.load.spritesheet('boss', 'images/monstres/boss.png', 80.75, 43, 4);
+    this.game.load.spritesheet('minotaur', 'images/minotaur/minotaur.png', 76, 65, 40);
     this.game.load.spritesheet('slime', 'images/monstres/slime.png', 15.8, 16, 25);
     this.game.load.spritesheet('bullet', 'images/playerMage/bullet.png', 20, 14, 4);
     this.game.load.spritesheet('laserAsset', 'images/decorations/laser.png', 112, 64, 2);
@@ -958,7 +1014,16 @@ PlayState._spawnCharacters = function (data) {
     hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN);
     hero.body.setSize(40, 50);
     this.game.add.existing(hero);
-    boss = new Boss(this.game, data.boss.x, data.boss.y, 'boss');
+
+    /* boss = new Boss(this.game, data.boss.x, data.boss.y, 'boss');
+    boss.body.setSize(boss.width, boss.height);
+    this.game.add.existing(boss);
+    boss.body.allowGravity = false;
+    boss.body.immovable = true;
+    boss.body.bounce.x = 1;
+    this.boss.add(boss); */
+
+    boss = new Minotaur(this.game, data.boss.x, data.boss.y, 'minotaur');
     boss.body.setSize(boss.width, boss.height);
     this.game.add.existing(boss);
     boss.body.allowGravity = false;
