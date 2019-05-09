@@ -10,7 +10,7 @@ var leftOrRight = 1;
 /*
 Constante pour le personnage choisie
  */
-const HEROCHOSEN = 'mage';
+var HEROCHOSEN = 'mage';
 // Variable pour detecter si le joueur est mort
 var dead = false;
 
@@ -51,14 +51,22 @@ function Hero(game, x, y, sprites) {
     Phaser.Sprite.call(this, game, x, y, sprites);
     this.anchor.set(0.5, 0.5);
     if (sprites === 'warrior') {
+        this.SPEED = 150;
+        this.attackSpeed = 500;
         this.health = 5;
         frameSpeed = 6;
-        this.scale.setTo(1.2, 1)
+        this.maxHealth = 5;
     } else if (sprites === 'assasin') {
+        this.SPEED = 200;
+        this.attackSpeed = 300;
         this.health = 3;
+        this.maxHealth = 3;
         frameSpeed = 8;
     } else {
+        this.SPEED = 180;
+        this.attackSpeed = 500;
         this.health = 2;
+        this.maxHealth = 2;
         frameSpeed = 2;
     }
     this.animations.add('right', [4, 5], 3, true);
@@ -79,31 +87,20 @@ function Hero(game, x, y, sprites) {
 // inherit from Phaser.Sprite
 Hero.prototype = Object.create(Phaser.Sprite.prototype);
 Hero.prototype.constructor = Hero;
-if (HEROCHOSEN === 'warrior') {
-    var SPEED = 1;
-    var attackSpeed = 500;
-} else if (HEROCHOSEN === 'assasin') {
-    var SPEED = 1.3;
-    var attackSpeed = 300;
-} else {
-    var SPEED = 1.2;
-    var attackSpeed = 400;
-}
 // Mouvement du Hero
 Hero.prototype.move = function (direction) {
     if (this.alive) {
-        //this.body.velocity.x = direction * SPEED;
+        this.body.velocity.x = direction * this.SPEED;
         switch (direction) {
             case RIGHT:
-                this.body.position.x += 3 * SPEED;
                 this.animations.play('right');
                 console.log(this.body.position)
                 break;
             case LEFT:
-                this.body.position.x -= 3 * SPEED;
                 this.animations.play('left');
                 break;
             case FIGHT:
+                this.body.velocity.x = 0 * this.SPEED;
                 if (leftOrRight === 1) {
                     this.animations.play('fightRight');
                 } else {
@@ -136,17 +133,19 @@ Hero.prototype.damage = function (amount, direction) {
         }, 300);
         switch (direction) {
             case 'left':
-                this.body.bounce.x -= 10;
+                this.game.add.tween(this).to({
+                    x: this.body.position.x - 50
+                }, 100, Phaser.Easing.Linear.None, true, 0);
                 break;
             case 'right':
                 this.game.add.tween(this).to({
                     x: this.body.position.x + 70
-                }, 100, Phaser.Easing.Linear.None, true, 100);
+                }, 100, Phaser.Easing.Linear.None, true, 0);
                 break;
             case 'up':
                 this.game.add.tween(this.body).to({
                     y: '-30'
-                }, 100, Phaser.Easing.Linear.None).start();
+                }, 100, Phaser.Easing.Linear.None, true, 0);
                 break;
             default:
         }
@@ -156,6 +155,9 @@ Hero.prototype.damage = function (amount, direction) {
         if (this.health <= 0) {
             dead = true;
             this.alive = false;
+            this.game.add.tween(this).from({
+                alpha: 0
+            }, 200, Phaser.Easing.Cubic.Out, true, 0, -1, true);
             setTimeout(() => {
                 this.kill();
                 this.game.state.restart();
@@ -192,7 +194,24 @@ Boss.prototype.update = function () {
         bossIsChangingFrame = true
         setTimeout(() => {
             bossIsChangingFrame = false;
-        }, 10);
+        }, 50);
+        if (this.game.physics.arcade.distanceBetween(this, hero) < 100) {
+            // if player to left of enemy AND enemy moving to right (or not moving)
+            if (hero.x < this.x && this.body.velocity.x >= 0) {
+                // move enemy to left
+                this.animations.play('left');
+                boss.body.velocity.x = -Boss.SPEED;
+            }
+            // if player to right of enemy AND enemy moving to left (or not moving)
+            else if (hero.x > boss.x && boss.body.velocity.x <= 0) {
+                // move enemy to right
+                this.animations.play('right');
+                this.body.velocity.x = Boss.SPEED; // turn right
+            }
+            bossCloseOfHero = true
+        } else {
+            bossCloseOfHero = false;
+        }
         // check against walls and reverse direction if necessary
         if (this.body.touching.right || this.body.blocked.right) {
             this.animations.play('left');
@@ -208,6 +227,7 @@ Boss.prototype.damage = function (amount) {
     if (this.alive) {
         this.health -= amount;
         if (this.health <= 0) {
+            PlayState._spawnKeys({x: this.body.x, y: this.body.y});
             this.kill();
         }
     }
@@ -275,6 +295,9 @@ PlayState = {};
 PlayState.init = function () {
     this.game.renderer.renderSession.roundPixels = true;
 
+    KeyPickupCount = 0;
+
+
     this.keys = this.game.input.keyboard.addKeys({
         left: Phaser.KeyCode.LEFT,
         right: Phaser.KeyCode.RIGHT,
@@ -313,6 +336,7 @@ PlayState.preload = function () {
     this.game.load.spritesheet('fireBall', 'images/decorations/fireBall.png', 13.33, 15, 3);
     this.game.load.spritesheet('trampo', 'images/decorations/trampo.png', 60, 51, 2);
     this.game.load.image('door-closed', 'images/decorations/door-closed.png');
+    this.game.load.spritesheet('door', 'images/decorations/door.png', 44, 51, 2);
     this.game.load.image('passerelle', 'images/platforms/passerelle.png');
     this.game.load.image('portalLeft', 'images/decorations/portalLeft.png');
     this.game.load.image('portalRight', 'images/decorations/portalRight.png');
@@ -332,6 +356,8 @@ PlayState.preload = function () {
     this.game.load.spritesheet('bullet', 'images/playerMage/bullet.png', 20, 14, 4);
     this.game.load.spritesheet('laserAsset', 'images/decorations/laser.png', 112, 64, 2);
     this.game.load.image('star', 'images/bonus/beer.png');
+    this.game.load.image('green-bar', 'images/health-green.png');
+    this.game.load.image('red-bar', 'images/health-red.png');
     this.game.load.audio('sfx:jump', 'audio/jump.wav');
     this.game.load.audio('sfx:coin', 'audio/coin.wav');
     this.game.load.audio('sfx:key', 'audio/key.wav');
@@ -345,7 +371,11 @@ PlayState.preload = function () {
     this.game.load.audio('sfx:stars', 'audio/stars.wav');
     this.game.load.audio('sfx:portal', 'audio/portal.wav');
     this.game.load.audio('sfx:bullet', 'audio/bullet.wav');
-    this.game.load.audio('sfx:explosion', 'audio/explosion.wav');
+    this.game.load.audio('sfx:explosion', 'audio/explosion1.wav');
+    this.game.load.audio('sfx:sharpe', 'audio/sharpe.wav');
+    this.game.load.audio('sfx:getingHit', 'audio/getingHit.wav');
+    this.game.load.audio('sfx:blade', 'audio/blade.wav');
+    this.game.load.audio('sfx:splash', 'audio/splash.wav');
 };
 // ==============================================
 // Var initialization
@@ -374,6 +404,7 @@ var bulletDamage = false;
 var deadSlime = 0;
 var mage;
 var hero;
+var healthBar;
 var pizza;
 var walking = false;
 var hiting = false;
@@ -384,10 +415,15 @@ var mageBulletReady = true;
 var bossIsChangingFrame = false;
 var sharperDamage = false;
 var bullets;
+var bossCloseOfHero = false;
+var keynumber;
+var KeyPickupCount;
+var door;
 // ==============================================
 // Crée le jeux
 // ==============================================
 PlayState.create = function () {
+
 
     // creation des sons du jeux
     this.sfx = {
@@ -403,7 +439,11 @@ PlayState.create = function () {
         stars: this.game.add.audio('sfx:stars'),
         portal: this.game.add.audio('sfx:portal'),
         bullet: this.game.add.audio('sfx:bullet'),
-        explosion: this.game.add.audio('sfx:explosion')
+        explosion: this.game.add.audio('sfx:explosion'),
+        sharpe: this.game.add.audio('sfx:sharpe'),
+        getingHit: this.game.add.audio('sfx:getingHit'),
+        blade: this.game.add.audio('sfx:blade'),
+        splash: this.game.add.audio('sfx:splash')
     };
     
 
@@ -418,6 +458,25 @@ PlayState.create = function () {
 
     // Charge le fichier JSON du niveaux 1
     this._loadLevel(this.game.cache.getJSON('level:1'));
+
+    // change position if needed (but use same position for both images)
+    var backgroundBar = this.game.add.image(100, 20, 'red-bar');
+    backgroundBar.fixedToCamera = true;
+
+    healthBar = this.game.add.image(100, 20, 'green-bar');
+    healthBar.fixedToCamera = true;
+
+    // add text label to left of bar
+    var healthLabel = this.game.add.text(10, 20, 'Health', {
+        fontSize: '20px',
+        fill: '#ffffff'
+    });
+    healthLabel.fixedToCamera = true;
+    keynumber = this.game.add.text(50, 60, KeyPickupCount, {
+        fontSize: '20px',
+        fill: '#ffffff'
+    });
+
 };
 // ==============================================
 // Fontion qui s'active toute les 1ms pour update le jeux
@@ -425,14 +484,19 @@ PlayState.create = function () {
 PlayState.update = function () {
     this._handleCollisions();
     this._handleInput();
-    /*this._mapStars();*/
-    this._handleBullet()
+    this._mapStars();
+    this._handleBullet();
+    keynumber.text = KeyPickupCount;
+    if (KeyPickupCount === 5) {
+        door.animations.play('open')
+    }
     // Si le mange touche le portail dimemensionel il est teleporter a celui du dessus
     if ((hero.position.y > 380 && hero.position.y < 450) && (hero.position.x > 380 && hero.position.x < 400)) {
         hero.position.y = 200;
         hero.position.x = 360;
         this.sfx.portal.play();
     }
+    healthBar.scale.setTo(hero.health / hero.maxHealth, 1);
 };
 // ==============================================
 // Fonction qui remet l'etat de base si la personne viens de sauter et atterie sur une platform
@@ -470,7 +534,7 @@ function spriteMovinPlant(hero, plant) {
             this.sfx.die.play();
             dead = false;
         }
-        this.sfx.punch.play();
+        this.sfx.getingHit.play();
     }
 }
 
@@ -526,6 +590,7 @@ function heroVsBoss(hero, boss) {
             setTimeout(() => {
                 bossDamage = false;
             }, 500);
+            boss.body.velocity.x *= -1;
             boss.damage(1);
         }
     }
@@ -605,13 +670,14 @@ function fireLaser() {
         mageBulletReady = false;
         setTimeout(() => {
             mageBulletReady = true;
-        }, attackSpeed);
+        }, hero.attackSpeed);
         // Get the first laser that's inactive, by passing 'false' as a parameter
         let laser = bullets.getFirstExists(false);
         if (laser) {
             laser.animations.add('explode', [0, 3], 10, true);
             laser.animations.add('fire', [0, 1, 2], 10, true);
             laser.animations.play('fire');
+            laser.body.setCircle(10, 5, 5);
             if (leftOrRight === 1) {
                 // If we have a laser, set it to the starting position
                 laser.reset(hero.x + 20, hero.y + 25);
@@ -662,18 +728,21 @@ PlayState._handleInput = function () {
             hiting = true;
             if (HEROCHOSEN === 'mage') {
                 this.sfx.bullet.play();
+            } else if (HEROCHOSEN === 'warrior') {
+                this.sfx.blade.play();
             } else {
                 this.sfx.hit.play();
             }
             hero.move(2);
             setTimeout(() => {
                 hiting = false;
-            }, attackSpeed)
+            }, hero.attackSpeed)
         }
     } else if (this.keys.up.isDown) { // move hero up
         this.game.camera.y += 1;
         hero.move(0);
     } else { // stop
+        hero.move(0);
         if (leftOrRight === 1) {
             hero.animations.play('standRight');
         } else {
@@ -690,6 +759,12 @@ PlayState._loadLevel = function (data) {
     const GRAVITY = 1500;
     // Ajoute la gravité
     this.game.physics.arcade.gravity.y = GRAVITY;
+
+    let keyIcon = this.game.make.image(10, 50, 'key');
+
+    this.hud = this.game.add.group();
+    this.hud.add(keyIcon);
+    this.hud.position.set(10, 10);
 
     // ...
     // spawn hero and enemies
@@ -736,12 +811,12 @@ PlayState._loadLevel = function (data) {
     // Creation de toute les platforms/decoration/pieges
     // ==============================================
     this.castle.create(3100, 70, 'castle');
-    // let arrowDown = this.game.add.image(45, 360, 'arrow');
-    movingGrasseYLeft = this.platformsMovable.create(280, 560, 'grass:2x1');
-    movingGrasseYRight = this.platformsMovable.create(550, 250, 'grass:2x1');
-    portalTopRight = this.portal.create(350, 120, 'portalTop');
-    portalBottomRight = this.portal.create(400, 420, 'portalBottom');
-    let door = this.doors.create(3210, 250, 'door-closed');
+    movingGrasseYLeft = this.platformsMovable.create(115, 535, 'grass:2x1');
+    movingGrasseYRight = this.platformsMovable.create(475, 535, 'grass:2x1');
+    portalTopRight = this.portal.create(30, 140, 'portalTop');
+    portalBottomRight = this.portal.create(30, 420, 'portalBottom');
+    door = this.doors.create(1000, 250, 'door');
+    door.animations.add('open', [1], 1, true);
     plant = this.platformsMovable.create(600, 600, 'plant');
     pizza = this.pizzas.create(310, 150, 'pizza');
     pizza2 = this.pizzas.create(890, 490, 'pizza');
@@ -751,11 +826,6 @@ PlayState._loadLevel = function (data) {
     // ==============================================
     // Animations
     // ==============================================
-    /* arrow down
-    this.game.add.tween(arrowDown).to({
-        y: arrowDown.position.y - 25
-    }, 800, Phaser.Easing.Linear.None, true, 0, -1, true);
-    */
     // PIZZA MOVE
     this.game.add.tween(pizza).to({
         y: pizza.position.y - 50
@@ -766,7 +836,6 @@ PlayState._loadLevel = function (data) {
         x: pizza2.position.x + 150
     }, 2500, Phaser.Easing.Linear.None, true, 0, -1, true);
     pizza2.body.setSize(pizza2.width, pizza2.height);
-
 
     this.game.add.tween(star1).to({
         y: star1.position.y - 10
@@ -783,12 +852,10 @@ PlayState._loadLevel = function (data) {
     this.game.add.tween(movingGrasseYLeft).to({
         y: movingGrasseYLeft.position.y - 120
     }, 2000, Phaser.Easing.Linear.None, true, 0, -1, true);
-    movingGrasseYLeft.body.setSize(movingGrasseYLeft.width, movingGrasseYLeft.height);
     // Platforme de haut en bas a coter de la plante
     this.game.add.tween(movingGrasseYRight).to({
         y: movingGrasseYRight.position.y - 120
     }, 2000, Phaser.Easing.Linear.None, true, 0, -1, true);
-    movingGrasseYRight.body.setSize(movingGrasseYRight.width, movingGrasseYRight.height);
     // Platforme en haut de gauche a droite a coter du soleil Moves
     this.game.add.tween(movingGrasseX.body).to({
         x: '+140'
@@ -908,13 +975,14 @@ PlayState._spawnSlime = function (nbr) {
 PlayState._spawnCharacters = function (data) {
     // spawn hero
     hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN);
-    hero.body.setSize(30, 50);
+    hero.body.setSize(40, 50);
     this.game.add.existing(hero);
     boss = new Boss(this.game, data.boss.x, data.boss.y, 'boss');
     boss.body.setSize(boss.width, boss.height);
     this.game.add.existing(boss);
     boss.body.allowGravity = false;
     boss.body.immovable = true;
+    boss.body.bounce.x = 1;
     this.boss.add(boss);
 
     let slime = new Slime(this.game, 330, 404, 'slime');
@@ -981,43 +1049,51 @@ PlayState._spawnFireBalls = function (fireBall) {
     sprite.animations.play('movin');
     this.game.add.tween(sprite).to({
         y: sprite.position.y + 10
-    }, getRandomArbitrary(600, 1000), Phaser.Easing.Linear.None, true, 0, -1, true);
+    }, getRandomArbitrary(600, 1000), Phaser.Easing.Cubic.In, true, 0, -1, true);
     sprite.body.setSize(sprite.width, sprite.height);
 };
 
 // Quand le hero touche un drapeau
 PlayState._onHeroVsKey = function (hero, key) {
+    KeyPickupCount++;
     this.sfx.key.play();
     key.kill();
 };
 PlayState._onHeroVsPizzas = function (hero, pizza) {
     this.sfx.pizza.play();
     pizza.kill();
-    hero.healt += 1;
+    hero.heal(1);
 };
 PlayState._onHeroVsStars = function (hero, star) {
     this.sfx.stars.play();
-    SPEED = 1.5;
+    let heroSpeed = hero.SPEED
+    hero.SPEED += 20;
     let heroHealtBefore = hero.health;
-    hero.health = 9999999999;
+    hero.health = 3;
     setTimeout(() => {
-        SPEED = 1;
+        hero.SPEED = heroSpeed;
         hero.health = heroHealtBefore;
-    }, 2000);
+    }, 4000);
     star.kill();
 };
 PlayState._onSpriteVsSharper = function (hero, sharper) {
     if (sharperDamage === false) {
-        console.log("test")
         sharperDamage = true;
         setTimeout(() => {
             sharperDamage = false;
         }, 500);
-        if (hero.body.position.x < sharper.body.position.x) {
-            hero.damage(0.5, 'left');
-        } else {
-            hero.damage(0.5, 'right');
+        if (hero.body.position.y < sharper.body.position.y) {
+            if (hero.body.position.x < sharper.body.position.x) {
+                hero.damage(0.5, 'left');
+            } else {
+                hero.damage(0.5, 'right');
+            }
+            this.sfx.sharpe.play();
         }
+    }
+    if (dead) {
+        this.sfx.die.play();
+        dead = false;
     }
 };
 PlayState._onBulletVsMonster = function (bullet, monster) {
@@ -1043,15 +1119,20 @@ PlayState._onSpriteVsSLime = function (hero, slime) {
             setTimeout(() => {
                 slimeDamage = false;
             }, 300);
-            if (hero.body.x >= slime.body.position.x - 40) {
+            if (hero.body.x >= slime.body.position.x) {
                 hero.damage(spriteDmg, 'right');
-            } else if (hero.body.x <= slime.body.position.x - 40) {
+            } else if (hero.body.x <= slime.body.position.x) {
                 hero.damage(spriteDmg, 'left');
             }
-            this.sfx.punch.play();
+            this.sfx.getingHit.play();
         }
     } else {
+        this.sfx.splash.play();
         slime.damage(1);
+    }
+    if (dead) {
+        this.sfx.die.play();
+        dead = false;
     }
 };
 
@@ -1106,8 +1187,10 @@ PlayState._spawnEnemyWall = function (x, y, side) {
 // entry point
 // =============================================================================
 
-window.onload = function () {
+
+function runGame(persoChoose) {
+    HEROCHOSEN = persoChoose;
     var game = new Phaser.Game(config);
     game.state.add('play', PlayState);
     game.state.start('play');
-};
+}

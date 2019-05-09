@@ -1,30 +1,156 @@
 <!doctype html>
+
 <head>
     <title>BATTLE TRAP</title>
     <meta charset="utf-8">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="css/style.css">
 
 
-    <style>
-        body {
-            background-color: black;
-        }
-
-        canvas {
-            margin: 0 auto;
-        }
-    </style>
 </head>
-<body>
-<div id="game">
 
+<body>
+
+<!-- HOME PAGE -->
+
+<div id="screen-home">
+    <section class="container">
+        <article class="row">
+            <div class=" mt-5 col-lg-12 text-center">
+                <h1>BATTLE TRAP </h1>
+            </div>
+
+            <div class="col-lg-4 offset"></div>
+
+            <div class="text-center">
+                <button onclick="screenChoosePerso.hidden = false;screenHome.hidden = true;"
+                        class="pixel">START
+                </button>
+            </div>
+
+
+        </article>
+    </section>
 </div>
-<!-- <iframe  src="audio/bgm.mp3" allow="autoplay" style="display:none" id="iframeAudio">
-</iframe> -->
-<audio autoplay loop id="playAudio">
+
+<!-- SCREEN CHOOSE PERSO -->
+
+<div id="screen-choose-perso">
+    <section class="container">
+        <article class="row">
+            <div class=" mt-5 col-lg-12 text-center">
+            </div>
+            <div class="col-lg-12 text-center mt-1">
+                <p style="color:white;">CHOOSE YOUR PLAYER</p>
+            </div>
+            <div class="col-lg-4"
+                 id="caracteristique">
+                <p style="color:white"
+                   id="titleCaracteristique"> CARACTERISTIQUE</p>
+                <p id="contenuCaracteristique"
+                   class="pt-2">
+                <p style="color:white; font-size:8px;">VIE</p>
+                <div class="progress">
+
+                    <div class="progress-bar progress-bar-striped bg-danger progress-bar-animated"
+                         role="progressbar"
+                         id="progressLife"></div>
+                </div>
+
+                <p style="color:white; font-size:8px;"
+                   class="pt-5">RAPIDITER</p>
+                <div class="progress">
+
+                    <div class="progress-bar progress-bar-striped bg-success progress-bar-animated"
+                         role="progressbar"
+                         id="progressSpeed"></div>
+                </div>
+                <p style="color:white; font-size:8px;"
+                   class="pt-5">DOMMAGE</p>
+                <div class="progress">
+
+                    <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated"
+                         role="progressbar"
+                         id="progressDommage"></div>
+                </div>
+
+                <p style="color:white; font-size:8px;"
+                   class="pt-5">VITESSE ATTAQUE</p>
+                <div class="progress">
+
+                    <div class="progress-bar progress-bar-striped bg-info progress-bar-animated"
+                         role="progressbar"
+                         id="progressSpeedAttaque"></div>
+                </div>
+                </p>
+
+
+            </div>
+            <div style="padding-top: 30px; margin-left:15px;"
+                 class="col-lg-4 mt-5 text-center">
+
+                <div class="pisxel git"
+                     id="mageChoose">
+                    <i class="icon-github"></i>
+                </div>
+
+                <div class="pisxel twitter"
+                     id="voleurChoose">
+                    <i class="icon-twitter"></i>
+                </div>
+
+                <div class="pisxel linkedin"
+                     id="guerrierChoose">
+                    <i class="icon-linkedin"></i>
+                </div>
+            </div>
+            <div class="col-lg-3 text-center">
+                <p style="color:white;">HISTOIRE</p>
+                <p style="color:white;
+                 font-family: 'Times New Roman', Times, serif;" id="historyPerso"></p>
+            </div>
+
+        </article>
+        <div class="col-lg-12 text-center">
+            <h3 id="text-choose"></h3>
+        </div>
+        <div class="text-center" style="transform: translateY(-100px)">
+            <button onclick="if (persoChoose){runGame(persoChoose);screenChoosePerso.hidden = true;} "
+                    class="pixel">PLAY
+            </button>
+        </div>
+    </section>
+</div>
+
+<!-- GAME -->
+
+<div id="screen-game">
+    <div id="game">
+
+    </div>
+</div>
+
+<!-- GAME OVER -->
+
+<div id="screen-gameOver">
+    <div class="container">
+        <a id="button-restart">
+            <button class="pixel">RESTART</button>
+        </a>
+        <a id="button-return-home">
+            <button class="pixel">HOME</button>
+        </a>
+    </div>
+</div>
+
+<audio autoplay
+       loop
+       id="playAudio">
     <source src="audio/bgm.mp3">
 </audio>
 
@@ -33,6 +159,8 @@
 <script src="js/phaser.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/music.js"></script>
+<script src="js/script2.js"></script>
+<script src="js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -44,3 +172,4 @@
         crossorigin="anonymous"></script>
 </body>
 
+<!-- aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%" -->
