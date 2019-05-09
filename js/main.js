@@ -334,6 +334,7 @@ PlayState.preload = function () {
     this.game.load.image('spike', 'images/decorations/spike.png');
     this.game.load.image('invisible-wall', 'images/platforms/invisible_wall.png');
     this.game.load.spritesheet('fireBall', 'images/decorations/fireBall.png', 13.33, 15, 3);
+    this.game.load.image('rond', 'images/decorations/rond_line.png')
     this.game.load.spritesheet('trampo', 'images/decorations/trampo.png', 60, 51, 2);
     this.game.load.image('door-closed', 'images/decorations/door-closed.png');
     this.game.load.spritesheet('door', 'images/decorations/door.png', 44, 51, 2);
@@ -484,12 +485,21 @@ PlayState.create = function () {
 PlayState.update = function () {
     this._handleCollisions();
     this._handleInput();
-    this._mapStars();
+/*    this._mapStars();*/
     this._handleBullet();
     keynumber.text = KeyPickupCount;
     if (KeyPickupCount === 5) {
         door.animations.play('open')
     }
+// ==============================================
+// Fonction qui tue le hero si il est en dehors de la map
+// ==============================================
+/*
+    if (hero.body.position.y === 570) {
+        hero.damage(hero.health);
+        this.sfx.die.play(); a améliorer avec la fonction ONDEAD
+    }*/
+    
     // Si le mange touche le portail dimemensionel il est teleporter a celui du dessus
     if ((hero.position.y > 380 && hero.position.y < 450) && (hero.position.x > 380 && hero.position.x < 400)) {
         hero.position.y = 200;
@@ -497,6 +507,7 @@ PlayState.update = function () {
         this.sfx.portal.play();
     }
     healthBar.scale.setTo(hero.health / hero.maxHealth, 1);
+        this.game.debug.spriteInfo(hero, 40,50)
 };
 // ==============================================
 // Fonction qui remet l'etat de base si la personne viens de sauter et atterie sur une platform
@@ -513,6 +524,7 @@ function spriteVsPlatform(hero) {
         jumpin = false;
     }
 }
+
 
 
 
@@ -545,7 +557,7 @@ function spriteDegatSpike(hero) {
             spikeDamage = false;
         }, 100);
         hero.damage(0.25, 'up');
-        this.sfx.lava.play();
+        this.sfx.punch.play();
         if (dead) {
             this.sfx.die.play();
             dead = false;
@@ -1136,24 +1148,7 @@ PlayState._onSpriteVsSLime = function (hero, slime) {
     }
 };
 
-PlayState._onSpriteVsSLime = function (hero, slime) {
-    if (hiting === false) {
-        if (slimeDamage === false) {
-            slimeDamage = true;
-            setTimeout(() => {
-                slimeDamage = false;
-            }, 300);
-            if (hero.body.x >= slime.body.position.x - 40) {
-                hero.damage(spriteDmg, 'right');
-            } else if (hero.body.x <= slime.body.position.x - 40) {
-                hero.damage(spriteDmg, 'left');
-            }
-            this.sfx.punch.play();
-        }
-    } else {
-        slime.damage(1);
-    }
-};
+
 
 PlayState._onHerovsTrampos = function (hero, trampo) {
     if (heroJumpinOnTrampo === false) {
