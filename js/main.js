@@ -94,7 +94,6 @@ Hero.prototype.move = function (direction) {
         switch (direction) {
             case RIGHT:
                 this.animations.play('right');
-                console.log(this.body.position)
                 break;
             case LEFT:
                 this.animations.play('left');
@@ -487,12 +486,13 @@ PlayState.update = function () {
     if (KeyPickupCount === 5) {
         door.animations.play('open')
     }
-    // Si le mange touche le portail dimemensionel il est teleporter a celui du dessus
-    if ((hero.position.y > 380 && hero.position.y < 450) && (hero.position.x > 380 && hero.position.x < 400)) {
+    // Si le mange touche le portail dimmensionel il est teleporter a celui du dessus
+    if ((hero.position.y > 380 && hero.position.y < 450) && (hero.position.x > 380 && hero.position.x < 460)) {
         hero.position.y = 200;
         hero.position.x = 360;
         this.sfx.portal.play();
     }
+    this.game.debug.spriteInfo(hero, 40, 50);
     healthBar.scale.setTo(hero.health / hero.maxHealth, 1);
 };
 // ==============================================
@@ -792,10 +792,10 @@ PlayState._loadLevel = function (data) {
     // Creation de toute les platforms/decoration/pieges
     // ==============================================
     this.castle.create(3100, 70, 'castle');
-    movingGrasseYLeft = this.platformsMovable.create(115, 535, 'grass:2x1');
-    movingGrasseYRight = this.platformsMovable.create(475, 535, 'grass:2x1');
-    portalTopRight = this.portal.create(30, 140, 'portalTop');
-    portalBottomRight = this.portal.create(30, 420, 'portalBottom');
+    movingGrasseYLeft = this.platformsMovable.create(280, 540, 'grass:2x1');
+    movingGrasseYRight = this.platformsMovable.create(520, 215, 'grass:2x1');
+    portalTopRight = this.portal.create(340, 100, 'portalTop');
+    portalBottomRight = this.portal.create(400, 410, 'portalBottom');
     door = this.doors.create(1000, 250, 'door');
     door.animations.add('open', [1], 1, true);
     plant = this.platformsMovable.create(600, 600, 'plant');
