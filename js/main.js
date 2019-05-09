@@ -94,7 +94,6 @@ Hero.prototype.move = function (direction) {
         switch (direction) {
             case RIGHT:
                 this.animations.play('right');
-                console.log(this.body.position)
                 break;
             case LEFT:
                 this.animations.play('left');
@@ -446,16 +445,14 @@ PlayState.create = function () {
         blade: this.game.add.audio('sfx:blade'),
         splash: this.game.add.audio('sfx:splash')
     };
-    
-
 
 
     // Creation de la map en parallax
-    background = this.add.tileSprite(0,0, 3410,620, "bg_back");
-    building = this.add.tileSprite(0,0, 2210,620, "buildinImg");
-    fontMap = this.add.tileSprite(0,0, 3410,620, "bg_front");
+    background = this.add.tileSprite(0, 0, 3410, 620, "bg_back");
+    building = this.add.tileSprite(0, 0, 2210, 620, "buildinImg");
+    fontMap = this.add.tileSprite(0, 0, 3410, 620, "bg_front");
     building.fixedToCamera = true; // Creer le parallax    
-    this.game.world.setBounds(0,0,3410,620); // taille du monde
+    this.game.world.setBounds(0, 0, 3410, 620); // taille du monde
 
     // Charge le fichier JSON du niveaux 1
     this._loadLevel(this.game.cache.getJSON('level:1'));
@@ -485,7 +482,6 @@ PlayState.create = function () {
 PlayState.update = function () {
     this._handleCollisions();
     this._handleInput();
-/*    this._mapStars();*/
     this._handleBullet();
     keynumber.text = KeyPickupCount;
     if (KeyPickupCount === 5) {
@@ -506,6 +502,7 @@ PlayState.update = function () {
         hero.position.x = 360;
         this.sfx.portal.play();
     }
+    this.game.debug.spriteInfo(hero, 40, 50);
     healthBar.scale.setTo(hero.health / hero.maxHealth, 1);
         this.game.debug.spriteInfo(hero, 40,50)
 };
@@ -516,10 +513,10 @@ function spriteVsPlatform(hero) {
     if (jumpin) {
         if (leftOrRight === 1) {
             hero.animations.play('standRight');
-            
+
         } else {
             hero.animations.play('standLeft');
-            
+
         }
         jumpin = false;
     }
@@ -564,6 +561,7 @@ function spriteDegatSpike(hero) {
         }
     }
 }
+
 function spriteDegatLava(hero) {
     if (!lavaDamage) {
         lavaDamage = true;
@@ -608,22 +606,6 @@ function heroVsBoss(hero, boss) {
     }
 }
 
-// Change la map pour faire bouger les etoiles
-/*PlayState._mapStars = function () {
-    if (counter !== 0) {
-        counter -= 1;
-    } else {
-        counter = 20;
-        if (timeMap !== 0) {
-            timeMap -= 1;
-        }
-        if (timeMap % 2 == 0) {
-            map.loadTexture('background1', 0);
-        } else {
-            map.loadTexture('background', 0);
-        }
-    }
-}*/
 // ==============================================
 // Fonction qui calcule les collisions
 // ==============================================f
@@ -693,7 +675,7 @@ function fireLaser() {
             if (leftOrRight === 1) {
                 // If we have a laser, set it to the starting position
                 laser.reset(hero.x + 20, hero.y + 25);
-                
+
                 // Give it a velocity of -500 so it starts shooting
                 laser.body.velocity.x = +400;
             } else {
@@ -823,10 +805,10 @@ PlayState._loadLevel = function (data) {
     // Creation de toute les platforms/decoration/pieges
     // ==============================================
     this.castle.create(3100, 70, 'castle');
-    movingGrasseYLeft = this.platformsMovable.create(115, 535, 'grass:2x1');
-    movingGrasseYRight = this.platformsMovable.create(475, 535, 'grass:2x1');
-    portalTopRight = this.portal.create(30, 140, 'portalTop');
-    portalBottomRight = this.portal.create(30, 420, 'portalBottom');
+    movingGrasseYLeft = this.platformsMovable.create(280, 540, 'grass:2x1');
+    movingGrasseYRight = this.platformsMovable.create(520, 215, 'grass:2x1');
+    portalTopRight = this.portal.create(340, 100, 'portalTop');
+    portalBottomRight = this.portal.create(400, 410, 'portalBottom');
     door = this.doors.create(1000, 250, 'door');
     door.animations.add('open', [1], 1, true);
     plant = this.platformsMovable.create(600, 600, 'plant');
@@ -920,7 +902,7 @@ PlayState._loadLevel = function (data) {
     data.laserAsset.forEach(this._spawnLaser, this);
     // appel les donnée "trampos" dans JSON
     data.trampos.forEach(this._spawnTrampo, this);
-     // appel les donnée "spike" dans JSON
+    // appel les donnée "spike" dans JSON
     data.spikeData.forEach(this._spawnSpike, this);
     // spawn hero and enemies
     this._spawnCharacters({
