@@ -226,7 +226,10 @@ Boss.prototype.damage = function (amount) {
     if (this.alive) {
         this.health -= amount;
         if (this.health <= 0) {
-            PlayState._spawnKeys({x: this.body.x, y: this.body.y});
+            PlayState._spawnKeys({
+                x: this.body.x,
+                y: this.body.y
+            });
             this.kill();
         }
     }
@@ -315,6 +318,7 @@ PlayState.init = function () {
             fireLaser()
         }
     }, this);
+
 };
 // ==============================================
 // Image pour les platforms, sprites etc..
@@ -418,10 +422,21 @@ var bossCloseOfHero = false;
 var keynumber;
 var KeyPickupCount;
 var door;
+var isDownX;
+
+var pad1;
+let upAXbox;
 // ==============================================
 // Crée le jeux
 // ==============================================
 PlayState.create = function () {
+
+    this.game.input.gamepad.start();
+
+    // To listen to buttons from a specific pad listen directly on that pad game.input.gamepad.padX, where X = pad 1-4
+    pad1 = this.game.input.gamepad.pad1;
+
+    this.game.input.onDown.add(dump, this);
 
 
     // creation des sons du jeux
@@ -443,17 +458,26 @@ PlayState.create = function () {
         getingHit: this.game.add.audio('sfx:getingHit'),
         blade: this.game.add.audio('sfx:blade'),
         splash: this.game.add.audio('sfx:splash')
+
     };
-    
+
+    function dump() {
+
+        console.log(pad1._axes[0]);
+        console.log(pad1._rawPad.axes[0]);
+
+    }
+
+
 
 
 
     // Creation de la map en parallax
-    background = this.add.tileSprite(0,0, 3410,620, "bg_back");
-    building = this.add.tileSprite(0,0, 2210,620, "buildinImg");
-    fontMap = this.add.tileSprite(0,0, 3410,620, "bg_front");
+    background = this.add.tileSprite(0, 0, 3410, 620, "bg_back");
+    building = this.add.tileSprite(0, 0, 2210, 620, "buildinImg");
+    fontMap = this.add.tileSprite(0, 0, 3410, 620, "bg_front");
     building.fixedToCamera = true; // Creer le parallax    
-    this.game.world.setBounds(0,0,3410,620); // taille du monde
+    this.game.world.setBounds(0, 0, 3410, 620); // taille du monde
 
     // Charge le fichier JSON du niveaux 1
     this._loadLevel(this.game.cache.getJSON('level:1'));
@@ -483,7 +507,6 @@ PlayState.create = function () {
 PlayState.update = function () {
     this._handleCollisions();
     this._handleInput();
-    this._mapStars();
     this._handleBullet();
     keynumber.text = KeyPickupCount;
     if (KeyPickupCount === 5) {
@@ -497,6 +520,10 @@ PlayState.update = function () {
     }
     this.game.debug.spriteInfo(hero, 40, 50);
     healthBar.scale.setTo(hero.health / hero.maxHealth, 1);
+
+    if (HEROCHOSEN === 'mage' && isDownX) {
+        fireLaser();
+    }
 };
 // ==============================================
 // Fonction qui remet l'etat de base si la personne viens de sauter et atterie sur une platform
@@ -505,10 +532,10 @@ function spriteVsPlatform(hero) {
     if (jumpin) {
         if (leftOrRight === 1) {
             hero.animations.play('standRight');
-            
+
         } else {
             hero.animations.play('standLeft');
-            
+
         }
         jumpin = false;
     }
@@ -552,6 +579,7 @@ function spriteDegatSpike(hero) {
         }
     }
 }
+
 function spriteDegatLava(hero) {
     if (!lavaDamage) {
         lavaDamage = true;
@@ -596,22 +624,6 @@ function heroVsBoss(hero, boss) {
     }
 }
 
-// Change la map pour faire bouger les etoiles
-/*PlayState._mapStars = function () {
-    if (counter !== 0) {
-        counter -= 1;
-    } else {
-        counter = 20;
-        if (timeMap !== 0) {
-            timeMap -= 1;
-        }
-        if (timeMap % 2 == 0) {
-            map.loadTexture('background1', 0);
-        } else {
-            map.loadTexture('background', 0);
-        }
-    }
-}*/
 // ==============================================
 // Fonction qui calcule les collisions
 // ==============================================f
@@ -681,7 +693,7 @@ function fireLaser() {
             if (leftOrRight === 1) {
                 // If we have a laser, set it to the starting position
                 laser.reset(hero.x + 20, hero.y + 25);
-                
+
                 // Give it a velocity of -500 so it starts shooting
                 laser.body.velocity.x = +400;
             } else {
@@ -698,10 +710,24 @@ function fireLaser() {
 // ==============================================
 // Ecouteur d'evenement sur la touche du clavier pressé
 // ==============================================
+/*
+
+
+
+*/
 PlayState._handleInput = function () {
-    let spaceBar = this.game.input.keyboard.addKey(32); // Recupere le ASCI de la barre d'espace
+
+
+
+
+    let spaceBar = this.game.input.keyboard.addKey(32);
+    let attackAXbox = pad1.justPressed(Phaser.Gamepad.XBOX360_B)
+    let upAXbox= pad1.justPressed(Phaser.Gamepad.XBOX360_A);
+    let upAna = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+    // Recupere le ASCI de la barre d'espace
     let isDown = spaceBar.isDown;
-    if (this.keys.left.isDown) { // move hero left
+    isDownX = attackAXbox;
+    if (this.keys.left.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) { // move hero left
         leftOrRight = -1;
         this.game.camera.follow(hero)
         hero.move(-1);
@@ -712,7 +738,7 @@ PlayState._handleInput = function () {
                 walking = false;
             }, 500)
         }
-    } else if (this.keys.right.isDown) { // move hero right
+    } else if (this.keys.right.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) { // move hero right
         leftOrRight = 1;
         hero.move(1);
         this.game.camera.follow(hero) //camera suit le hero
@@ -723,7 +749,7 @@ PlayState._handleInput = function () {
                 walking = false;
             }, 500)
         }
-    } else if (isDown) { // fighting
+    } else if (isDown || isDownX) { // fighting
         if (hiting === false) {
             hiting = true;
             if (HEROCHOSEN === 'mage') {
@@ -738,7 +764,9 @@ PlayState._handleInput = function () {
                 hiting = false;
             }, hero.attackSpeed)
         }
-    } else if (this.keys.up.isDown) { // move hero up
+    } else if (this.keys.up.isDown || upAXbox || upAna) { // move hero up
+        console.log("je saute wllh ! ")
+        hero.jump();
         this.game.camera.y += 1;
         hero.move(0);
     } else { // stop
@@ -908,7 +936,7 @@ PlayState._loadLevel = function (data) {
     data.laserAsset.forEach(this._spawnLaser, this);
     // appel les donnée "trampos" dans JSON
     data.trampos.forEach(this._spawnTrampo, this);
-     // appel les donnée "spike" dans JSON
+    // appel les donnée "spike" dans JSON
     data.spikeData.forEach(this._spawnSpike, this);
     // spawn hero and enemies
     this._spawnCharacters({
