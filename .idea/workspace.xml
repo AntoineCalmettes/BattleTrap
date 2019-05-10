@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
 <<<<<<< Updated upstream
     <list default="true" id="adefe66b-ca4f-4d21-bb4a-7a0264a6d6e2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/data/level01.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/level01.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
 =======
     <list default="true" id="adefe66b-ca4f-4d21-bb4a-7a0264a6d6e2" name="Default Changelist" comment="" />
@@ -20,9 +19,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state relative-caret-position="50">
+              <caret line="244" lean-forward="true" selection-start-line="244" selection-end-line="244" />
+=======
 <<<<<<< HEAD
 <<<<<<< Updated upstream
             <state relative-caret-position="124">
@@ -35,6 +38,7 @@
             <state relative-caret-position="83">
               <caret line="236" column="27" lean-forward="true" selection-start-line="236" selection-start-column="27" selection-end-line="236" selection-end-column="27" />
 >>>>>>> Julien
+>>>>>>> GAMEPAD
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -42,9 +46,22 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/css/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="166">
+              <caret line="172" column="32" lean-forward="true" selection-start-line="172" selection-start-column="32" selection-end-line="172" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/level01.json">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state relative-caret-position="29">
+              <caret line="333" column="5" lean-forward="true" selection-start-line="333" selection-start-column="5" selection-end-line="333" selection-end-column="5" />
+=======
 <<<<<<< HEAD
 <<<<<<< Updated upstream
             <state relative-caret-position="259">
@@ -57,6 +74,7 @@
             <state relative-caret-position="1066">
               <caret line="422" column="4" lean-forward="true" selection-start-line="422" selection-start-column="4" selection-end-line="422" selection-end-column="4" />
 >>>>>>> Julien
+>>>>>>> GAMEPAD
             </state>
           </provider>
         </entry>
@@ -65,6 +83,8 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
+<<<<<<< HEAD
+=======
 <<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
@@ -85,6 +105,7 @@
       <find>left</find>
       <find>canJum</find>
       <find>stand</find>
+>>>>>>> GAMEPAD
       <find>boss.damage</find>
       <find>.setSize</find>
       <find>hero.body.set</find>
@@ -93,8 +114,6 @@
       <find>fireB</find>
       <find>update</find>
       <find>play</find>
-      <find>key</find>
-      <find>boss</find>
       <find>this.key</find>
       <find>door-clo</find>
       <find>door</find>
@@ -109,7 +128,23 @@
 >>>>>>> Stashed changes
 =======
       <find>Mi</find>
+<<<<<<< HEAD
+      <find>Boss</find>
+      <find>boss</find>
+      <find>healthLabel</find>
+      <find>key</find>
+      <find>debug</find>
+      <find>trampos</find>
+      <find>this.trampos</find>
+      <find>rampos</find>
+      <find>jump</find>
+      <find>fire</find>
+      <find>slims</find>
+      <find>slim</find>
+      <find>trampo</find>
+=======
 >>>>>>> Julien
+>>>>>>> GAMEPAD
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -120,10 +155,10 @@
       <list>
         <option value="$PROJECT_DIR$/js/music.js" />
         <option value="$PROJECT_DIR$/js/script.js" />
-        <option value="$PROJECT_DIR$/css/style.css" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/js/main.js" />
         <option value="$PROJECT_DIR$/data/level01.json" />
+        <option value="$PROJECT_DIR$/js/main.js" />
+        <option value="$PROJECT_DIR$/css/style.css" />
       </list>
     </option>
   </component>
@@ -216,6 +251,9 @@
       <workItem from="1557210716112" duration="1068000" />
       <workItem from="1557225685500" duration="16117000" />
 <<<<<<< HEAD
+      <workItem from="1557384920586" duration="22875000" />
+=======
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       <workItem from="1557384920586" duration="1642000" />
 =======
@@ -224,10 +262,14 @@
 =======
       <workItem from="1557384920586" duration="6327000" />
 >>>>>>> Julien
+>>>>>>> GAMEPAD
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
+    <option name="totallyTimeSpent" value="117313000" />
+=======
 <<<<<<< HEAD
 <<<<<<< Updated upstream
     <option name="totallyTimeSpent" value="96080000" />
@@ -237,6 +279,7 @@
 =======
     <option name="totallyTimeSpent" value="100765000" />
 >>>>>>> Julien
+>>>>>>> GAMEPAD
   </component>
   <component name="ToolWindowManager">
     <frame x="292" y="24" width="988" height="698" extended-state="0" />
@@ -299,13 +342,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="172" column="32" lean-forward="true" selection-start-line="172" selection-start-column="32" selection-end-line="172" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/script.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
@@ -348,13 +384,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data/level01.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1066">
-          <caret line="422" column="4" lean-forward="true" selection-start-line="422" selection-start-column="4" selection-end-line="422" selection-end-column="4" />
+        <state relative-caret-position="29">
+          <caret line="333" column="5" lean-forward="true" selection-start-line="333" selection-start-column="5" selection-end-line="333" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="50">
+          <caret line="244" lean-forward="true" selection-start-line="244" selection-end-line="244" />
+=======
 <<<<<<< HEAD
 <<<<<<< Updated upstream
         <state relative-caret-position="259">
@@ -366,10 +406,18 @@
 =======
         <state relative-caret-position="83">
           <caret line="236" column="27" lean-forward="true" selection-start-line="236" selection-start-column="27" selection-end-line="236" selection-end-column="27" />
+>>>>>>> GAMEPAD
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
 >>>>>>> Julien
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="172" column="32" lean-forward="true" selection-start-line="172" selection-start-column="32" selection-end-line="172" selection-end-column="32" />
         </state>
       </provider>
     </entry>
