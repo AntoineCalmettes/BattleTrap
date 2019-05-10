@@ -201,13 +201,13 @@
       "x": 1924,
       "y": 70
     },
-                      {
-    "image": "grass:2x1",
+    {
+      "image": "grass:2x1",
       "x": 2163,
       "y": 400
     },
-                      {
-    "image": "grass:2x1",
+    {
+      "image": "grass:2x1",
       "x": 2227,
       "y": 400
     }
@@ -422,8 +422,8 @@
     }
   ],
   "hero": {
-    "x": 740,
-    "y": 260
+    "x": 10,
+    "y": 10
   },
   "minotaur": {
     "x": 1010,
@@ -476,25 +476,25 @@
       "y": 595
     },
     {
-    "image":"spike",    
+      "image": "spike",
       "x": 1584,
-      "y":  595
+      "y": 595
     },
     {
-    "image":"spike",    
+      "image": "spike",
       "x": 1648,
-      "y":  595
+      "y": 595
     },
     {
-    "image":"spike",    
+      "image": "spike",
       "x": 1712,
-      "y":  595
+      "y": 595
     },
     {
-    "image":"spike",    
+      "image": "spike",
       "x": 1776,
-      "y":  595
-    }        
+      "y": 595
+    }
   ],
   "trampos": [
     {
