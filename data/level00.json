@@ -1,7 +1,7 @@
 {
     "platforms": [
         {"image": "ground", "x": 0, "y": 546},
-        {"image": "grass:4x1", "x": 420, "y": 420}
+        {"image": "grass:4x1", "x": 420, "y": 420},
     ],
     "decoration": [
         {"frame": 2, "x": 630, "y": 504},
