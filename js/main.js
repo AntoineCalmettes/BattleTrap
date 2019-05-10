@@ -45,7 +45,7 @@ var config = {
 //
 // Cree un nouveaux Hero
 //
-function Hero(game, x, y, sprites, speed, attackSpeed, health, maxHealth) {
+function Hero(game, x, y, sprites, speed, attackSpeed, health, maxHealth, range, damageCount) {
     this.sprites = sprites;
     Phaser.Sprite.call(this, game, x, y, sprites);
     this.anchor.set(0.5, 0.5);
@@ -53,6 +53,8 @@ function Hero(game, x, y, sprites, speed, attackSpeed, health, maxHealth) {
     this.attackSpeed = attackSpeed;
     this.health = health;
     this.maxHealth = maxHealth;
+    this.range = range;
+    this.damageCount = damageCount;
     this.animations.add('right', [4, 5], 3, true);
     this.animations.add('standRight', [0, 1], 3, true);
     this.animations.add('standLeft', [2, 3], 3, true);
@@ -83,6 +85,7 @@ Hero.prototype.move = function (direction) {
                 this.animations.play('left');
                 break;
             case FIGHT:
+                this.hit()
                 this.body.velocity.x = 0 * this.SPEED;
                 if (leftOrRight === 1) {
                     this.animations.play('fightRight');
@@ -150,9 +153,24 @@ Hero.prototype.damage = function (amount, direction) {
     }
     return this;
 };
+
 Hero.prototype.hit = function () {
-    if (this.game.physics.arcade.distanceBetween(this, minotaur) < 500) {
-        console.log('test')
+    if (this.game.physics.arcade.distanceBetween(this, minotaur) < this.range) {
+        console.log(minotaur.position.y);
+        if (this.position.y >= minotaur.position.y - 10 && this.position.y <= minotaur.position.y + 10) {
+            if (this.sprites !== 'mage' && minotaur.health > 0) {
+                console.log('minotaur' + this.damageCount);
+                minotaur.damage(this.damageCount);
+                PlayState._soundEffect('splash');
+            }
+        }
+    }
+    if (this.game.physics.arcade.distanceBetween(this, slime) < this.range) {
+        if (this.position.y >= slime.position.y - 10 && this.position.y <= slime.position.y + 10) {
+            console.log('slime' + this.damageCount);
+            slime.damage(this.damageCount);
+            PlayState._soundEffect('splash');
+        }
     }
 };
 
@@ -237,6 +255,7 @@ function Minotaur(game, x, y, sprites) {
     this.animations.add('movinRight', [13, 14, 15, 16, 17, 18, 19, 20, 21], 12, true);
     this.animations.add('attackRight', [22, 23, 24, 25, 26, 27, 28, 29], 5, true);
     this.animations.add('attackLeft', [30, 31, 32, 33, 34, 35, 36, 37], 5, true);
+    this.animations.add('die', [38, 39, 40, 41, 42], 5, true);
     this.animations.play('standingLeft');
     // physic properties
     this.game.physics.enable(this);
@@ -245,87 +264,100 @@ function Minotaur(game, x, y, sprites) {
 
 Minotaur.prototype = Object.create(Phaser.Sprite.prototype);
 Minotaur.prototype.constructor = Minotaur;
-
+Minotaur.prototype.damage = function (amount) {
+    this.health -= amount;
+};
 Minotaur.prototype.update = function () {
-    if ((hero.position.x < 840 || hero.position.x > 1200) && (this.position.x > 1010 && this.position.x < 1030)) {
-        this.animations.play('standingLeft');
-        this.body.velocity.x = 0;
-    } else {
-        if (bossIsChangingFrame === false) {
-            bossIsChangingFrame = true;
-            setTimeout(() => {
-                bossIsChangingFrame = false;
-            }, 50);
-            if (this.position.x > 840 && this.position.x < 1180 && hero.position.x > 840 && hero.position.x < 1200) {
-                if (this.game.physics.arcade.distanceBetween(this, hero) > 50) {
-                    // if player to left of enemy AND enemy moving to right (or not moving)
-                    if (hero.x < this.x && this.body.velocity.x >= 0) {
-                        // move enemy to left
-                        this.animations.play('movinLeft');
-                        this.body.velocity.x = -Minotaur.SPEED;
-                    }
-                    // if player to right of enemy AND enemy moving to left (or not moving)
-                    else if (hero.x > this.x && this.body.velocity.x <= 0) {
-                        // move enemy to right
-                        this.animations.play('movinRight');
-                        this.body.velocity.x = Minotaur.SPEED; // turn right
-                    }
-                    bossCloseOfHero = true
-                } else {
-                    if (this.game.physics.arcade.distanceBetween(this, hero) < 50) {
-                        this.body.velocity.x = 0;
-                        if (hero.x < this.x && this.body.velocity.x >= 0) {
-                            this.animations.play('attackLeft', 15, false, false);
-                            if (minotaureHitHero === false) {
-                                minotaureHitHero = true;
-                                setTimeout(() => {
-                                    minotaureHitHero = false;
-                                }, 1500);
-                                this.events.onAnimationComplete.add(function (event) {
-                                    if (event.animations.currentAnim.name === 'attackLeft') {
-                                        hero.damage(1, 'left');
-                                        PlayState._soundEffect('blade')
-                                    }
-                                }, this);
-                            }
-                        } else if (hero.x > this.x && this.body.velocity.x <= 0) {
-                            this.animations.play('attackRight', 15, false, false);
-                            if (minotaureHitHero === false) {
-                                minotaureHitHero = true;
-                                setTimeout(() => {
-                                    minotaureHitHero = false;
-                                }, 1500);
-                                this.events.onAnimationComplete.add(function (event) {
-                                    if (event.animations.currentAnim.name === 'attackRight') {
-                                        hero.damage(1, 'right');
-                                        PlayState._soundEffect('blade')
-                                    }
-                                }, this);
-                            }
-                        }
-                        if (dead) {
-                            dead = false;
-                        }
-                    }
-                    bossCloseOfHero = false;
-                }
+    if (minotaur._exists) {
+        if (this.health > 0) {
+            if ((hero.position.x < 840 || hero.position.x > 1200) && (this.position.x > 1010 && this.position.x < 1030)) {
+                this.animations.play('standingLeft');
+                this.body.velocity.x = 0;
             } else {
-                if (this.position.x <= 840) {
-                    this.animations.play('movinRight');
-                    this.body.velocity.x = Minotaur.SPEED; // turn right
-                } else if (this.position.x >= 1180) {
-                    this.animations.play('movinLeft');
-                    this.body.velocity.x = -Minotaur.SPEED;
-                } else {
-                    if (hero.position.x < 1019) {
-                        this.animations.play('movinRight');
-                        this.game.physics.arcade.moveToXY(this, 1020, 270, 50, 1000);
+                if (bossIsChangingFrame === false) {
+                    bossIsChangingFrame = true;
+                    setTimeout(() => {
+                        bossIsChangingFrame = false;
+                    }, 50);
+                    if (this.position.x > 840 && this.position.x < 1180 && hero.position.x > 840 && hero.position.x < 1200) {
+                        if (this.game.physics.arcade.distanceBetween(this, hero) > 50) {
+                            // if player to left of enemy AND enemy moving to right (or not moving)
+                            if (hero.x < this.x && this.body.velocity.x >= 0) {
+                                // move enemy to left
+                                this.animations.play('movinLeft');
+                                this.body.velocity.x = -Minotaur.SPEED;
+                            }
+                            // if player to right of enemy AND enemy moving to left (or not moving)
+                            else if (hero.x > this.x && this.body.velocity.x <= 0) {
+                                // move enemy to right
+                                this.animations.play('movinRight');
+                                this.body.velocity.x = Minotaur.SPEED; // turn right
+                            }
+                            bossCloseOfHero = true
+                        } else {
+                            if (this.game.physics.arcade.distanceBetween(this, hero) < 50) {
+                                this.body.velocity.x = 0;
+                                if (hero.x < this.x && this.body.velocity.x >= 0) {
+                                    this.animations.play('attackLeft', 15, false, false);
+                                    if (minotaureHitHero === false) {
+                                        minotaureHitHero = true;
+                                        setTimeout(() => {
+                                            minotaureHitHero = false;
+                                        }, 1500);
+                                        this.events.onAnimationComplete.add(function (event) {
+                                            if (event.animations.currentAnim.name === 'attackLeft') {
+                                                hero.damage(1, 'left');
+                                                PlayState._soundEffect('blade')
+                                            }
+                                        }, this);
+                                    }
+                                } else if (hero.x > this.x && this.body.velocity.x <= 0) {
+                                    this.animations.play('attackRight', 15, false, false);
+                                    if (minotaureHitHero === false) {
+                                        minotaureHitHero = true;
+                                        setTimeout(() => {
+                                            minotaureHitHero = false;
+                                        }, 1500);
+                                        this.events.onAnimationComplete.add(function (event) {
+                                            if (event.animations.currentAnim.name === 'attackRight') {
+                                                hero.damage(1, 'right');
+                                                PlayState._soundEffect('blade')
+                                            }
+                                        }, this);
+                                    }
+                                }
+                                if (dead) {
+                                    dead = false;
+                                }
+                            }
+                            bossCloseOfHero = false;
+                        }
                     } else {
-                        this.animations.play('movinLeft');
-                        this.game.physics.arcade.moveToXY(this, 1020, 270, 50, 1000);
+                        if (this.position.x <= 840) {
+                            this.animations.play('movinRight');
+                            this.body.velocity.x = Minotaur.SPEED; // turn right
+                        } else if (this.position.x >= 1180) {
+                            this.animations.play('movinLeft');
+                            this.body.velocity.x = -Minotaur.SPEED;
+                        } else {
+                            if (hero.position.x < 1019) {
+                                this.animations.play('movinRight');
+                                this.game.physics.arcade.moveToXY(this, 1020, 270, 50, 1000);
+                            } else {
+                                this.animations.play('movinLeft');
+                                this.game.physics.arcade.moveToXY(this, 1020, 270, 50, 1000);
+                            }
+                        }
                     }
                 }
             }
+        } else {
+            this.body.velocity.x = 0;
+            PlayState._soundEffect('minotaurDie')
+            this.animations.play('die', false, false);
+            this.events.onAnimationComplete.add(function () {
+                minotaur.kill()
+            })
         }
     }
 };
@@ -452,7 +484,7 @@ PlayState.preload = function () {
     this.game.load.spritesheet('sharper', 'images/decorations/sharper.png', 62, 68, 6);
     this.game.load.image('arrow', 'images/decorations/arrow.png');
     this.game.load.spritesheet('boss', 'images/monstres/boss.png', 80.75, 43, 4);
-    this.game.load.spritesheet('minotaur', 'images/minotaur/minotaur.png', 76, 65, 40);
+    this.game.load.spritesheet('minotaur', 'images/minotaur/minotaur.png', 76, 65, 45);
     this.game.load.spritesheet('slime', 'images/monstres/slime.png', 15.8, 16, 25);
     this.game.load.spritesheet('bullet', 'images/playerMage/bullet.png', 20, 14, 4);
     this.game.load.spritesheet('laserAsset', 'images/decorations/laser.png', 112, 64, 2);
@@ -477,6 +509,8 @@ PlayState.preload = function () {
     this.game.load.audio('sfx:getingHit', 'audio/getingHit.wav');
     this.game.load.audio('sfx:blade', 'audio/blade.wav');
     this.game.load.audio('sfx:splash', 'audio/splash.wav');
+    this.game.load.audio('sfx:splash', 'audio/splash.wav');
+    this.game.load.audio('sfx:minotaurDie', 'audio/minotaurDie.wav');
 };
 // ==============================================
 // Var initialization
@@ -491,16 +525,12 @@ var movingGrasseXCastle;
 var portalBottomRight;
 var portalTopRight;
 var block;
-var timeMap = 10000;
-var counter = 20;
 var heroDamage = false;
 var slimeDamage = false;
 var plantDamage = false;
 var heroJumpinOnTrampo = false;
-var heroTouchBoss = false;
 var lavaDamage = false;
 var spikeDamage = false;
-var bossDamage = false;
 var bulletDamage = false;
 var deadSlime = 0;
 var mage;
@@ -525,6 +555,7 @@ var pad1;
 let upAXbox;
 var minotaur;
 var minotaureHitHero = false;
+var slime;
 // ==============================================
 // Crée le jeux
 // ==============================================
@@ -556,7 +587,8 @@ PlayState.create = function () {
         sharpe: this.game.add.audio('sfx:sharpe'),
         getingHit: this.game.add.audio('sfx:getingHit'),
         blade: this.game.add.audio('sfx:blade'),
-        splash: this.game.add.audio('sfx:splash')
+        splash: this.game.add.audio('sfx:splash'),
+        minotaurDie: this.game.add.audio('sfx:minotaurDie')
 
     };
 
@@ -652,9 +684,6 @@ function spriteVsPlatform(hero) {
         jumpin = false;
     }
 }
-
-
-
 
 
 // ==============================================
@@ -801,8 +830,6 @@ function fireLaser() {
 PlayState._handleInput = function () {
 
 
-
-
     let spaceBar = this.game.input.keyboard.addKey(32);
     let attackAXbox = pad1.justPressed(Phaser.Gamepad.XBOX360_B)
     let upAXbox = pad1.justPressed(Phaser.Gamepad.XBOX360_A);
@@ -854,7 +881,10 @@ PlayState._handleInput = function () {
                 hiting = false;
             }, hero.attackSpeed)
         }
-    }  else { // stop
+    } else if (this.keys.up.isDown || upAXbox || upAna) { // move hero up
+        hero.jump();
+        this.game.camera.y += 1;
+    } else { // stop
         hero.move(0);
         if (leftOrRight === 1) {
             hero.animations.play('standRight');
@@ -1095,13 +1125,13 @@ PlayState._spawnCharacters = function (data) {
     // spawn hero
     switch (HEROCHOSEN) {
         case 'warrior':
-            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 150, 300, 5, 5);
+            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 150, 300, 5, 5, 70, 1);
             break;
-        case 'assasin':
-            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 200, 800, 3, 3);
+        case'assasin':
+            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 200, 800, 3, 3, 50, 0.5);
             break;
         case 'mage':
-            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 180, 500, 2, 2);
+            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 180, 500, 2, 2, 300, 0.5);
             break;
         default:
     }
@@ -1124,7 +1154,7 @@ PlayState._spawnCharacters = function (data) {
     minotaur.body.setSize(30, 40);
     this.boss.add(minotaur);
 
-    let slime = new Slime(this.game, 330, 404, 'slime');
+    slime = new Slime(this.game, 330, 404, 'slime');
     slime.body.setSize(slime.width, slime.height);
     this.game.add.existing(slime);
     slime.body.allowGravity = false;
@@ -1275,7 +1305,6 @@ PlayState._onSpriteVsSLime = function (hero, slime) {
 };
 
 
-
 PlayState._onHerovsTrampos = function (hero, trampo) {
     if (heroJumpinOnTrampo === false) {
         heroJumpinOnTrampo = true;
@@ -1289,6 +1318,10 @@ PlayState._onHerovsTrampos = function (hero, trampo) {
 PlayState._soundEffect = function (sound) {
     if (sound === 'blade') {
         this.sfx.blade.play();
+    } else if (sound === 'splash') {
+        this.sfx.splash.play();
+    } else if (sound === 'minotaurDie') {
+        this.sfx.minotaurDie.play();
     }
 };
 PlayState._onHerovsPasserelle = function (hero, passerelle) {
