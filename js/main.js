@@ -217,7 +217,10 @@ Boss.prototype.damage = function (amount) {
     if (this.alive) {
         this.health -= amount;
         if (this.health <= 0) {
-            PlayState._spawnKeys({x: this.body.x, y: this.body.y});
+            PlayState._spawnKeys({
+                x: this.body.x,
+                y: this.body.y
+            });
             this.kill();
         }
     }
@@ -410,6 +413,7 @@ PlayState.init = function () {
             fireLaser()
         }
     }, this);
+
 };
 // ==============================================
 // Image pour les platforms, sprites etc..
@@ -426,9 +430,11 @@ PlayState.preload = function () {
     this.game.load.image('grass:2x1:noborder', 'images/platforms/grass_2x1_noborder.png');
     this.game.load.image('lava', 'images/decorations/lava.png');
     this.game.load.image('spike', 'images/decorations/spike.png');
+    this.game.load.image('grass_3', 'images/platforms/grass_3.png')
     this.game.load.image('invisible-wall', 'images/platforms/invisible_wall.png');
     this.game.load.spritesheet('fireBall', 'images/decorations/fireBall.png', 13.33, 15, 3);
-    this.game.load.spritesheet('trampo', 'images/decorations/trampo.png', 60, 51, 20);
+    this.game.load.image('rond', 'images/platforms/rond_line.png')
+    this.game.load.spritesheet('trampo', 'images/decorations/trampo.png', 60, 51, 2);
     this.game.load.image('door-closed', 'images/decorations/door-closed.png');
     this.game.load.spritesheet('door', 'images/decorations/door.png', 44, 51, 2);
     this.game.load.image('passerelle', 'images/platforms/passerelle.png');
@@ -514,12 +520,22 @@ var bossCloseOfHero = false;
 var keynumber;
 var KeyPickupCount;
 var door;
+var isDownX;
+var pad1;
+let upAXbox;
 var minotaur;
 var minotaureHitHero = false;
 // ==============================================
 // Crée le jeux
 // ==============================================
 PlayState.create = function () {
+
+    this.game.input.gamepad.start();
+
+    // To listen to buttons from a specific pad listen directly on that pad game.input.gamepad.padX, where X = pad 1-4
+    pad1 = this.game.input.gamepad.pad1;
+
+    this.game.input.onDown.add(dump, this);
 
 
     // creation des sons du jeux
@@ -541,7 +557,18 @@ PlayState.create = function () {
         getingHit: this.game.add.audio('sfx:getingHit'),
         blade: this.game.add.audio('sfx:blade'),
         splash: this.game.add.audio('sfx:splash')
+
     };
+
+    function dump() {
+/*
+        console.log(pad1._axes[0]);
+        console.log(pad1._rawPad.axes[0]);*/
+
+    }
+
+
+
 
 
     // Creation de la map en parallax
@@ -550,9 +577,14 @@ PlayState.create = function () {
     fontMap = this.add.tileSprite(0, 0, 3410, 620, "bg_front");
     building.fixedToCamera = true; // Creer le parallax
     this.game.world.setBounds(0, 0, 3410, 620); // taille du monde
+    
+    // rond de deco pour platfome bascule
+    var rond_line = this.game.add.image(1907, 250, 'rond');
 
     // Charge le fichier JSON du niveaux 1
     this._loadLevel(this.game.cache.getJSON('level:1'));
+    
+    var grass_3 = this.game.add.image(1870, 400, 'grass_3')
 
     // change position if needed (but use same position for both images)
     var backgroundBar = this.game.add.image(100, 20, 'red-bar');
@@ -566,14 +598,14 @@ PlayState.create = function () {
         fontSize: '20px',
         fill: '#ffffff'
     });
+
     healthLabel.fixedToCamera = true;
     keynumber = this.game.add.text(50, 60, KeyPickupCount, {
         fontSize: '20px',
-        fill: '#ffffff'
+        fill: '#ffffff',
     });
     keynumber.fixedToCamera = true;
 
-};
 // ==============================================
 // Fontion qui s'active toute les 1ms pour update le jeux
 // ==============================================
@@ -585,8 +617,18 @@ PlayState.update = function () {
     if (KeyPickupCount === 5) {
         door.animations.play('open')
     }
-    // Si le mange touche le portail dimmensionel il est teleporter a celui du dessus
-    if ((hero.position.y > 380 && hero.position.y < 450) && (hero.position.x > 380 && hero.position.x < 460)) {
+            
+// ==============================================
+// Fonction qui tue le hero si il est en dehors de la map
+// ==============================================
+/*
+    if (hero.body.position.y === 570) {
+        hero.damage(hero.health);
+        this.sfx.die.play(); a améliorer avec la fonction ONDEAD
+    }*/
+    
+    // Si le mange touche le portail dimemensionel il est teleporter a celui du dessus
+    if ((hero.position.y > 380 && hero.position.y < 450) && (hero.position.x > 380 && hero.position.x < 480)) {
         hero.position.y = 200;
         hero.position.x = 360;
         this.sfx.portal.play();
@@ -594,6 +636,11 @@ PlayState.update = function () {
     // debug
     // his.game.debug.spriteInfo(hero, 40, 50);
     healthBar.scale.setTo(hero.health / hero.maxHealth, 1);
+
+    if (HEROCHOSEN === 'mage' && isDownX) {
+        fireLaser();
+    }
+        this.game.debug.spriteInfo(hero, 40,50)
 };
 // ==============================================
 // Fonction qui remet l'etat de base si la personne viens de sauter et atterie sur une platform
@@ -609,6 +656,9 @@ function spriteVsPlatform(hero) {
         jumpin = false;
     }
 }
+
+
+
 
 
 // ==============================================
@@ -640,7 +690,7 @@ function spriteDegatSpike(hero) {
             spikeDamage = false;
         }, 100);
         hero.damage(0.25, 'up');
-        this.sfx.punch.play();
+        this.sfx.lava.play();
         if (dead) {
             this.sfx.die.play();
             dead = false;
@@ -747,10 +797,24 @@ function fireLaser() {
 // ==============================================
 // Ecouteur d'evenement sur la touche du clavier pressé
 // ==============================================
+/*
+
+
+
+*/
 PlayState._handleInput = function () {
-    let spaceBar = this.game.input.keyboard.addKey(32); // Recupere le ASCI de la barre d'espace
+
+
+
+
+    let spaceBar = this.game.input.keyboard.addKey(32);
+    let attackAXbox = pad1.justPressed(Phaser.Gamepad.XBOX360_B)
+    let upAXbox= pad1.justPressed(Phaser.Gamepad.XBOX360_A);
+    let upAna = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
+    // Recupere le ASCI de la barre d'espace
     let isDown = spaceBar.isDown;
-    if (this.keys.left.isDown) { // move hero left
+    isDownX = attackAXbox;
+    if (this.keys.left.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) { // move hero left
         leftOrRight = -1;
         this.game.camera.follow(hero)
         hero.move(-1);
@@ -761,7 +825,7 @@ PlayState._handleInput = function () {
                 walking = false;
             }, 500)
         }
-    } else if (this.keys.right.isDown) { // move hero right
+    } else if (this.keys.right.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) { // move hero right
         leftOrRight = 1;
         hero.move(1);
         this.game.camera.follow(hero) //camera suit le hero
@@ -772,7 +836,7 @@ PlayState._handleInput = function () {
                 walking = false;
             }, 500)
         }
-    } else if (isDown) { // fighting
+    } else if (isDown || isDownX) { // fighting
         if (hiting === false) {
             hiting = true;
             if (HEROCHOSEN === 'mage') {
@@ -787,7 +851,9 @@ PlayState._handleInput = function () {
                 hiting = false;
             }, hero.attackSpeed)
         }
-    } else if (this.keys.up.isDown) { // move hero up
+    } else if (this.keys.up.isDown || upAXbox || upAna) { // move hero up
+        console.log("je saute wllh ! ")
+        hero.jump();
         this.game.camera.y += 1;
         hero.move(0);
     } else { // stop
@@ -863,7 +929,7 @@ PlayState._loadLevel = function (data) {
     this.castle.create(3100, 70, 'castle');
     movingGrasseYLeft = this.platformsMovable.create(280, 540, 'grass:2x1');
     movingGrasseYRight = this.platformsMovable.create(520, 215, 'grass:2x1');
-    portalTopRight = this.portal.create(340, 100, 'portalTop');
+    portalTopRight = this.portal.create(270, 100, 'portalTop');
     portalBottomRight = this.portal.create(400, 410, 'portalBottom');
     door = this.doors.create(1000, 250, 'door');
     door.animations.add('open', [1], 1, true);
@@ -876,6 +942,11 @@ PlayState._loadLevel = function (data) {
     // ==============================================
     // Animations
     // ==============================================
+    
+    // platfome qui se balance
+/*    this.game.add.tween(target).to({ property: value }, duration, easing,
+    autostart, delay, repeat, yoyo);*/
+    
     // PIZZA MOVE
     this.game.add.tween(pizza).to({
         y: pizza.position.y - 50
@@ -1206,24 +1277,7 @@ PlayState._onSpriteVsSLime = function (hero, slime) {
     }
 };
 
-PlayState._onSpriteVsSLime = function (hero, slime) {
-    if (hiting === false) {
-        if (slimeDamage === false) {
-            slimeDamage = true;
-            setTimeout(() => {
-                slimeDamage = false;
-            }, 300);
-            if (hero.body.x >= slime.body.position.x - 40) {
-                hero.damage(spriteDmg, 'right');
-            } else if (hero.body.x <= slime.body.position.x - 40) {
-                hero.damage(spriteDmg, 'left');
-            }
-            this.sfx.punch.play();
-        }
-    } else {
-        slime.damage(1);
-    }
-};
+
 
 PlayState._onHerovsTrampos = function (hero, trampo) {
     if (heroJumpinOnTrampo === false) {
