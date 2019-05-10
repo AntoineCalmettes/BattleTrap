@@ -89,6 +89,7 @@ var laserLeft;
 var laserRight;
 var laserTop;
 var laserTo2;
+var grass_3;
 // ==============================================
 // Initialisation du jeux
 // ==============================================
