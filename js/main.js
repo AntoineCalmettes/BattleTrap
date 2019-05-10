@@ -537,7 +537,7 @@ PlayState._spawnCharacters = function (data) {
             hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 220, 300, 3, 3, 50, 0.5);
             break;
         case 'mage':
-            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 180, 500, 2, 2, 400, 0.5);
+            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 180, 500, 99, 99, 400, 0.5); // REMETRE A 2, 2
             break;
         default:
     }

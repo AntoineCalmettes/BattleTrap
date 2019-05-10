@@ -59,14 +59,14 @@ PlayState._loadLevel = function (data) {
     // Creation de toute les platforms/decoration/pieges
     // ==============================================
     this.castle.create(3100, 70, 'castle');
-    movingGrasseYLeft = this.platformsMovable.create(280, 540, 'grass:2x1');
+    movingGrasseYLeft = this.platformsMovable.create(340, 550, 'grass:2x1');
     movingGrasseYRight = this.platformsMovable.create(520, 215, 'grass:2x1');
     portalTopRight = this.portal.create(270, 100, 'portalTop');
     portalBottomRight = this.portal.create(400, 410, 'portalBottom');
     door = this.doors.create(1000, 250, 'door');
     door.animations.add('open', [1], 1, true);
     plant = this.platformsMovable.create(600, 600, 'plant');
-    pizza = this.pizzas.create(310, 150, 'pizza');
+    pizza = this.pizzas.create(691, 579, 'pizza');
     pizza2 = this.pizzas.create(890, 490, 'pizza');
     movingGrasseX = this.platformsMovabl.create(240, 250, 'grass:2x1');
     movingGrasseXCastle = this.platformsMovable.create(760, 565, 'grass:2x1');
