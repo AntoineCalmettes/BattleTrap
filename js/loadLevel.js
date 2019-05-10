@@ -158,7 +158,7 @@ PlayState._loadLevel = function (data) {
     // appel les donnée "keys" dans JSON
     data.keys.forEach(this._spawnKeys, this);
     // appel les donnée "laserAsset" dans JSON
-    data.laserAsset.forEach(this._spawnLaser, this);
+    PlayState._spawnLaser();
     // appel les donnée "trampos" dans JSON
     data.trampos.forEach(this._spawnTrampo, this);
     // appel les donnée "spike" dans JSON

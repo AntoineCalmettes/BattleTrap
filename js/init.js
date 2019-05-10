@@ -83,6 +83,12 @@ var minotaur;
 var minotaureHitHero = false;
 var slime;
 var minotaurKey = false;
+var laser = 0;
+var laserCount = 100;
+var laserLeft;
+var laserRight;
+var laserTop;
+var laserTo2;
 // ==============================================
 // Initialisation du jeux
 // ==============================================

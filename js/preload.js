@@ -39,7 +39,9 @@ PlayState.preload = function () {
     this.game.load.spritesheet('minotaur', 'images/minotaur/minotaur.png', 76, 65, 45);
     this.game.load.spritesheet('slime', 'images/monstres/slime.png', 15.8, 16, 25);
     this.game.load.spritesheet('bullet', 'images/playerMage/bullet.png', 20, 14, 4);
-    this.game.load.spritesheet('laserAsset', 'images/decorations/laser.png', 112, 64, 2);
+    this.game.load.spritesheet('laserLeft', 'images/decorations/laserLeft.png', 32, 53, 2);
+    this.game.load.spritesheet('laserRight', 'images/decorations/laserRight.png', 32, 53, 2);
+    this.game.load.spritesheet('laser', 'images/decorations/laser.png', 32, 13, 1);
     this.game.load.image('star', 'images/bonus/beer.png');
     this.game.load.image('green-bar', 'images/health-green.png');
     this.game.load.image('red-bar', 'images/health-red.png');

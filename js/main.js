@@ -95,7 +95,7 @@ Hero.prototype.damage = function (amount, direction) {
                 break;
             case 'up':
                 this.game.add.tween(this.body).to({
-                    y: '-30'
+                    y: '-10'
                 }, 100, Phaser.Easing.Linear.None, true, 0);
                 break;
             default:
@@ -112,6 +112,8 @@ Hero.prototype.damage = function (amount, direction) {
             setTimeout(() => {
                 this.kill();
                 this.game.state.restart();
+                laser = 1;
+                laserCount = 53;
             }, 1200)
         }
     }
@@ -584,14 +586,31 @@ PlayState._spawnTrampo = function (trampo) {
     sprite.animations.add('upDown', [1, 0], 6, false)
 };
 
-PlayState._spawnLaser = function (laser) {
-    let sprite = this.laserAsset.create(laser.x, laser.y, 'laserAsset');
-    sprite.anchor.set(0.5, 0.5);
-    this.game.physics.enable(sprite);
-    sprite.body.allowGravity = false;
-    sprite.animations.add('rotate', [0, 1], 1, true);
-    sprite.animations.play('rotate');
-    sprite.scale.setTo(1, 1);
+PlayState._spawnLaser = function () {
+    laserLeft = this.laserAsset.create(1860, 45, 'laserRight');
+    laserLeft.anchor.set(0.5, 0.5);
+    this.game.physics.enable(laserLeft);
+    laserLeft.body.allowGravity = false;
+
+    laserTop = this.laserAsset.create(1891, 25, 'laser');
+    laserTop.anchor.set(0.5, 0.5);
+    this.game.physics.enable(laserTop);
+    laserTop.body.allowGravity = false;
+
+    laserTop2 = this.laserAsset.create(1921, 25, 'laser');
+    laserTop2.anchor.set(0.5, 0.5);
+    this.game.physics.enable(laserTop2);
+    laserTop2.body.allowGravity = false;
+
+    laserRight = this.laserAsset.create(1950, 45, 'laserRight');
+    laserRight.anchor.set(0.5, 0.5);
+    this.game.physics.enable(laserRight);
+    laserRight.body.allowGravity = false;
+
+    laserLeft.animations.add('fire', [1], 1, true);
+    laserLeft.animations.add('stop', [0], 1, true);
+    laserRight.animations.add('fire', [1], 1, true);
+    laserRight.animations.add('stop', [0], 1, true);
 };
 
 PlayState._spawnSharper = function (sharper) {
@@ -730,6 +749,31 @@ PlayState._onHerovsPasserelle = function (hero, passerelle) {
     setTimeout(() => {
         passerelle.body.allowGravity = true;
     }, 600);
+};
+PlayState._handleLaser = function () {
+    if (laserCount !== 0) {
+        laserCount--;
+    } else {
+        laserCount = 100;
+        if (laser === 0) {
+            laser = 1;
+            laserLeft.animations.play('fire');
+            laserRight.animations.play('stop');
+        } else if (laser === 1) {
+            laser = 0;
+            laserRight.animations.play('fire');
+            laserLeft.animations.play('stop');
+        }
+    }
+    if (laser === 1) {
+        if (hero.position.x > 1830 && hero.position.x < 1895) {
+            hero.damage(0.01, 'up');
+        }
+    } else if (laser === 0) {
+        if (hero.position.x > 1925 && hero.position.x < 1980) {
+            hero.damage(0.01, 'up');
+        }
+    }
 };
 
 function runGame(persoChoose) {
