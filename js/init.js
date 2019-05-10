@@ -83,6 +83,7 @@ var minotaur;
 var minotaureHitHero = false;
 var slime;
 var minotaurKey = false;
+var grass_3;
 // ==============================================
 // Initialisation du jeux
 // ==============================================

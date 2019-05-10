@@ -70,6 +70,7 @@ PlayState._loadLevel = function (data) {
     pizza2 = this.pizzas.create(890, 490, 'pizza');
     movingGrasseX = this.platformsMovabl.create(240, 250, 'grass:2x1');
     movingGrasseXCastle = this.platformsMovable.create(760, 565, 'grass:2x1');
+    grass_3 = this.platformsMovable.create(2000, 450, 'grass_3');
     star1 = this.stars.create(300, 500, 'star');
     // ==============================================
     // Animations
