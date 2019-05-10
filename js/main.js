@@ -85,7 +85,7 @@ Hero.prototype.move = function (direction) {
                 this.animations.play('left');
                 break;
             case FIGHT:
-                this.hit()
+                this.hit();
                 this.body.velocity.x = 0 * this.SPEED;
                 if (leftOrRight === 1) {
                     this.animations.play('fightRight');
@@ -357,7 +357,11 @@ Minotaur.prototype.update = function () {
             PlayState._soundEffect('minotaurDie')
             this.animations.play('die', false, false);
             this.events.onAnimationComplete.add(function () {
-                minotaur.kill()
+                minotaur.kill();
+                PlayState._spawnKeys({
+                    x: minotaur.body.x + 20,
+                    y: minotaur.body.y -20
+                });
             })
         }
     }
@@ -1328,6 +1332,7 @@ PlayState._onHerovsTrampos = function (hero, trampo) {
         heroJumpinOnTrampo = true;
         trampo.animations.play('upDown');
         hero.body.velocity.y -= 700;
+        this.sfx.jump.play();
         setTimeout(() => {
             heroJumpinOnTrampo = false;
         }, 350)
