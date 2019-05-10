@@ -59,9 +59,9 @@ function Hero(game, x, y, sprites, speed, attackSpeed, health, maxHealth, range,
     this.animations.add('standRight', [0, 1], 3, true);
     this.animations.add('standLeft', [2, 3], 3, true);
     this.animations.add('left', [6, 7], 3, true);
-    this.animations.add('up', [8], 3, true);
-    this.animations.add('fightRight', [10, 0], this.attackSpeed / 100, true);
-    this.animations.add('fightLeft', [11, 2], this.attackSpeed / 100, true);
+    this.animations.add('up', [9], 3, true);
+    this.animations.add('fightRight', [10, 12, 12, 13, 14], this.attackSpeed / 10, true);
+    this.animations.add('fightLeft', [15, 16, 17, 18, 19], this.attackSpeed / 10, true);
     // hero heroSprite.animations.add('right', [4, 5], 10, true);
     this.animations.play('standRight');
     // physic properties
@@ -362,7 +362,7 @@ Minotaur.prototype.update = function () {
                 minotaur.kill();
                 PlayState._spawnKeys({
                     x: minotaur.body.x + 20,
-                    y: minotaur.body.y -20
+                    y: minotaur.body.y - 20
                 });
             })
         }
@@ -484,7 +484,7 @@ PlayState.preload = function () {
     this.game.load.image('castle', 'images/decorations/castle.png');
     this.game.load.image('plant', 'images/decorations/plant.png');
     this.game.load.image('pizza', 'images/bonus/pizza.png');
-    this.game.load.spritesheet('warrior', 'images/playerWarrior/warrior.png', 49, 48, 13);
+    this.game.load.spritesheet('warrior', 'images/playerWarrior/warrior.png', 61.8, 48, 20);
     this.game.load.spritesheet('assasin', 'images/playerAssasin/assasin.png', 54.54, 48, 13);
     this.game.load.spritesheet('mage', 'images/playerMage/mage.png', 48.6, 48, 13);
     this.game.load.spritesheet('key', 'images/decorations/key.png', 25, 25, 8);
@@ -576,10 +576,6 @@ PlayState.create = function () {
 
     // To listen to buttons from a specific pad listen directly on that pad game.input.gamepad.padX, where X = pad 1-4
     pad1 = this.game.input.gamepad.pad1;
-
-    this.game.input.onDown.add(dump, this);
-
-    
     // GAME OVER SCREEN - add images and/or text to display
 gameWinImage = this.game.add.image(100, 100, 'game-win');
 gameWinImage.anchor.set(0.5, 0.5);
@@ -587,14 +583,13 @@ gameWinImage.anchor.set(0.5, 0.5);
 gameLoseImage = this.game.add.image(100, 100, 'game-lose');
 gameLoseImage.anchor.set(0.5, 0.5);
 
-gameOverText = this.game.add.text(100, 100, 'Game Over', {fontSize: '30px', fill: '#00ff00'});
 gameOverText.anchor.set(0.5, 0.5);
+gameOverText = this.game.add.text(100, 100, 'Game Over', {fontSize: '30px', fill: '#00ff00'});
 
 // hide game over screen at start
 gameWinImage.visible = false;
 gameLoseImage.visible = false;
 gameOverText.visible = false;
-
     // creation des sons du jeux
     this.sfx = {
         jump: this.game.add.audio('sfx:jump'),
@@ -617,13 +612,6 @@ gameOverText.visible = false;
         minotaurDie: this.game.add.audio('sfx:minotaurDie')
 
     };
-
-    function dump() {
-        /*
-                console.log(pad1._axes[0]);
-                console.log(pad1._rawPad.axes[0]);*/
-
-    }
 
     // Creation de la map en parallax
     background = this.add.tileSprite(0, 0, 3410, 620, "bg_back");
