@@ -592,7 +592,7 @@ PlayState._spawnLaser = function (laser) {
     sprite.body.allowGravity = false;
     sprite.animations.add('rotate', [0, 1], 1, true);
     sprite.animations.play('rotate');
-    sprite.scale.setTo(1, 1);
+   /* sprite.scale.setTo(1, 1);*/
 };
 
 PlayState._spawnSharper = function (sharper) {
