@@ -147,7 +147,8 @@ Hero.prototype.damage = function (amount, direction) {
             }, 200, Phaser.Easing.Cubic.Out, true, 0, -1, true);
             setTimeout(() => {
                 this.kill();
-                this.game.state.restart();
+                PlayState._gameOver()
+
             }, 1200)
         }
     }
@@ -511,6 +512,8 @@ PlayState.preload = function () {
     this.game.load.audio('sfx:splash', 'audio/splash.wav');
     this.game.load.audio('sfx:splash', 'audio/splash.wav');
     this.game.load.audio('sfx:minotaurDie', 'audio/minotaurDie.wav');
+    // this.game.load.image('game-win', 'images/gameover-win.png');
+    this.game.load.image('game-lose', 'images/gameover-lose.png');
 };
 // ==============================================
 // Var initialization
@@ -556,6 +559,8 @@ let upAXbox;
 var minotaur;
 var minotaureHitHero = false;
 var slime;
+var gameWinImage, gameLoseImage, gameOverText;
+var gameWon = false; // set to false for start of game
 // ==============================================
 // Crée le jeux
 // ==============================================
@@ -568,6 +573,21 @@ PlayState.create = function () {
 
     this.game.input.onDown.add(dump, this);
 
+    
+    // GAME OVER SCREEN - add images and/or text to display
+gameWinImage = game.add.image(400, 300, 'game-win');
+gameWinImage.anchor.set(0.5, 0.5);
+
+gameLoseImage = game.add.image(400, 300, 'game-lose');
+gameLoseImage.anchor.set(0.5, 0.5);
+
+gameOverText = game.add.text(400, 500, 'Game Over', {fontSize: '30px', fill: '#00ff00'});
+gameOverText.anchor.set(0.5, 0.5);
+
+// hide game over screen at start
+gameWinImage.visible = false;
+gameLoseImage.visible = false;
+gameOverText.visible = false;
 
     // creation des sons du jeux
     this.sfx = {
@@ -837,13 +857,11 @@ PlayState._handleInput = function () {
     // Recupere le ASCI de la barre d'espace
     let isDown = spaceBar.isDown;
     isDownX = attackAXbox;
-     if (this.keys.up.isDown || upAXbox || upAna || ( (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) && upAXbox)   || (( pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) && upAXbox)) 
-     {
+    if (this.keys.up.isDown || upAXbox || upAna || ((pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) && upAXbox) || ((pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) && upAXbox)) {
         hero.jump();
         this.game.camera.y += 1;
-    }
-    else if (this.keys.left.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) { // move hero left
-       
+    } else if (this.keys.left.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) { // move hero left
+
         leftOrRight = -1;
         this.game.camera.follow(hero)
         hero.move(-1);
@@ -855,7 +873,7 @@ PlayState._handleInput = function () {
             }, 500)
         }
     } else if (this.keys.right.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) { // move hero right
-        
+
         leftOrRight = 1;
         hero.move(1);
         this.game.camera.follow(hero) //camera suit le hero
@@ -1127,7 +1145,7 @@ PlayState._spawnCharacters = function (data) {
         case 'warrior':
             hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 150, 300, 5, 5, 70, 1);
             break;
-        case'assasin':
+        case 'assasin':
             hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 200, 800, 3, 3, 50, 0.5);
             break;
         case 'mage':
@@ -1338,6 +1356,11 @@ PlayState._spawnEnemyWall = function (x, y, side) {
     sprite.body.immovable = true;
     sprite.body.allowGravity = false;
 };
+
+PlayState._gameOver = function(){
+    gameLoseImage.visible = true;
+    gameOverText.visible = true;
+}
 
 
 // =============================================================================
