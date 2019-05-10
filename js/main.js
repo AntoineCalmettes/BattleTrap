@@ -561,15 +561,11 @@ PlayState.create = function () {
     };
 
     function dump() {
-/*
-        console.log(pad1._axes[0]);
-        console.log(pad1._rawPad.axes[0]);*/
+        /*
+                console.log(pad1._axes[0]);
+                console.log(pad1._rawPad.axes[0]);*/
 
     }
-
-
-
-
 
     // Creation de la map en parallax
     background = this.add.tileSprite(0, 0, 3410, 620, "bg_back");
@@ -577,13 +573,13 @@ PlayState.create = function () {
     fontMap = this.add.tileSprite(0, 0, 3410, 620, "bg_front");
     building.fixedToCamera = true; // Creer le parallax
     this.game.world.setBounds(0, 0, 3410, 620); // taille du monde
-    
+
     // rond de deco pour platfome bascule
     var rond_line = this.game.add.image(1907, 250, 'rond');
 
     // Charge le fichier JSON du niveaux 1
     this._loadLevel(this.game.cache.getJSON('level:1'));
-    
+
     var grass_3 = this.game.add.image(1870, 400, 'grass_3')
 
     // change position if needed (but use same position for both images)
@@ -605,7 +601,7 @@ PlayState.create = function () {
         fill: '#ffffff',
     });
     keynumber.fixedToCamera = true;
-
+}
 // ==============================================
 // Fontion qui s'active toute les 1ms pour update le jeux
 // ==============================================
