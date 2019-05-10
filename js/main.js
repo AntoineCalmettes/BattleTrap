@@ -148,6 +148,8 @@ Hero.prototype.damage = function (amount, direction) {
             setTimeout(() => {
                 this.kill();
                 PlayState._gameOver()
+                gameLoseImage.visible = true;
+                gameOverText.visible = true;
 
             }, 1200)
         }
@@ -516,8 +518,8 @@ PlayState.preload = function () {
     this.game.load.audio('sfx:splash', 'audio/splash.wav');
     this.game.load.audio('sfx:splash', 'audio/splash.wav');
     this.game.load.audio('sfx:minotaurDie', 'audio/minotaurDie.wav');
-    // this.game.load.image('game-win', 'images/gameover-win.png');
-    this.game.load.image('game-lose', 'images/gameover-lose.png');
+    this.game.load.image('game-win', 'images/gameover-win.png');
+    this.game.load.image('game-lose', 'images/gameover-lost.png');
 };
 // ==============================================
 // Var initialization
@@ -579,13 +581,13 @@ PlayState.create = function () {
 
     
     // GAME OVER SCREEN - add images and/or text to display
-gameWinImage = game.add.image(400, 300, 'game-win');
+gameWinImage = this.game.add.image(100, 100, 'game-win');
 gameWinImage.anchor.set(0.5, 0.5);
 
-gameLoseImage = game.add.image(400, 300, 'game-lose');
+gameLoseImage = this.game.add.image(100, 100, 'game-lose');
 gameLoseImage.anchor.set(0.5, 0.5);
 
-gameOverText = game.add.text(400, 500, 'Game Over', {fontSize: '30px', fill: '#00ff00'});
+gameOverText = this.game.add.text(100, 100, 'Game Over', {fontSize: '30px', fill: '#00ff00'});
 gameOverText.anchor.set(0.5, 0.5);
 
 // hide game over screen at start
