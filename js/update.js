@@ -7,7 +7,7 @@ PlayState.update = function () {
     this._handleBullet();
     this._handleLaser();
     keynumber.text = KeyPickupCount;
-    if (KeyPickupCount === 5) {
+    if (KeyPickupCount >= 5) {
         door.animations.play('open')
     }
 

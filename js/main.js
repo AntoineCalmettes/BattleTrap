@@ -189,7 +189,7 @@ Minotaur.prototype.update = function () {
                 this.body.velocity.x = 0;
             } else {
                 if (this.position.x > 840 && this.position.x < 1180 && hero.position.x > 840 && hero.position.x < 1200) {
-                    if (this.game.physics.arcade.distanceBetween(this, hero) > 50) {
+                    if (this.game.physics.arcade.distanceBetween(this, hero) > 50 && hero.position.y < 300) {
                         // if player to left of enemy AND enemy moving to right (or not moving)
                         if (hero.x < this.x && this.body.velocity.x >= 0) {
                             // move enemy to left
