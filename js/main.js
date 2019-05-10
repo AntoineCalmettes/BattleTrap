@@ -834,7 +834,7 @@ PlayState._handleInput = function () {
             }, hero.attackSpeed)
         }
     } else if (this.keys.up.isDown || upAXbox || upAna) { // move hero up
-        console.log("je saute wllh ! ")
+        console.log(" Bon DEBUG hahaha ! ")
         hero.jump();
         this.game.camera.y += 1;
         hero.move(0);
