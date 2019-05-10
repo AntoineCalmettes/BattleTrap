@@ -59,9 +59,9 @@ function Hero(game, x, y, sprites, speed, attackSpeed, health, maxHealth, range,
     this.animations.add('standRight', [0, 1], 3, true);
     this.animations.add('standLeft', [2, 3], 3, true);
     this.animations.add('left', [6, 7], 3, true);
-    this.animations.add('up', [8], 3, true);
-    this.animations.add('fightRight', [10, 0], this.attackSpeed / 100, true);
-    this.animations.add('fightLeft', [11, 2], this.attackSpeed / 100, true);
+    this.animations.add('up', [9], 3, true);
+    this.animations.add('fightRight', [10, 12, 12, 13, 14], this.attackSpeed / 10, true);
+    this.animations.add('fightLeft', [15, 16, 17, 18, 19], this.attackSpeed / 10, true);
     // hero heroSprite.animations.add('right', [4, 5], 10, true);
     this.animations.play('standRight');
     // physic properties
@@ -359,7 +359,7 @@ Minotaur.prototype.update = function () {
                 minotaur.kill();
                 PlayState._spawnKeys({
                     x: minotaur.body.x + 20,
-                    y: minotaur.body.y -20
+                    y: minotaur.body.y - 20
                 });
             })
         }
@@ -481,7 +481,7 @@ PlayState.preload = function () {
     this.game.load.image('castle', 'images/decorations/castle.png');
     this.game.load.image('plant', 'images/decorations/plant.png');
     this.game.load.image('pizza', 'images/bonus/pizza.png');
-    this.game.load.spritesheet('warrior', 'images/playerWarrior/warrior.png', 49, 48, 13);
+    this.game.load.spritesheet('warrior', 'images/playerWarrior/warrior.png', 61.8, 48, 20);
     this.game.load.spritesheet('assasin', 'images/playerAssasin/assasin.png', 54.54, 48, 13);
     this.game.load.spritesheet('mage', 'images/playerMage/mage.png', 48.6, 48, 13);
     this.game.load.spritesheet('key', 'images/decorations/key.png', 25, 25, 8);
@@ -569,10 +569,6 @@ PlayState.create = function () {
 
     // To listen to buttons from a specific pad listen directly on that pad game.input.gamepad.padX, where X = pad 1-4
     pad1 = this.game.input.gamepad.pad1;
-
-    this.game.input.onDown.add(dump, this);
-
-
     // creation des sons du jeux
     this.sfx = {
         jump: this.game.add.audio('sfx:jump'),
@@ -595,13 +591,6 @@ PlayState.create = function () {
         minotaurDie: this.game.add.audio('sfx:minotaurDie')
 
     };
-
-    function dump() {
-        /*
-                console.log(pad1._axes[0]);
-                console.log(pad1._rawPad.axes[0]);*/
-
-    }
 
     // Creation de la map en parallax
     background = this.add.tileSprite(0, 0, 3410, 620, "bg_back");
@@ -841,13 +830,11 @@ PlayState._handleInput = function () {
     // Recupere le ASCI de la barre d'espace
     let isDown = spaceBar.isDown;
     isDownX = attackAXbox;
-     if (this.keys.up.isDown || upAXbox || upAna || ( (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) && upAXbox)   || (( pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) && upAXbox)) 
-     {
+    if (this.keys.up.isDown || upAXbox || upAna || ((pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) && upAXbox) || ((pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) && upAXbox)) {
         hero.jump();
         this.game.camera.y += 1;
-    }
-    else if (this.keys.left.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) { // move hero left
-       
+    } else if (this.keys.left.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) { // move hero left
+
         leftOrRight = -1;
         this.game.camera.follow(hero)
         hero.move(-1);
@@ -859,7 +846,7 @@ PlayState._handleInput = function () {
             }, 500)
         }
     } else if (this.keys.right.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) { // move hero right
-        
+
         leftOrRight = 1;
         hero.move(1);
         this.game.camera.follow(hero) //camera suit le hero
