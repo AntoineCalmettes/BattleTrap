@@ -393,6 +393,7 @@ PlayState.preload = function () {
     this.game.load.image('grass_3', 'images/platforms/grass_3.png')
     this.game.load.image('invisible-wall', 'images/platforms/invisible_wall.png');
     this.game.load.spritesheet('fireBall', 'images/decorations/fireBall.png', 13.33, 15, 3);
+    this.game.load.image('line', 'images/platforms/line.png');
     this.game.load.image('rond', 'images/platforms/rond_line.png')
     this.game.load.spritesheet('trampo', 'images/decorations/trampo.png', 60, 51, 2);
     this.game.load.image('door-closed', 'images/decorations/door-closed.png');
@@ -483,6 +484,7 @@ var door;
 var isDownX;
 var pad1;
 let upAXbox;
+var line;
 // ==============================================
 // Crée le jeux
 // ==============================================
@@ -541,8 +543,8 @@ PlayState.create = function () {
 
     // Charge le fichier JSON du niveaux 1
     this._loadLevel(this.game.cache.getJSON('level:1'));
-    
-    var grass_3 = this.game.add.image(1870, 400, 'grass_3')
+    // 
+    this.line = this.game.add.image(1920, 275, 'line');
 
     // change position if needed (but use same position for both images)
     var backgroundBar = this.game.add.image(100, 20, 'red-bar');
@@ -715,7 +717,8 @@ PlayState._handleCollisions = function () {
     this.game.physics.arcade.overlap(hero, boss, heroVsBoss, null, this);
     this.game.physics.arcade.collide(hero, this.platforms, spriteVsPlatform, null, this);
     this.game.physics.arcade.collide(hero, this.passerelles, this._onHerovsPasserelle, null, this);
-    this.game.physics.arcade.collide(hero, movingGrasseX, spriteVsPlatform, null, this);
+    this.game.physics.arcade.collide(hero, grass_3);
+    
     this.physics.arcade.collide(hero, this.platformsMovable);
     this.physics.arcade.overlap(hero, this.slims, this._onSpriteVsSLime, null, this);
     this.physics.arcade.overlap(hero, this.sharpers, this._onSpriteVsSharper, null, this);
@@ -926,14 +929,18 @@ PlayState._loadLevel = function (data) {
     pizza2 = this.pizzas.create(890, 490, 'pizza');
     movingGrasseX = this.platformsMovabl.create(240, 250, 'grass:2x1');
     movingGrasseXCastle = this.platformsMovable.create(760, 565, 'grass:2x1');
+    grass_3 = this.platformsMovable.create(2000, 450, 'grass_3');
     star1 = this.stars.create(300, 500, 'star');
+    
     // ==============================================
     // Animations
     // ==============================================
     
     // platfome qui se balance
-/*    this.game.add.tween(target).to({ property: value }, duration, easing,
-    autostart, delay, repeat, yoyo);*/
+this.game.add.tween(grass_3).to({x: '+300'}, 2000, Phaser.Easing.Cubic.InOut, true, 0);
+    this.game.add.tween(grass_3).to({x: '-300'}, 2000, Phaser.Easing.Cubic.InOut, true, 0, -1, true);
+    
+    
     
     // PIZZA MOVE
     this.game.add.tween(pizza).to({
