@@ -650,9 +650,9 @@ PlayState.update = function () {
         door.animations.play('open')
     }
 
-// ==============================================
-// Fonction qui tue le hero si il est en dehors de la map
-// ==============================================
+    // ==============================================
+    // Fonction qui tue le hero si il est en dehors de la map
+    // ==============================================
     /*
         if (hero.body.position.y === 570) {
             hero.damage(hero.health);
@@ -841,7 +841,13 @@ PlayState._handleInput = function () {
     // Recupere le ASCI de la barre d'espace
     let isDown = spaceBar.isDown;
     isDownX = attackAXbox;
-    if (this.keys.left.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) { // move hero left
+     if (this.keys.up.isDown || upAXbox || upAna || ( (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) && upAXbox)   || (( pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) && upAXbox)) 
+     {
+        hero.jump();
+        this.game.camera.y += 1;
+    }
+    else if (this.keys.left.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) { // move hero left
+       
         leftOrRight = -1;
         this.game.camera.follow(hero)
         hero.move(-1);
@@ -853,6 +859,7 @@ PlayState._handleInput = function () {
             }, 500)
         }
     } else if (this.keys.right.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) { // move hero right
+        
         leftOrRight = 1;
         hero.move(1);
         this.game.camera.follow(hero) //camera suit le hero
@@ -1158,8 +1165,7 @@ PlayState._spawnCharacters = function (data) {
     slime.body.immovable = true;
     slime.scale.setTo(1.8, 1.8);
     this.slims.add(slime);
-}
-;
+};
 // ==========================
 // Crée les drapeaux
 // ==========================
