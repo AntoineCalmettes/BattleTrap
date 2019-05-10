@@ -613,16 +613,16 @@ PlayState.update = function () {
     if (KeyPickupCount === 5) {
         door.animations.play('open')
     }
-            
-// ==============================================
-// Fonction qui tue le hero si il est en dehors de la map
-// ==============================================
-/*
-    if (hero.body.position.y === 570) {
-        hero.damage(hero.health);
-        this.sfx.die.play(); a améliorer avec la fonction ONDEAD
-    }*/
-    
+
+    // ==============================================
+    // Fonction qui tue le hero si il est en dehors de la map
+    // ==============================================
+    /*
+        if (hero.body.position.y === 570) {
+            hero.damage(hero.health);
+            this.sfx.die.play(); a améliorer avec la fonction ONDEAD
+        }*/
+
     // Si le mange touche le portail dimemensionel il est teleporter a celui du dessus
     if ((hero.position.y > 380 && hero.position.y < 450) && (hero.position.x > 380 && hero.position.x < 480)) {
         hero.position.y = 200;
@@ -636,7 +636,7 @@ PlayState.update = function () {
     if (HEROCHOSEN === 'mage' && isDownX) {
         fireLaser();
     }
-        this.game.debug.spriteInfo(hero, 40,50)
+    this.game.debug.spriteInfo(hero, 40, 50)
 };
 // ==============================================
 // Fonction qui remet l'etat de base si la personne viens de sauter et atterie sur une platform
@@ -805,12 +805,18 @@ PlayState._handleInput = function () {
 
     let spaceBar = this.game.input.keyboard.addKey(32);
     let attackAXbox = pad1.justPressed(Phaser.Gamepad.XBOX360_B)
-    let upAXbox= pad1.justPressed(Phaser.Gamepad.XBOX360_A);
+    let upAXbox = pad1.justPressed(Phaser.Gamepad.XBOX360_A);
     let upAna = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
     // Recupere le ASCI de la barre d'espace
     let isDown = spaceBar.isDown;
     isDownX = attackAXbox;
-    if (this.keys.left.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) { // move hero left
+     if (this.keys.up.isDown || upAXbox || upAna || ( (pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) && upAXbox)   || (( pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) && upAXbox)) 
+     {
+        hero.jump();
+        this.game.camera.y += 1;
+    }
+    else if (this.keys.left.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) { // move hero left
+       
         leftOrRight = -1;
         this.game.camera.follow(hero)
         hero.move(-1);
@@ -822,6 +828,7 @@ PlayState._handleInput = function () {
             }, 500)
         }
     } else if (this.keys.right.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) { // move hero right
+        
         leftOrRight = 1;
         hero.move(1);
         this.game.camera.follow(hero) //camera suit le hero
@@ -847,12 +854,7 @@ PlayState._handleInput = function () {
                 hiting = false;
             }, hero.attackSpeed)
         }
-    } else if (this.keys.up.isDown || upAXbox || upAna) { // move hero up
-        console.log("je saute wllh ! ")
-        hero.jump();
-        this.game.camera.y += 1;
-        hero.move(0);
-    } else { // stop
+    }  else { // stop
         hero.move(0);
         if (leftOrRight === 1) {
             hero.animations.play('standRight');
@@ -938,11 +940,11 @@ PlayState._loadLevel = function (data) {
     // ==============================================
     // Animations
     // ==============================================
-    
+
     // platfome qui se balance
-/*    this.game.add.tween(target).to({ property: value }, duration, easing,
-    autostart, delay, repeat, yoyo);*/
-    
+    /*    this.game.add.tween(target).to({ property: value }, duration, easing,
+        autostart, delay, repeat, yoyo);*/
+
     // PIZZA MOVE
     this.game.add.tween(pizza).to({
         y: pizza.position.y - 50
@@ -1095,7 +1097,7 @@ PlayState._spawnCharacters = function (data) {
         case 'warrior':
             hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 150, 300, 5, 5);
             break;
-        case'assasin':
+        case 'assasin':
             hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 200, 800, 3, 3);
             break;
         case 'mage':
@@ -1129,8 +1131,7 @@ PlayState._spawnCharacters = function (data) {
     slime.body.immovable = true;
     slime.scale.setTo(1.8, 1.8);
     this.slims.add(slime);
-}
-;
+};
 // ==========================
 // Crée les drapeaux
 // ==========================
