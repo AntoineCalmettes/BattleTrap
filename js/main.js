@@ -1,10 +1,4 @@
-
-// =============================================================================
-// sprites
-// =============================================================================
-//
-// Cree un nouveaux Hero
-//
+// create Hero
 function Hero(game, x, y, sprites, speed, attackSpeed, health, maxHealth, range, damageCount) {
     this.sprites = sprites;
     Phaser.Sprite.call(this, game, x, y, sprites);
@@ -192,79 +186,73 @@ Minotaur.prototype.update = function () {
                 this.animations.play('standingLeft');
                 this.body.velocity.x = 0;
             } else {
-                if (bossIsChangingFrame === false) {
-                    bossIsChangingFrame = true;
-                    setTimeout(() => {
-                        bossIsChangingFrame = false;
-                    }, 50);
-                    if (this.position.x > 840 && this.position.x < 1180 && hero.position.x > 840 && hero.position.x < 1200) {
-                        if (this.game.physics.arcade.distanceBetween(this, hero) > 50) {
-                            // if player to left of enemy AND enemy moving to right (or not moving)
-                            if (hero.x < this.x && this.body.velocity.x >= 0) {
-                                // move enemy to left
-                                this.animations.play('movinLeft');
-                                this.body.velocity.x = -Minotaur.SPEED;
-                            }
-                            // if player to right of enemy AND enemy moving to left (or not moving)
-                            else if (hero.x > this.x && this.body.velocity.x <= 0) {
-                                // move enemy to right
-                                this.animations.play('movinRight');
-                                this.body.velocity.x = Minotaur.SPEED; // turn right
-                            }
-                            bossCloseOfHero = true
-                        } else {
-                            if (this.game.physics.arcade.distanceBetween(this, hero) < 50) {
-                                this.body.velocity.x = 0;
-                                if (hero.x < this.x && this.body.velocity.x >= 0) {
-                                    this.animations.play('attackLeft', 15, false, false);
-                                    if (minotaureHitHero === false) {
-                                        minotaureHitHero = true;
-                                        setTimeout(() => {
-                                            minotaureHitHero = false;
-                                        }, 1500);
-                                        this.events.onAnimationComplete.add(function (event) {
-                                            if (event.animations.currentAnim.name === 'attackLeft') {
-                                                hero.damage(1, 'left');
-                                                PlayState._soundEffect('blade')
-                                            }
-                                        }, this);
-                                    }
-                                } else if (hero.x > this.x && this.body.velocity.x <= 0) {
-                                    this.animations.play('attackRight', 15, false, false);
-                                    if (minotaureHitHero === false) {
-                                        minotaureHitHero = true;
-                                        setTimeout(() => {
-                                            minotaureHitHero = false;
-                                        }, 1500);
-                                        this.events.onAnimationComplete.add(function (event) {
-                                            if (event.animations.currentAnim.name === 'attackRight') {
-                                                hero.damage(1, 'right');
-                                                PlayState._soundEffect('blade')
-                                            }
-                                        }, this);
-                                    }
-                                }
-                                if (dead) {
-                                    dead = false;
-                                }
-                            }
-                            bossCloseOfHero = false;
-                        }
-                    } else {
-                        if (this.position.x <= 840) {
-                            this.animations.play('movinRight');
-                            this.body.velocity.x = Minotaur.SPEED; // turn right
-                        } else if (this.position.x >= 1180) {
+                if (this.position.x > 840 && this.position.x < 1180 && hero.position.x > 840 && hero.position.x < 1200) {
+                    if (this.game.physics.arcade.distanceBetween(this, hero) > 50) {
+                        // if player to left of enemy AND enemy moving to right (or not moving)
+                        if (hero.x < this.x && this.body.velocity.x >= 0) {
+                            // move enemy to left
                             this.animations.play('movinLeft');
                             this.body.velocity.x = -Minotaur.SPEED;
-                        } else {
-                            if (hero.position.x < 1019) {
-                                this.animations.play('movinRight');
-                                this.game.physics.arcade.moveToXY(this, 1020, 270, 50, 1000);
-                            } else {
-                                this.animations.play('movinLeft');
-                                this.game.physics.arcade.moveToXY(this, 1020, 270, 50, 1000);
+                        }
+                        // if player to right of enemy AND enemy moving to left (or not moving)
+                        else if (hero.x > this.x && this.body.velocity.x <= 0) {
+                            // move enemy to right
+                            this.animations.play('movinRight');
+                            this.body.velocity.x = Minotaur.SPEED; // turn right
+                        }
+                        bossCloseOfHero = true
+                    } else {
+                        if (this.game.physics.arcade.distanceBetween(this, hero) < 50) {
+                            this.body.velocity.x = 0;
+                            if (hero.x < this.x && this.body.velocity.x >= 0) {
+                                this.animations.play('attackLeft', 15, false, false);
+                                if (minotaureHitHero === false) {
+                                    minotaureHitHero = true;
+                                    setTimeout(() => {
+                                        minotaureHitHero = false;
+                                    }, 1500);
+                                    this.events.onAnimationComplete.add(function (event) {
+                                        if (event.animations.currentAnim.name === 'attackLeft') {
+                                            hero.damage(1, 'left');
+                                            PlayState._soundEffect('blade')
+                                        }
+                                    }, this);
+                                }
+                            } else if (hero.x > this.x && this.body.velocity.x <= 0) {
+                                this.animations.play('attackRight', 15, false, false);
+                                if (minotaureHitHero === false) {
+                                    minotaureHitHero = true;
+                                    setTimeout(() => {
+                                        minotaureHitHero = false;
+                                    }, 1500);
+                                    this.events.onAnimationComplete.add(function (event) {
+                                        if (event.animations.currentAnim.name === 'attackRight') {
+                                            hero.damage(1, 'right');
+                                            PlayState._soundEffect('blade')
+                                        }
+                                    }, this);
+                                }
                             }
+                            if (dead) {
+                                dead = false;
+                            }
+                        }
+                        bossCloseOfHero = false;
+                    }
+                } else {
+                    if (this.position.x <= 840) {
+                        this.animations.play('movinRight');
+                        this.body.velocity.x = Minotaur.SPEED; // turn right
+                    } else if (this.position.x >= 1180) {
+                        this.animations.play('movinLeft');
+                        this.body.velocity.x = -Minotaur.SPEED;
+                    } else {
+                        if (hero.position.x < 1019) {
+                            this.animations.play('movinRight');
+                            this.game.physics.arcade.moveToXY(this, 1020, 270, 50, 1000);
+                        } else {
+                            this.animations.play('movinLeft');
+                            this.game.physics.arcade.moveToXY(this, 1020, 270, 50, 1000);
                         }
                     }
                 }
@@ -279,6 +267,7 @@ Minotaur.prototype.update = function () {
                     x: minotaur.body.x + 20,
                     y: minotaur.body.y - 20
                 });
+                minotaurKey = true;
             })
         }
     }
@@ -576,13 +565,15 @@ PlayState._spawnCharacters = function (data) {
 // Crée les clefs
 // ==========================
 PlayState._spawnKeys = function (key) {
-    let sprite = this.key.create(key.x, key.y, 'key');
-    sprite.anchor.set(0.5, 0.5);
-    this.game.physics.enable(sprite);
-    sprite.body.allowGravity = false;
-    sprite.animations.add('movin', [0, 1, 2, 3, 4, 5, 6], 4, true);
-    sprite.animations.play('movin');
-    this.game.physics.arcade.collide(hero, key, this._onHeroVskey, null, this);
+    if (minotaurKey === false) {
+        let sprite = this.key.create(key.x, key.y, 'key');
+        sprite.anchor.set(0.5, 0.5);
+        this.game.physics.enable(sprite);
+        sprite.body.allowGravity = false;
+        sprite.animations.add('movin', [0, 1, 2, 3, 4, 5, 6], 4, true);
+        sprite.animations.play('movin');
+        this.game.physics.arcade.collide(hero, key, this._onHeroVskey, null, this);
+    }
 };
 PlayState._spawnTrampo = function (trampo) {
     let sprite = this.trampos.create(trampo.x, trampo.y, 'trampo');

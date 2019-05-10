@@ -82,6 +82,7 @@ let upAXbox;
 var minotaur;
 var minotaureHitHero = false;
 var slime;
+var minotaurKey = false;
 // ==============================================
 // Initialisation du jeux
 // ==============================================
