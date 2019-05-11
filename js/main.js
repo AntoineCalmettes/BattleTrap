@@ -406,6 +406,7 @@ PlayState._handleCollisions = function () {
     this.game.physics.arcade.collide(hero, this.lavaData, spriteDegatLava, null, this);
     this.game.physics.arcade.collide(hero, this.spikeData, spriteDegatSpike, null, this);
     this.game.physics.arcade.collide(hero, this.platforms, spriteVsPlatform, null, this);
+    this.game.physics.arcade.collide(hero, this.grass3Data);
     this.game.physics.arcade.collide(hero, this.passerelles, this._onHerovsPasserelle, null, this);
     this.game.physics.arcade.collide(hero, movingGrasseX, spriteVsPlatform, null, this);
     this.physics.arcade.collide(hero, this.platformsMovable);
@@ -557,7 +558,7 @@ PlayState._spawnCharacters = function (data) {
     minotaur.body.setSize(30, 40);
     this.boss.add(minotaur);
     //  creer le slime
-    slime = new Slime(this.game, 330, 404, 'slime');
+    slime = new Slime(this.game, 1530, 575, 'slime');
     slime.body.setSize(slime.width, slime.height);
     this.game.add.existing(slime);
     slime.body.allowGravity = false;
@@ -750,7 +751,8 @@ PlayState._soundEffect = function (sound) {
 PlayState._onHerovsPasserelle = function (hero, passerelle) {
     setTimeout(() => {
         passerelle.body.allowGravity = true;
-    }, 600);
+    }, 800);
+
 };
 PlayState._handleLaser = function () {
     if (laserCount !== 0) {

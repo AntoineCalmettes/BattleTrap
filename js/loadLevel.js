@@ -24,6 +24,7 @@ PlayState._loadLevel = function (data) {
     this.castle = this.game.add.physicsGroup();
     this.portal = this.game.add.physicsGroup();
     this.key = this.game.add.group();
+    this.grass3data = this.game.add.group();
     this.platformsMovable = this.add.physicsGroup();
     this.lavaData = this.game.add.group();
     this.spikeData = this.game.add.group();
@@ -66,19 +67,20 @@ PlayState._loadLevel = function (data) {
     door = this.doors.create(1000, 250, 'door');
     door.animations.add('open', [1], 1, true);
     plant = this.platformsMovable.create(600, 600, 'plant');
-    pizza = this.pizzas.create(310, 150, 'pizza');
+    pizza = this.pizzas.create(2020, 350, 'pizza');
     pizza2 = this.pizzas.create(890, 490, 'pizza');
     movingGrasseX = this.platformsMovabl.create(240, 250, 'grass:2x1');
-    movingGrasseXCastle = this.platformsMovable.create(760, 565, 'grass:2x1');
-    star1 = this.stars.create(300, 500, 'star');
+    movingGrasseXCastle = this.platformsMovabl.create(760, 565, 'grass:2x1')
+    movingGrasseDownSpike = this.platformsMovable.create(1260, 570, 'grass:2x1')
+    grassx3 = this.platformsMovable.create(2000, 450, 'grassx3');
+    star1 = this.stars.create(1480, 550, 'star');
     // ==============================================
     // Animations
     // ==============================================
 
     // platfome qui se balance
-    /*    this.game.add.tween(target).to({ property: value }, duration, easing,
-        autostart, delay, repeat, yoyo);*/
-
+/*    this.game.add.tween(gameTitle.scale).from({x: 0, y: 0}, 1500, Phaser.Easing.Default, true, 0);*/
+    this.game.add.tween(grassx3).to({x: '-300'}, 3000, Phaser.Easing.Cubic.InOut, true, 0, -1, true);
     // PIZZA MOVE
     this.game.add.tween(pizza).to({
         y: pizza.position.y - 50
@@ -109,6 +111,12 @@ PlayState._loadLevel = function (data) {
     this.game.add.tween(movingGrasseYRight).to({
         y: movingGrasseYRight.position.y - 120
     }, 2000, Phaser.Easing.Linear.None, true, 0, -1, true);
+    // platform qui bouge sur les piques
+      this.game.add.tween(movingGrasseDownSpike.body).to({
+        x: '+140'
+    }, 2000, Phaser.Easing.Linear.None).to({
+        x: '-140'
+    }, 2000, Phaser.Easing.Linear.None).yoyo().loop().start();
     // Platforme en haut de gauche a droite a coter du soleil Moves
     this.game.add.tween(movingGrasseX.body).to({
         x: '+140'

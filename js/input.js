@@ -3,13 +3,13 @@
 // ==============================================
 PlayState._handleInput = function () {
     let spaceBar = this.game.input.keyboard.addKey(32);
-    let attackAXbox = pad1.justPressed(Phaser.Gamepad.XBOX360_B)
+    let attackAXbox = pad1.justPressed(Phaser.Gamepad.XBOX360_X)
     let upAXbox = pad1.justPressed(Phaser.Gamepad.XBOX360_A);
     let upAna = pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_Y);
     // Recupere le ASCI de la barre d'espace
     let isDown = spaceBar.isDown;
     isDownX = attackAXbox;
-    if (this.keys.up.isDown || upAXbox || upAna || ((pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) && upAXbox) || ((pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) && upAXbox)) {
+    if (this.keys.up.isDown || upAXbox || /*upAna || */((pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) && upAXbox) || ((pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1) && upAXbox)) {
         hero.jump();
         this.game.camera.y += 1;
     } else if (this.keys.left.isDown || pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1) { // move hero left
@@ -51,7 +51,7 @@ PlayState._handleInput = function () {
                 hiting = false;
             }, hero.attackSpeed)
         }
-    } else if (this.keys.up.isDown || upAXbox || upAna) { // move hero up
+    } else if (this.keys.up.isDown || upAXbox /*|| upAna*/) { // move hero up
         hero.jump();
         this.game.camera.y += 1;
     } else { // stop

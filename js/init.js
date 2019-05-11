@@ -44,6 +44,8 @@ var config = {
 var fontMap;
 var building
 var background;
+var grassx3;
+var movingGrasseDownSpike;
 var movingGrasseYLeft;
 var movingGrasseYRight;
 var movingGrasseX;
@@ -89,7 +91,6 @@ var laserLeft;
 var laserRight;
 var laserTop;
 var laserTo2;
-var grass_3;
 // ==============================================
 // Initialisation du jeux
 // ==============================================
