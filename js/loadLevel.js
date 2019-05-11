@@ -21,7 +21,6 @@ PlayState._loadLevel = function (data) {
     // ==============================================
     this.sharpers = this.game.add.group();
     this.platforms = this.game.add.group();
-    this.castle = this.game.add.physicsGroup();
     this.portal = this.game.add.physicsGroup();
     this.key = this.game.add.group();
     this.platformsMovable = this.add.physicsGroup();
@@ -58,7 +57,6 @@ PlayState._loadLevel = function (data) {
     // ==============================================
     // Creation de toute les platforms/decoration/pieges
     // ==============================================
-    this.castle.create(3100, 70, 'castle');
     movingGrasseYLeft = this.platformsMovable.create(280, 540, 'grass:2x1');
     movingGrasseYRight = this.platformsMovable.create(520, 215, 'grass:2x1');
     portalTopRight = this.portal.create(270, 100, 'portalTop');
@@ -129,7 +127,6 @@ PlayState._loadLevel = function (data) {
     this.platformsMovabl.setAll('body.allowGravity', false);
     this.pizzas.setAll('body.allowGravity', false);
     this.stars.setAll('body.allowGravity', false);
-    this.castle.setAll('body.allowGravity', false);
     this.doors.setAll('body.allowGravity', false);
     bullets.setAll('body.allowGravity', false);
     movingGrasseXCastle.body.allowGravity = false;
@@ -139,7 +136,6 @@ PlayState._loadLevel = function (data) {
     this.platformsMovabl.setAll('body.immovable', true);
     this.pizzas.setAll('body.immovable', true);
     this.stars.setAll('body.immovable', true);
-    this.castle.setAll('body.immovable', true);
     this.doors.setAll('body.immovable', true);
     movingGrasseXCastle.body.immovable = true;
 
@@ -166,7 +162,8 @@ PlayState._loadLevel = function (data) {
     // spawn hero and enemies
     this._spawnCharacters({
         hero: data.hero,
-        minotaur: data.minotaur
+        minotaur: data.minotaur,
+        boss: data.boss
     });
 
 };
