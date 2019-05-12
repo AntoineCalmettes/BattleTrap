@@ -44,6 +44,8 @@ var config = {
 var fontMap;
 var building
 var background;
+var grassx3;
+var movingGrasseDownSpike;
 var movingGrasseYLeft;
 var movingGrasseYRight;
 var movingGrasseX;
@@ -93,6 +95,7 @@ var grass_3;
 var bossCanAttack = true;
 var attackFinished = true;
 var bossAnimationAttackPLaying = false;
+var level = 0;
 // ==============================================
 // Initialisation du jeux
 // ==============================================
@@ -101,7 +104,7 @@ PlayState.init = function () {
 
     KeyPickupCount = 0;
 
-
+    this.level = level;
     this.keys = this.game.input.keyboard.addKeys({
         left: Phaser.KeyCode.LEFT,
         right: Phaser.KeyCode.RIGHT,
@@ -120,5 +123,4 @@ PlayState.init = function () {
             fireLaser()
         }
     }, this);
-
 };

@@ -3,9 +3,10 @@ PlayState = {};
 // Image pour les platforms, sprites etc..
 // ==============================================
 PlayState.preload = function () {
-    this.game.load.json('level:1', 'data/level01.json');
-    this.game.load.image('bg_front', 'images/backgrounds/secondplan.png');
-    this.game.load.image('buildinImg', 'images/backgrounds/building.png');
+    this.game.load.json('level:0', 'data/level01.json');
+    this.game.load.json('level:1', 'data/level00.json');
+    this.game.load.image('bg_front', 'images/backgrounds/building.png');
+    this.game.load.image('buildinImg', 'images/backgrounds/secondplan.png');
     this.game.load.image('bg_back', 'images/backgrounds/arriere_plan.png');
     this.game.load.image('grass:1x1', 'images/platforms/grass_1x1.png');
     this.game.load.image('grass:1x1Left', 'images/platforms/grass_1x1_borderLeft.png');
@@ -14,7 +15,7 @@ PlayState.preload = function () {
     this.game.load.image('grass:2x1:noborder', 'images/platforms/grass_2x1_noborder.png');
     this.game.load.image('lava', 'images/decorations/lava.png');
     this.game.load.image('spike', 'images/decorations/spike.png');
-    this.game.load.image('grass_3', 'images/platforms/grass_3.png')
+    this.game.load.image('grassx3', 'images/platforms/grass_3.png')
     this.game.load.image('invisible-wall', 'images/platforms/invisible_wall.png');
     this.game.load.spritesheet('fireBall', 'images/decorations/fireBall.png', 13.33, 15, 3);
     this.game.load.image('rond', 'images/platforms/rond_line.png')
@@ -73,4 +74,6 @@ PlayState.preload = function () {
     this.game.load.audio('sfx:splash', 'audio/splash.wav');
     this.game.load.audio('sfx:splash', 'audio/splash.wav');
     this.game.load.audio('sfx:minotaurDie', 'audio/minotaurDie.wav');
+    this.game.scale.pageAlignVertically = true;
+    this.game.scale.refresh();
 };

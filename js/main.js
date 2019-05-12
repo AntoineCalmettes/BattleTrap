@@ -114,34 +114,34 @@ Hero.prototype.damage = function (amount, direction) {
                 this.game.state.restart();
 
                 var canvasTest = document.getElementsByTagName('canvas')[0];
-                canvasTest.hidden=true;
+                canvasTest.hidden = true;
                 let containerGameOver = document.createElement("div")
                 document.body.appendChild(containerGameOver)
                 let buttonRestart = document.createElement("button")
                 let buttonChoosePerso = document.createElement("button")
-                
-                buttonRestart.className ="pixel"
-                buttonRestart.textContent="Restart"
-                buttonRestart.style.fontSize="25px"
 
-                buttonChoosePerso.className ="pixel"
-                buttonChoosePerso.textContent="Exit"
-                buttonChoosePerso.style.fontSize="25px"
+                buttonRestart.className = "pixel"
+                buttonRestart.textContent = "Restart"
+                buttonRestart.style.fontSize = "25px"
+
+                buttonChoosePerso.className = "pixel"
+                buttonChoosePerso.textContent = "Exit"
+                buttonChoosePerso.style.fontSize = "25px"
 
                 containerGameOver.appendChild(buttonRestart)
                 containerGameOver.appendChild(buttonChoosePerso)
 
-                buttonRestart.addEventListener("click", ()=>{
-                    canvasTest.hidden=false;
+                buttonRestart.addEventListener("click", () => {
+                    canvasTest.hidden = false;
                     containerGameOver.remove();
                 }, false);
 
-                buttonChoosePerso.addEventListener("click", ()=>{
-                    buttonChoosePerso.onclick=screenChoosePerso.hidden = false;
+                buttonChoosePerso.addEventListener("click", () => {
+                    buttonChoosePerso.onclick = screenChoosePerso.hidden = false;
                     canvasTest.remove();
                     containerGameOver.remove();
                     this.game.remove();
-                    
+
                 }, false);
 
                 laser = 1;
@@ -162,10 +162,12 @@ Hero.prototype.hit = function () {
             }
         }
     }
-    if (this.game.physics.arcade.distanceBetween(this, boss) < this.range + 200) {
-        if (this.sprites !== 'mage' && boss.health > 0) {
-            boss.damage(this.damageCount);
-            PlayState._soundEffect('splash');
+    if (level === 1) {
+        if (this.game.physics.arcade.distanceBetween(this, boss) < this.range + 200) {
+            if (this.sprites !== 'mage' && boss.health > 0) {
+                boss.damage(this.damageCount);
+                PlayState._soundEffect('splash');
+            }
         }
     }
     if (this.game.physics.arcade.distanceBetween(this, slime) < this.range) {
@@ -520,6 +522,7 @@ PlayState._handleCollisions = function () {
     this.game.physics.arcade.collide(hero, this.lavaData, spriteDegatLava, null, this);
     this.game.physics.arcade.collide(hero, this.spikeData, spriteDegatSpike, null, this);
     this.game.physics.arcade.collide(hero, this.platforms, spriteVsPlatform, null, this);
+    this.game.physics.arcade.collide(hero, this.grass3Data);
     this.game.physics.arcade.collide(hero, this.passerelles, this._onHerovsPasserelle, null, this);
     this.game.physics.arcade.collide(hero, movingGrasseX, spriteVsPlatform, null, this);
     this.physics.arcade.collide(hero, this.platformsMovable);
@@ -659,34 +662,35 @@ PlayState._spawnCharacters = function (data) {
         default:
     }
     // set hero size in game
-    hero.body.setSize(45, 45);
+    hero.body.setSize(45, 46);
     // add hero in game
     this.game.add.existing(hero);
-    // créer le minotaur
-    minotaur = new Minotaur(this.game, data.minotaur.x, data.minotaur.y, 'minotaur');
-    this.game.add.existing(minotaur);
-    minotaur.body.allowGravity = false;
-    minotaur.body.immovable = true;
-    minotaur.body.bounce.x = 1;
-    minotaur.body.setSize(30, 40);
-    this.boss.add(minotaur);
-
-    boss = new Boss(this.game, data.boss.x, data.boss.y, 'boss');
-    this.game.add.existing(boss);
-    boss.body.allowGravity = false;
-    boss.body.immovable = true;
-    boss.body.bounce.x = 1;
-    boss.body.setSize(300, 400);
-    this.boss.add(boss);
-
-    //  creer le slime
-    slime = new Slime(this.game, 330, 404, 'slime');
-    slime.body.setSize(slime.width, slime.height);
-    this.game.add.existing(slime);
-    slime.body.allowGravity = false;
-    slime.body.immovable = true;
-    slime.scale.setTo(1.8, 1.8);
-    this.slims.add(slime);
+    if (this.level === 1) {
+        boss = new Boss(this.game, data.boss.x, data.boss.y, 'boss');
+        this.game.add.existing(boss);
+        boss.body.allowGravity = false;
+        boss.body.immovable = true;
+        boss.body.bounce.x = 1;
+        boss.body.setSize(300, 400);
+        this.boss.add(boss);
+    } else {
+        // créer le minotaur
+        minotaur = new Minotaur(this.game, data.minotaur.x, data.minotaur.y, 'minotaur');
+        this.game.add.existing(minotaur);
+        minotaur.body.allowGravity = false;
+        minotaur.body.immovable = true;
+        minotaur.body.bounce.x = 1;
+        minotaur.body.setSize(30, 40);
+        this.boss.add(minotaur);
+        //  creer le slime
+        slime = new Slime(this.game, 1530, 575, 'slime');
+        slime.body.setSize(slime.width, slime.height);
+        this.game.add.existing(slime);
+        slime.body.allowGravity = false;
+        slime.body.immovable = true;
+        slime.scale.setTo(1.8, 1.8);
+        this.slims.add(slime);
+    }
 };
 // ==========================
 // Crée les clefs
@@ -716,21 +720,29 @@ PlayState._spawnLaser = function () {
     laserLeft.anchor.set(0.5, 0.5);
     this.game.physics.enable(laserLeft);
     laserLeft.body.allowGravity = false;
+    laserLeft.body.immovable = true;
+    laserLeft.body.setSize(0, 0);
 
     laserTop = this.laserAsset.create(1891, 25, 'laser');
     laserTop.anchor.set(0.5, 0.5);
     this.game.physics.enable(laserTop);
     laserTop.body.allowGravity = false;
+    laserTop.body.immovable = true;
+    laserTop.body.setSize(0, 0);
 
     laserTop2 = this.laserAsset.create(1921, 25, 'laser');
     laserTop2.anchor.set(0.5, 0.5);
     this.game.physics.enable(laserTop2);
     laserTop2.body.allowGravity = false;
+    laserTop2.body.immovable = true;
+    laserTop2.body.setSize(0, 0);
 
     laserRight = this.laserAsset.create(1950, 45, 'laserRight');
     laserRight.anchor.set(0.5, 0.5);
     this.game.physics.enable(laserRight);
     laserRight.body.allowGravity = false;
+    laserRight.body.immovable = true;
+    laserRight.body.setSize(0, 0);
 
     laserLeft.animations.add('fire', [1], 1, true);
     laserLeft.animations.add('stop', [0], 1, true);
@@ -873,7 +885,8 @@ PlayState._soundEffect = function (sound) {
 PlayState._onHerovsPasserelle = function (hero, passerelle) {
     setTimeout(() => {
         passerelle.body.allowGravity = true;
-    }, 600);
+    }, 800);
+
 };
 PlayState._handleLaser = function () {
     if (laserCount !== 0) {
@@ -905,5 +918,5 @@ function runGame(persoChoose) {
     HEROCHOSEN = persoChoose;
     var game = new Phaser.Game(config);
     game.state.add('play', PlayState);
-    game.state.start('play');
+    game.state.start('play', true, false, {level: 0});
 }
