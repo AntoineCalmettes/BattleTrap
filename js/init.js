@@ -118,5 +118,4 @@ PlayState.init = function () {
             fireLaser()
         }
     }, this);
-
 };

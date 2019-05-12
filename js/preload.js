@@ -65,4 +65,6 @@ PlayState.preload = function () {
     this.game.load.audio('sfx:splash', 'audio/splash.wav');
     this.game.load.audio('sfx:splash', 'audio/splash.wav');
     this.game.load.audio('sfx:minotaurDie', 'audio/minotaurDie.wav');
+    this.game.scale.pageAlignVertically = true;
+    this.game.scale.refresh();
 };
