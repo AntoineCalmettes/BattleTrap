@@ -111,7 +111,7 @@ Hero.prototype.damage = function (amount, direction) {
             }, 200, Phaser.Easing.Cubic.Out, true, 0, -1, true);
             setTimeout(() => {
                 this.kill();
-                // this.game.state.restart();
+                this.game.state.restart();
 
                 var canvasTest = document.getElementsByTagName('canvas')[0];
                 canvasTest.hidden=true;
@@ -132,7 +132,6 @@ Hero.prototype.damage = function (amount, direction) {
                 containerGameOver.appendChild(buttonChoosePerso)
 
                 buttonRestart.addEventListener("click", ()=>{
-                    this.game.state.restart();
                     canvasTest.hidden=false;
                     containerGameOver.remove();
                 }, false);
