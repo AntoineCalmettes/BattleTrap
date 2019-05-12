@@ -112,6 +112,38 @@ Hero.prototype.damage = function (amount, direction) {
             setTimeout(() => {
                 this.kill();
                 this.game.state.restart();
+
+                var canvasTest = document.getElementsByTagName('canvas')[0];
+                canvasTest.hidden=true;
+                let containerGameOver = document.createElement("div")
+                document.body.appendChild(containerGameOver)
+                let buttonRestart = document.createElement("button")
+                let buttonChoosePerso = document.createElement("button")
+                
+                buttonRestart.className ="pixel"
+                buttonRestart.textContent="Restart"
+                buttonRestart.style.fontSize="25px"
+
+                buttonChoosePerso.className ="pixel"
+                buttonChoosePerso.textContent="Exit"
+                buttonChoosePerso.style.fontSize="25px"
+
+                containerGameOver.appendChild(buttonRestart)
+                containerGameOver.appendChild(buttonChoosePerso)
+
+                buttonRestart.addEventListener("click", ()=>{
+                    canvasTest.hidden=false;
+                    containerGameOver.remove();
+                }, false);
+
+                buttonChoosePerso.addEventListener("click", ()=>{
+                    buttonChoosePerso.onclick=screenChoosePerso.hidden = false;
+                    canvasTest.remove();
+                    containerGameOver.remove();
+                    this.game.remove();
+                    
+                }, false);
+
                 laser = 1;
                 laserCount = 53;
             }, 1200)
