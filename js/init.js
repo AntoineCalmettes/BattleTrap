@@ -90,6 +90,9 @@ var laserRight;
 var laserTop;
 var laserTo2;
 var grass_3;
+var bossCanAttack = true;
+var attackFinished = true;
+var bossAnimationAttackPLaying = false;
 // ==============================================
 // Initialisation du jeux
 // ==============================================

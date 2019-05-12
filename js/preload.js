@@ -26,7 +26,6 @@ PlayState.preload = function () {
     this.game.load.image('portalRight', 'images/decorations/portalRight.png');
     this.game.load.image('portalTop', 'images/decorations/portalTop.png');
     this.game.load.image('portalBottom', 'images/decorations/portalBottom.png');
-    this.game.load.image('castle', 'images/decorations/castle.png');
     this.game.load.image('plant', 'images/decorations/plant.png');
     this.game.load.image('pizza', 'images/bonus/pizza.png');
     this.game.load.spritesheet('warrior', 'images/playerWarrior/warrior.png', 61.8, 48, 20);
@@ -34,8 +33,12 @@ PlayState.preload = function () {
     this.game.load.spritesheet('mage', 'images/playerMage/mage.png', 48.6, 48, 13);
     this.game.load.spritesheet('key', 'images/decorations/key.png', 25, 25, 8);
     this.game.load.spritesheet('sharper', 'images/decorations/sharper.png', 62, 68, 6);
+    this.game.load.spritesheet('fireWorkRed', 'images/Fireworks/redshot.png', 64, 64, 8);
+    this.game.load.spritesheet('fireWorkYellow', 'images/Fireworks/yellowshot.png', 64, 64, 8);
+    this.game.load.spritesheet('fireWorkYellow', 'images/Fireworks/violetshot.png', 64, 64, 8);
+    this.game.load.spritesheet('fireWorkYellow', 'images/Fireworks/blueshot.png', 64, 64, 8);
     this.game.load.image('arrow', 'images/decorations/arrow.png');
-    this.game.load.spritesheet('boss', 'images/monstres/boss.png', 80.75, 43, 4);
+    this.game.load.spritesheet('boss', 'images/monstres/boss.png', 394, 403, 20);
     this.game.load.spritesheet('minotaur', 'images/minotaur/minotaur.png', 76, 65, 45);
     this.game.load.spritesheet('slime', 'images/monstres/slime.png', 15.8, 16, 25);
     this.game.load.spritesheet('bullet', 'images/playerMage/bullet.png', 20, 14, 4);
