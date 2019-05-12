@@ -45,6 +45,11 @@ PlayState.preload = function () {
     this.game.load.image('star', 'images/bonus/beer.png');
     this.game.load.image('green-bar', 'images/health-green.png');
     this.game.load.image('red-bar', 'images/health-red.png');
+    this.game.load.image('gameover', 'images/gameover-lost.png');
+    // AUDIO
+    //
+    //
+    //********************************************** */
     this.game.load.audio('sfx:jump', 'audio/jump.wav');
     this.game.load.audio('sfx:coin', 'audio/coin.wav');
     this.game.load.audio('sfx:key', 'audio/key.wav');
