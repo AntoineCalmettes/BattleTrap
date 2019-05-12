@@ -95,7 +95,7 @@ Hero.prototype.damage = function (amount, direction) {
                 break;
             case 'up':
                 this.game.add.tween(this.body).to({
-                    y: '-30'
+                    y: '-10'
                 }, 100, Phaser.Easing.Linear.None, true, 0);
                 break;
             default:
@@ -112,6 +112,40 @@ Hero.prototype.damage = function (amount, direction) {
             setTimeout(() => {
                 this.kill();
                 this.game.state.restart();
+
+                var canvasTest = document.getElementsByTagName('canvas')[0];
+                canvasTest.hidden = true;
+                let containerGameOver = document.createElement("div")
+                document.body.appendChild(containerGameOver)
+                let buttonRestart = document.createElement("button")
+                let buttonChoosePerso = document.createElement("button")
+
+                buttonRestart.className = "pixel"
+                buttonRestart.textContent = "Restart"
+                buttonRestart.style.fontSize = "25px"
+
+                buttonChoosePerso.className = "pixel"
+                buttonChoosePerso.textContent = "Exit"
+                buttonChoosePerso.style.fontSize = "25px"
+
+                containerGameOver.appendChild(buttonRestart)
+                containerGameOver.appendChild(buttonChoosePerso)
+
+                buttonRestart.addEventListener("click", () => {
+                    canvasTest.hidden = false;
+                    containerGameOver.remove();
+                }, false);
+
+                buttonChoosePerso.addEventListener("click", () => {
+                    buttonChoosePerso.onclick = screenChoosePerso.hidden = false;
+                    canvasTest.remove();
+                    containerGameOver.remove();
+                    this.game.remove();
+
+                }, false);
+
+                laser = 1;
+                laserCount = 53;
             }, 1200)
         }
     }
@@ -120,11 +154,18 @@ Hero.prototype.damage = function (amount, direction) {
 
 Hero.prototype.hit = function () {
     if (this.game.physics.arcade.distanceBetween(this, minotaur) < this.range) {
-        console.log(minotaur.position.y);
         if (this.position.y >= minotaur.position.y - 10 && this.position.y <= minotaur.position.y + 10) {
             if (this.sprites !== 'mage' && minotaur.health > 0) {
                 console.log('minotaur' + this.damageCount);
                 minotaur.damage(this.damageCount);
+                PlayState._soundEffect('splash');
+            }
+        }
+    }
+    if (level === 1) {
+        if (this.game.physics.arcade.distanceBetween(this, boss) < this.range + 200) {
+            if (this.sprites !== 'mage' && boss.health > 0) {
+                boss.damage(this.damageCount);
                 PlayState._soundEffect('splash');
             }
         }
@@ -142,26 +183,103 @@ Hero.prototype.hit = function () {
 // Create new Boss
 // ==================
 function Boss(game, x, y, sprites) {
+    this.sprites = sprites;
+    Phaser.Sprite.call(this, game, x, y, sprites);
+    this.anchor.set(0.5, 0.5);
+    this.health = 5;
+    this.attackSpeed = 1500;
+    this.animations.add('movinLeft', [0, 1, 2, 3], 8, true);
+    this.animations.add('movinRight', [6, 7, 8, 9], 8, true);
+    this.animations.add('attackLeft', [12, 13], 10, true);
+    this.animations.add('attackRight', [14, 15], 10, true);
+    this.animations.add('damageLeft', [16], 4, false);
+    this.animations.add('damageRight', [18], 4, false);
+    this.animations.add('dieLeft', [17], 1, false);
+    this.animations.add('dieRight', [19], 1, false);
+    this.animations.play('movinLeft');
+    // physic properties
+    this.game.physics.enable(this);
+    this.body.collideWorldBounds = true;
+    this.events.onAnimationComplete.add(function (event) {
+        bossAnimationAttackPLaying = false;
+    }, this);
 }
 
-Boss.SPEED = 50;
+Boss.SPEED = 70;
 Slime.SPEED = 70;
 Minotaur.SPEED = 60;
 // inherit from Phaser.Sprite
 Boss.prototype = Object.create(Phaser.Sprite.prototype);
 Boss.prototype.constructor = Boss;
-Boss.prototype.update = function () {
-
-};
 Boss.prototype.damage = function (amount) {
-
+    this.health -= amount;
+    if (hero.x < boss.x) {
+        this.animations.play('damageLeft', false, false);
+    } else {
+        this.animations.play('damageRight', false, false);
+    }
+    this.events.onAnimationComplete.add(function (event) {
+        if (event.animations.currentAnim.name === 'damageLeft') {
+            this.animations.play('movinLeft');
+            this.body.velocity.x = -Boss.SPEED;
+        } else {
+            this.animations.play('movinRight');
+            this.body.velocity.x = Boss.SPEED;
+        }
+    }, this);
+};
+Boss.prototype.update = function () {
+    if (this.health > 0) {
+        if (this.game.physics.arcade.distanceBetween(this, hero) < 220) {
+            if (bossCanAttack === true) {
+                bossCanAttack = false;
+                if (hero.x < this.x) {
+                    attackFinished = false;
+                    bossAnimationAttackPLaying = true;
+                    this.animations.play('attackLeft', false, false);
+                    hero.damage(0.75, 'left');
+                    PlayState._soundEffect('blade')
+                } else {
+                    attackFinished = false;
+                    bossAnimationAttackPLaying = true;
+                    this.animations.play('attackRight', false, false);
+                    hero.damage(0.75, 'right');
+                    PlayState._soundEffect('blade')
+                }
+                setTimeout(() => {
+                    bossCanAttack = true;
+                }, boss.attackSpeed)
+            }
+            this.body.velocity.x = 0;
+        } else if (hero.x < this.x && this.body.velocity.x >= 0 && bossAnimationAttackPLaying === false) {
+            // move enemy to left
+            this.animations.play('movinLeft');
+            this.body.velocity.x = -Boss.SPEED;
+        }
+        // if player to right of enemy AND enemy moving to left (or not moving)
+        else if (hero.x > this.x && this.body.velocity.x <= 0 && bossAnimationAttackPLaying === false) {
+            // move enemy to right
+            this.animations.play('movinRight');
+            this.body.velocity.x = Boss.SPEED; // turn right
+        }
+    } else {
+        this.body.velocity.x = 0;
+        if (hero.x < this.x) {
+            this.animations.play('dieLeft', false, false);
+        } else {
+            this.animations.play('dieRight', false, false);
+        }
+        this.events.onAnimationComplete.add(function (event) {
+            this.kill();
+        }, this);
+    }
 };
 
 function Minotaur(game, x, y, sprites) {
     this.sprites = sprites;
     Phaser.Sprite.call(this, game, x, y, sprites);
     this.anchor.set(0.5, 0.5);
-    this.health = 5;
+    this.health = 3;
     this.animations.add('standingLeft', [0, 1, 2, 3], 4, true);
     this.animations.add('movinLeft', [4, 5, 6, 7, 8, 9, 10, 11, 12], 12, true);
     this.animations.add('movinRight', [13, 14, 15, 16, 17, 18, 19, 20, 21], 12, true);
@@ -187,7 +305,7 @@ Minotaur.prototype.update = function () {
                 this.body.velocity.x = 0;
             } else {
                 if (this.position.x > 840 && this.position.x < 1180 && hero.position.x > 840 && hero.position.x < 1200) {
-                    if (this.game.physics.arcade.distanceBetween(this, hero) > 50) {
+                    if (this.game.physics.arcade.distanceBetween(this, hero) > 50 && hero.position.y < 300) {
                         // if player to left of enemy AND enemy moving to right (or not moving)
                         if (hero.x < this.x && this.body.velocity.x >= 0) {
                             // move enemy to left
@@ -404,6 +522,7 @@ PlayState._handleCollisions = function () {
     this.game.physics.arcade.collide(hero, this.lavaData, spriteDegatLava, null, this);
     this.game.physics.arcade.collide(hero, this.spikeData, spriteDegatSpike, null, this);
     this.game.physics.arcade.collide(hero, this.platforms, spriteVsPlatform, null, this);
+    this.game.physics.arcade.collide(hero, this.grass3Data);
     this.game.physics.arcade.collide(hero, this.passerelles, this._onHerovsPasserelle, null, this);
     this.game.physics.arcade.collide(hero, grass_3);
     
@@ -417,6 +536,8 @@ PlayState._handleCollisions = function () {
     this.game.physics.arcade.collide(hero, this.trampos, this._onHerovsTrampos, null, this);
     this.game.physics.arcade.collide(hero, plant, spriteMovinPlant, null, this);
     this.game.physics.arcade.collide(this.slims, this.enemyWalls);
+    this.game.physics.arcade.collide(hero, laserTop);
+    this.game.physics.arcade.collide(hero, laserTop2);
 };
 
 PlayState._handleBullet = function () {
@@ -531,36 +652,46 @@ PlayState._spawnCharacters = function (data) {
     // spawn hero
     switch (HEROCHOSEN) {
         case 'warrior':
-            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 150, 400, 5, 5, 60, 1);
+            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 150, 700, 5, 5, 60, 0.75);
             break;
         case'assasin':
-            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 220, 300, 3, 3, 50, 0.5);
+            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 200, 400, 3, 3, 50, 0.5);
             break;
         case 'mage':
-            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 180, 500, 99, 99, 400, 0.5); // REMETRE A 2, 2
+            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 170, 500, 2, 2, 600, 0.5);
             break;
         default:
     }
     // set hero size in game
-    hero.body.setSize(45, 45);
+    hero.body.setSize(45, 46);
     // add hero in game
     this.game.add.existing(hero);
-    // créer le minotaur
-    minotaur = new Minotaur(this.game, data.minotaur.x, data.minotaur.y, 'minotaur');
-    this.game.add.existing(minotaur);
-    minotaur.body.allowGravity = false;
-    minotaur.body.immovable = true;
-    minotaur.body.bounce.x = 1;
-    minotaur.body.setSize(30, 40);
-    this.boss.add(minotaur);
-    //  creer le slime
-    slime = new Slime(this.game, 330, 404, 'slime');
-    slime.body.setSize(slime.width, slime.height);
-    this.game.add.existing(slime);
-    slime.body.allowGravity = false;
-    slime.body.immovable = true;
-    slime.scale.setTo(1.8, 1.8);
-    this.slims.add(slime);
+    if (this.level === 1) {
+        boss = new Boss(this.game, data.boss.x, data.boss.y, 'boss');
+        this.game.add.existing(boss);
+        boss.body.allowGravity = false;
+        boss.body.immovable = true;
+        boss.body.bounce.x = 1;
+        boss.body.setSize(300, 400);
+        this.boss.add(boss);
+    } else {
+        // créer le minotaur
+        minotaur = new Minotaur(this.game, data.minotaur.x, data.minotaur.y, 'minotaur');
+        this.game.add.existing(minotaur);
+        minotaur.body.allowGravity = false;
+        minotaur.body.immovable = true;
+        minotaur.body.bounce.x = 1;
+        minotaur.body.setSize(30, 40);
+        this.boss.add(minotaur);
+        //  creer le slime
+        slime = new Slime(this.game, 1530, 575, 'slime');
+        slime.body.setSize(slime.width, slime.height);
+        this.game.add.existing(slime);
+        slime.body.allowGravity = false;
+        slime.body.immovable = true;
+        slime.scale.setTo(1.8, 1.8);
+        this.slims.add(slime);
+    }
 };
 // ==========================
 // Crée les clefs
@@ -585,14 +716,39 @@ PlayState._spawnTrampo = function (trampo) {
     sprite.animations.add('upDown', [1, 0], 6, false)
 };
 
-PlayState._spawnLaser = function (laser) {
-    let sprite = this.laserAsset.create(laser.x, laser.y, 'laserAsset');
-    sprite.anchor.set(0.5, 0.5);
-    this.game.physics.enable(sprite);
-    sprite.body.allowGravity = false;
-    sprite.animations.add('rotate', [0, 1], 1, true);
-    sprite.animations.play('rotate');
-   /* sprite.scale.setTo(1, 1);*/
+PlayState._spawnLaser = function () {
+    laserLeft = this.laserAsset.create(1860, 45, 'laserRight');
+    laserLeft.anchor.set(0.5, 0.5);
+    this.game.physics.enable(laserLeft);
+    laserLeft.body.allowGravity = false;
+    laserLeft.body.immovable = true;
+    laserLeft.body.setSize(0, 0);
+
+    laserTop = this.laserAsset.create(1891, 25, 'laser');
+    laserTop.anchor.set(0.5, 0.5);
+    this.game.physics.enable(laserTop);
+    laserTop.body.allowGravity = false;
+    laserTop.body.immovable = true;
+    laserTop.body.setSize(0, 0);
+
+    laserTop2 = this.laserAsset.create(1921, 25, 'laser');
+    laserTop2.anchor.set(0.5, 0.5);
+    this.game.physics.enable(laserTop2);
+    laserTop2.body.allowGravity = false;
+    laserTop2.body.immovable = true;
+    laserTop2.body.setSize(0, 0);
+
+    laserRight = this.laserAsset.create(1950, 45, 'laserRight');
+    laserRight.anchor.set(0.5, 0.5);
+    this.game.physics.enable(laserRight);
+    laserRight.body.allowGravity = false;
+    laserRight.body.immovable = true;
+    laserRight.body.setSize(0, 0);
+
+    laserLeft.animations.add('fire', [1], 1, true);
+    laserLeft.animations.add('stop', [0], 1, true);
+    laserRight.animations.add('fire', [1], 1, true);
+    laserRight.animations.add('stop', [0], 1, true);
 };
 
 PlayState._spawnSharper = function (sharper) {
@@ -730,12 +886,38 @@ PlayState._soundEffect = function (sound) {
 PlayState._onHerovsPasserelle = function (hero, passerelle) {
     setTimeout(() => {
         passerelle.body.allowGravity = true;
-    }, 600);
+    }, 800);
+
+};
+PlayState._handleLaser = function () {
+    if (laserCount !== 0) {
+        laserCount--;
+    } else {
+        laserCount = 100;
+        if (laser === 0) {
+            laser = 1;
+            laserLeft.animations.play('fire');
+            laserRight.animations.play('stop');
+        } else if (laser === 1) {
+            laser = 0;
+            laserRight.animations.play('fire');
+            laserLeft.animations.play('stop');
+        }
+    }
+    if (laser === 1) {
+        if (hero.position.x > 1830 && hero.position.x < 1895) {
+            hero.damage(0.01, 'up');
+        }
+    } else if (laser === 0) {
+        if (hero.position.x > 1925 && hero.position.x < 1980) {
+            hero.damage(0.01, 'up');
+        }
+    }
 };
 
 function runGame(persoChoose) {
     HEROCHOSEN = persoChoose;
     var game = new Phaser.Game(config);
     game.state.add('play', PlayState);
-    game.state.start('play');
+    game.state.start('play', true, false, {level: 0});
 }

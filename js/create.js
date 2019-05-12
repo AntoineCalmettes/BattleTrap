@@ -35,14 +35,12 @@ PlayState.create = function () {
     building = this.add.tileSprite(0, 0, 2210, 620, "buildinImg");
     fontMap = this.add.tileSprite(0, 0, 3410, 620, "bg_front");
     building.fixedToCamera = true; // Creer le parallax
-    this.game.world.setBounds(0, 0, 3410, 620); // taille du monde
-    grass_3 = this.add.image(1870, 400, 'grass_3')
+    this.game.world.setBounds(0, 0, 2130, 620); // taille du monde
+
     // rond de deco pour platfome bascule
-    var rond_line = this.game.add.image(1907, 250, 'rond');
-
+    var rond_line = this.game.add.image(1907, 300, 'rond');
     // Charge le fichier JSON du niveaux 1
-    this._loadLevel(this.game.cache.getJSON('level:1'));
-
+    this._loadLevel(this.game.cache.getJSON(`level:${this.level}`));
 
     // change position if needed (but use same position for both images)
     var backgroundBar = this.game.add.image(100, 20, 'red-bar');
@@ -63,4 +61,4 @@ PlayState.create = function () {
         fill: '#ffffff',
     });
     keynumber.fixedToCamera = true;
-}
+};
