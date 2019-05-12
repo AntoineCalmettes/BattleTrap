@@ -3,7 +3,8 @@ PlayState = {};
 // Image pour les platforms, sprites etc..
 // ==============================================
 PlayState.preload = function () {
-    this.game.load.json('level:1', 'data/level01.json');
+    this.game.load.json('level:0', 'data/level01.json');
+    this.game.load.json('level:1', 'data/level00.json');
     this.game.load.image('bg_front', 'images/backgrounds/building.png');
     this.game.load.image('buildinImg', 'images/backgrounds/secondplan.png');
     this.game.load.image('bg_back', 'images/backgrounds/arriere_plan.png');
