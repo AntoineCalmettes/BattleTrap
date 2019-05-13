@@ -829,7 +829,7 @@ PlayState._onHeroVsStars = function (hero, star) {
     setTimeout(() => {
         hero.SPEED = heroSpeed;
         hero.health = heroHealtBefore;
-    }, 4000);
+    }, 10000);
     star.kill();
 };
 PlayState._onSpriteVsSharper = function (hero, sharper) {

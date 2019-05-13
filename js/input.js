@@ -36,7 +36,7 @@ PlayState._handleInput = function () {
                 walking = false;
             }, 500)
         }
-    } else if (isDown || isDownX) { // fighting
+    } else if (isDown || isDownX || ( isDownX && ((pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1)  )) || ( isDownX && ((pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1)  )) ){ // fighting
         if (hiting === false) {
             hiting = true;
             if (HEROCHOSEN === 'mage') {
