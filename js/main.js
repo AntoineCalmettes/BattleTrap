@@ -258,13 +258,25 @@ Boss.prototype.update = function () {
                 }, boss.attackSpeed)
             }
             this.body.velocity.x = 0;
-        } else if (hero.x < this.x && this.body.velocity.x >= 0 && bossAnimationAttackPLaying === false) {
+        } else if (hero.x < 400 || hero.x > 1080) {
+            if (boss.x > 890 && boss.x < 910) {
+                this.animations.play('movinLeft');
+            } else if (boss.x > 590 && boss.x < 610) {
+                this.animations.play('movinRight');
+            } else if (hero.x < 400) {
+                this.animations.play('movinRight');
+                this.game.physics.arcade.moveToXY(this, 900, 405, 50, 1000);
+            } else {
+                this.animations.play('movinLeft');
+                this.game.physics.arcade.moveToXY(this, 600, 405, 50, 1000);
+            }
+        } else if (this.game.physics.arcade.distanceBetween(this, hero) < 500 && hero.x < this.x && this.body.velocity.x >= 0 && bossAnimationAttackPLaying === false) {
             // move enemy to left
             this.animations.play('movinLeft');
             this.body.velocity.x = -Boss.SPEED;
         }
         // if player to right of enemy AND enemy moving to left (or not moving)
-        else if (hero.x > this.x && this.body.velocity.x <= 0 && bossAnimationAttackPLaying === false) {
+        else if (this.game.physics.arcade.distanceBetween(this, hero) < 500 && hero.x > this.x && this.body.velocity.x <= 0 && bossAnimationAttackPLaying === false) {
             // move enemy to right
             this.animations.play('movinRight');
             this.body.velocity.x = Boss.SPEED; // turn right
@@ -280,7 +292,8 @@ Boss.prototype.update = function () {
             this.kill();
         }, this);
     }
-};
+}
+;
 
 function Minotaur(game, x, y, sprites) {
     this.sprites = sprites;
@@ -338,7 +351,7 @@ Minotaur.prototype.update = function () {
                                     }, 1500);
                                     this.events.onAnimationComplete.add(function (event) {
                                         if (event.animations.currentAnim.name === 'attackLeft') {
-                                            hero.damage(1, 'left');
+                                            hero.damage(0.75, 'left');
                                             PlayState._soundEffect('blade')
                                         }
                                     }, this);
@@ -352,7 +365,7 @@ Minotaur.prototype.update = function () {
                                     }, 1500);
                                     this.events.onAnimationComplete.add(function (event) {
                                         if (event.animations.currentAnim.name === 'attackRight') {
-                                            hero.damage(1, 'right');
+                                            hero.damage(0.75, 'right');
                                             PlayState._soundEffect('blade')
                                         }
                                     }, this);
@@ -930,6 +943,3 @@ function runGame(persoChoose) {
     });
 }
 
-function callback(x) {
-    x();
-}

@@ -6,6 +6,7 @@ PlayState._loadLevel = function (data) {
     const GRAVITY = 1500;
     // Ajoute la gravité
     this.game.physics.arcade.gravity.y = GRAVITY;
+    this.lavaData = this.game.add.group();
     if (this.level === 0) {
         let keyIcon = this.game.make.image(10, 50, 'key');
         keyIcon.fixedToCamera = true;
@@ -19,12 +20,10 @@ PlayState._loadLevel = function (data) {
         // ==============================================
         // create all the groups/layers that we need
         // ==============================================
-        this.sharpers = this.game.add.group();
         this.portal = this.game.add.physicsGroup();
         this.key = this.game.add.group();
         this.grass3data = this.game.add.group();
         this.platformsMovable = this.add.physicsGroup();
-        this.lavaData = this.game.add.group();
         this.spikeData = this.game.add.group();
         this.platformsMovabl = this.add.physicsGroup();
         this.pizzas = this.add.physicsGroup();
@@ -38,7 +37,9 @@ PlayState._loadLevel = function (data) {
         this.trampos = this.game.add.group();
         this.boss = this.game.add.group();
         bullets = this.game.add.group();
+        this.sharpers = this.game.add.group();
         this.platforms = this.game.add.group();
+
         // ==============================================
         // Creation de toute les platforms/decoration/pieges
         // ==============================================
@@ -129,15 +130,13 @@ PlayState._loadLevel = function (data) {
         // platforme qui bouge sur l'axe x a coter du portail animation (je sais pas a quoi sa sert mais c'est important)
         movingGrasseX.body.kinematic = true;
         movingGrasseXCastle.body.kinematic = true;
-        data.sharpers.forEach(this._spawnSharper, this);
         // Appelle la fonction qui spawn toute les platforms contenue dans le JSON passé en parametre de la fonction loadLevel
         data.platforms.forEach(this._spawnPlatform, this);
         // appel les donnée "fireBalls" dans JSON
         data.fireBalls.forEach(this._spawnFireBalls, this);
-        // appel les donnée "lavaData" dans JSON
-        data.lavaData.forEach(this._spawnLava, this);
         // appel les donnée "passerelles" dans JSON
         data.passerelles.forEach(this._spawnPasserelles, this);
+        data.sharpers.forEach(this._spawnSharper, this);
         // appel les donnée "keys" dans JSON
         data.keys.forEach(this._spawnKeys, this);
         // appel les donnée "laserAsset" dans JSON
@@ -162,6 +161,8 @@ PlayState._loadLevel = function (data) {
             boss: data.boss
         });
     }
+    // appel les donnée "lavaData" dans JSON
+    data.lavaData.forEach(this._spawnLava, this);
     bullets.enableBody = true;
     bullets.physicsBodyType = Phaser.Physics.ARCADE;
     bullets.createMultiple(20, 'bullet');
