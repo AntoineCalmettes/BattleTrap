@@ -27,7 +27,7 @@ PlayState.update = function () {
             hero.position.x = 360;
             this.sfx.portal.play();
         }
-        // debug
-        // his.game.debug.spriteInfo(hero, 40, 50);
     }
+    // debug
+    this.game.debug.spriteInfo(hero, 40, 50);
 };
