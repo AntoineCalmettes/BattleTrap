@@ -348,7 +348,7 @@ Minotaur.prototype.update = function () {
                                     }, 1500);
                                     this.events.onAnimationComplete.add(function (event) {
                                         if (event.animations.currentAnim.name === 'attackLeft') {
-                                            hero.damage(1, 'left');
+                                            hero.damage(0.75, 'left');
                                             PlayState._soundEffect('blade')
                                         }
                                     }, this);
@@ -362,7 +362,7 @@ Minotaur.prototype.update = function () {
                                     }, 1500);
                                     this.events.onAnimationComplete.add(function (event) {
                                         if (event.animations.currentAnim.name === 'attackRight') {
-                                            hero.damage(1, 'right');
+                                            hero.damage(0.75, 'right');
                                             PlayState._soundEffect('blade')
                                         }
                                     }, this);
@@ -940,6 +940,3 @@ function runGame(persoChoose) {
     });
 }
 
-function callback(x) {
-    x();
-}
