@@ -292,8 +292,7 @@ Boss.prototype.update = function () {
             this.kill();
         }, this);
     }
-}
-;
+};
 
 function Minotaur(game, x, y, sprites) {
     this.sprites = sprites;
