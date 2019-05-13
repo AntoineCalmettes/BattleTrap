@@ -291,7 +291,8 @@ Boss.prototype.update = function () {
             this.kill();
             if (win === false) {
                 win = true;
-                PlayState._wingame();
+                PlayState._fireWork();
+                //PlayState._wingame();
             }
         }, this);
     }
@@ -895,6 +896,7 @@ PlayState._onHerovsTrampos = function (hero, trampo) {
         }, 350)
     }
 };
+
 PlayState._soundEffect = function (sound) {
     if (sound === 'blade') {
         this.sfx.blade.play();
@@ -904,17 +906,39 @@ PlayState._soundEffect = function (sound) {
         this.sfx.minotaurDie.play();
     }
 };
+
 PlayState._onHerovsPasserelle = function (hero, passerelle) {
     setTimeout(() => {
         passerelle.body.allowGravity = true;
     }, 800);
 
 };
+
+PlayState._fireWork = function () {
+    let fireWorksColors = ['fireWorkRed', 'fireWorkYellow', 'fireWorkPurple', 'fireWorkBlue'];
+    for (let i = 0; i < 100; i++) {
+        let currentFireWork = fireWorksColors[getRandomArbitrary(0, 3).toFixed(0)];
+        let sprite = this.fireWorks.create(getRandomArbitrary(300, 1180), getRandomArbitrary(20, 350), `${currentFireWork}`);
+        this.game.physics.enable(sprite);
+        sprite.body.allowGravity = false;
+        sprite.body.immovable = true;
+        sprite.animations.add('fire', [0, 1, 2, 3, 4, 5, 6, 7], 16, true);
+        sprite.animations.play('fire');
+    }
+    this.sfx.win.play();
+    let win = this.game.add.sprite(520, 400, 'win');
+    win.animations.add('win', [0, 1, 2, 3], 8, true);
+    win.animations.play('win');
+    this.sfx.win.onStop.addOnce(function () {
+        PlayState._wingame();
+    }, this);
+};
+
 PlayState._handleLaser = function () {
     if (laserCount !== 0) {
         laserCount--;
     } else {
-        laserCount = 100;
+        laserCount = 150;
         if (laser === 0) {
             laser = 1;
             laserLeft.animations.play('fire');
@@ -943,12 +967,11 @@ PlayState._wingame = function () {
     document.body.appendChild(containerGamewin)
     let buttonChoosePerso = document.createElement("button")
 
+    buttonChoosePerso.className = "pixel";
+    buttonChoosePerso.textContent = "Exit";
+    buttonChoosePerso.style.fontSize = "25px";
 
-    buttonChoosePerso.className = "pixel"
-    buttonChoosePerso.textContent = "Exit"
-    buttonChoosePerso.style.fontSize = "25px"
-
-    containerGamewin.appendChild(buttonChoosePerso)
+    containerGamewin.appendChild(buttonChoosePerso);
 
     buttonChoosePerso.addEventListener("click", () => {
         document.location.reload(true);

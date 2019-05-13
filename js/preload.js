@@ -33,10 +33,10 @@ PlayState.preload = function () {
     this.game.load.spritesheet('mage', 'images/playerMage/mage.png', 48.6, 48, 13);
     this.game.load.spritesheet('key', 'images/decorations/key.png', 25, 25, 8);
     this.game.load.spritesheet('sharper', 'images/decorations/sharper.png', 62, 68, 6);
-    this.game.load.spritesheet('fireWorkRed', 'images/Fireworks/redshot.png', 64, 64, 8);
-    this.game.load.spritesheet('fireWorkYellow', 'images/Fireworks/yellowshot.png', 64, 64, 8);
-    this.game.load.spritesheet('fireWorkPurple', 'images/Fireworks/violetshot.png', 64, 64, 8);
-    this.game.load.spritesheet('fireWorkBlue', 'images/Fireworks/blueshot.png', 64, 64, 8);
+    this.game.load.spritesheet('fireWorkRed', 'images/Fireworks/redshot.png', 39.87, 37, 8);
+    this.game.load.spritesheet('fireWorkYellow', 'images/Fireworks/yellowshot.png', 40, 37, 8);
+    this.game.load.spritesheet('fireWorkPurple', 'images/Fireworks/violetshot.png', 40, 38, 8);
+    this.game.load.spritesheet('fireWorkBlue', 'images/Fireworks/blueshot.png', 39.87, 37, 8);
     this.game.load.image('arrow', 'images/decorations/arrow.png');
     this.game.load.spritesheet('boss', 'images/monstres/boss.png', 394, 403, 20);
     this.game.load.spritesheet('minotaur', 'images/minotaur/minotaur.png', 76, 65, 45);
@@ -49,6 +49,7 @@ PlayState.preload = function () {
     this.game.load.image('green-bar', 'images/health-green.png');
     this.game.load.image('red-bar', 'images/health-red.png');
     this.game.load.image('gameover', 'images/gameover-lost.png');
+    this.game.load.spritesheet('win', 'images/win.png', 510, 104, 4);
     // AUDIO
     //
     //
@@ -73,6 +74,7 @@ PlayState.preload = function () {
     this.game.load.audio('sfx:splash', 'audio/splash.wav');
     this.game.load.audio('sfx:splash', 'audio/splash.wav');
     this.game.load.audio('sfx:minotaurDie', 'audio/minotaurDie.wav');
+    this.game.load.audio('sfx:win', 'audio/win.wav');
     this.game.scale.pageAlignVertically = true;
     this.game.scale.refresh();
 };

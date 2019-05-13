@@ -26,7 +26,8 @@ PlayState.create = function () {
         getingHit: this.game.add.audio('sfx:getingHit'),
         blade: this.game.add.audio('sfx:blade'),
         splash: this.game.add.audio('sfx:splash'),
-        minotaurDie: this.game.add.audio('sfx:minotaurDie')
+        minotaurDie: this.game.add.audio('sfx:minotaurDie'),
+        win: this.game.add.audio('sfx:win')
 
     };
     

@@ -151,6 +151,7 @@ PlayState._loadLevel = function (data) {
             minotaur: data.minotaur
         });
     } else {
+        this.fireWorks = this.game.add.group();
         this.platforms = this.game.add.group();
         this.boss = this.game.add.group();
         bullets = this.game.add.group();
