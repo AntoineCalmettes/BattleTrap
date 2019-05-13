@@ -192,7 +192,7 @@ function Boss(game, x, y, sprites) {
     this.sprites = sprites;
     Phaser.Sprite.call(this, game, x, y, sprites);
     this.anchor.set(0.5, 0.5);
-    this.health = 5;
+    this.health = 1;
     this.attackSpeed = 1500;
     this.animations.add('movinLeft', [0, 1, 2, 3], 8, true);
     this.animations.add('movinRight', [6, 7, 8, 9], 8, true);
