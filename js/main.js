@@ -17,18 +17,22 @@ function Hero(game, x, y, sprites, speed, attackSpeed, health, maxHealth, range,
         this.animations.add('up', [9], 3, true);
         this.animations.add('fightRight', [10], this.attackSpeed / 10, true);
         this.animations.add('fightLeft', [11], this.attackSpeed / 10, true);
+        this.animations.add('getingHitLeft', [13], 3, false);
+        this.animations.add('getingHitRight', [14], 3, false);
+        this.animations.add('getingHitFireLeft', [15, 16], 2, true);
+        this.animations.add('dieLeft', [19], 2, true);
+        this.animations.add('dieRight', [20], 2, true);
     } else {
         this.animations.add('right', [4, 5], 3, true);
-        this.animations.add('standRight', [2, 1], 3, true);
+        this.animations.add('standRight', [0, 1], 3, true);
         this.animations.add('standLeft', [2, 3], 3, true);
         this.animations.add('left', [6, 7], 3, true);
         this.animations.add('up', [9], 3, true);
         this.animations.add('fightRight', [10, 12, 12, 13, 14], this.attackSpeed / 10, true);
         this.animations.add('fightLeft', [15, 16, 17, 18, 19], this.attackSpeed / 10, true);
-        this.animations.add('getingHitLeft', [20], 2, true);
-        this.animations.add('getingHitRight', [21], 2, true);
+        this.animations.add('getingHitLeft', [20], 3, false);
+        this.animations.add('getingHitRight', [21], 3, false);
         this.animations.add('getingHitFireLeft', [22, 23], 2, true);
-        this.animations.add('getingHitFireRight', [24, 25], 2, true);
         this.animations.add('dieLeft', [26], 2, true);
         this.animations.add('dieRight', [27], 2, true);
     }
@@ -38,7 +42,6 @@ function Hero(game, x, y, sprites, speed, attackSpeed, health, maxHealth, range,
     this.game.physics.enable(this);
     this.body.collideWorldBounds = true;
 }
-
 
 // inherit from Phaser.Sprite
 Hero.prototype = Object.create(Phaser.Sprite.prototype);
@@ -93,12 +96,21 @@ Hero.prototype.damage = function (amount, direction) {
                     x: this.body.position.x - 50
                 }, 100, Phaser.Easing.Linear.None, true, 0);
                 this.animations.play('getingHitLeft');
+                heroFrame = true;
+                setTimeout(() => {
+                    heroFrame = false;
+                }, 300);
                 break;
             case 'right':
                 this.game.add.tween(this).to({
                     x: this.body.position.x + 70
                 }, 100, Phaser.Easing.Linear.None, true, 0);
                 this.animations.play('getingHitRight');
+                heroFrame = true;
+                setTimeout(() => {
+                    heroFrame = false;
+                }, 300);
+                break;
                 break;
             case 'up':
                 this.game.add.tween(this.body).to({
@@ -111,6 +123,11 @@ Hero.prototype.damage = function (amount, direction) {
     if (this.alive) {
         this.health -= amount;
         if (this.health <= 0) {
+            heroFrame = true;
+            setTimeout(() => {
+                heroFrame = false;
+            }, 500);
+            hero.animations.play('dieLeft');
             dead = true;
             this.alive = false;
             this.game.add.tween(this).from({
@@ -527,6 +544,11 @@ function spriteDegatLava(hero) {
         setTimeout(() => {
             lavaDamage = false;
         }, 100);
+        hero.animations.play('getingHitFireLeft');
+        heroFrame = true;
+        setTimeout(() => {
+            heroFrame = false;
+        }, 300);
         hero.damage(0.25, 'up');
         this.sfx.lava.play();
         if (dead) {

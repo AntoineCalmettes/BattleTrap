@@ -56,10 +56,12 @@ PlayState._handleInput = function () {
         this.game.camera.y += 1;
     } else { // stop
         hero.move(0);
-        if (leftOrRight === 1) {
-            hero.animations.play('standRight');
-        } else {
-            hero.animations.play('standLeft');
+        if (heroFrame === false && hero.health > 0) {
+            if (leftOrRight === 1) {
+                hero.animations.play('standRight');
+            } else {
+                hero.animations.play('standLeft');
+            }
         }
     }
 
