@@ -28,8 +28,8 @@ function Hero(game, x, y, sprites, speed, attackSpeed, health, maxHealth, range,
         this.animations.add('standLeft', [2, 3], 3, true);
         this.animations.add('left', [6, 7], 3, true);
         this.animations.add('up', [9], 3, true);
-        this.animations.add('fightRight', [10, 12, 12, 13, 14], this.attackSpeed / 10, true);
-        this.animations.add('fightLeft', [15, 16, 17, 18, 19], this.attackSpeed / 10, true);
+        this.animations.add('fightRight', [10, 12, 12, 13, 14], this.attackSpeed / 10, false);
+        this.animations.add('fightLeft', [15, 16, 17, 18, 19], this.attackSpeed / 10, false);
         this.animations.add('getingHitLeft', [20], 3, false);
         this.animations.add('getingHitRight', [21], 3, false);
         this.animations.add('getingHitFireLeft', [22, 23], 2, true);
@@ -52,10 +52,14 @@ Hero.prototype.move = function (direction) {
         this.body.velocity.x = direction * this.SPEED;
         switch (direction) {
             case RIGHT:
-                this.animations.play('right');
+                if (!lavaDamage) {
+                    this.animations.play('right');
+                }
                 break;
             case LEFT:
-                this.animations.play('left');
+                if (!lavaDamage) {
+                    this.animations.play('left');
+                }
                 break;
             case FIGHT:
                 this.hit();
@@ -478,10 +482,10 @@ Slime.prototype.damage = function (amount) {
 
 Slime.prototype.update = function () {
     // check against walls and reverse direction if necessary
-    if (this.body.touching.right || this.body.blocked.right) {
+    if (this.body.touching.right || this.body.blocked.right || this.position.x >= 1670) {
         this.animations.play('left');
         this.body.velocity.x = -Slime.SPEED; // turn left
-    } else if (this.body.touching.left || this.body.blocked.left) {
+    } else if (this.body.touching.left || this.body.blocked.left || this.position.x <= 1470) {
         this.animations.play('right');
         this.body.velocity.x = Slime.SPEED; // turn right
     }
@@ -540,11 +544,11 @@ function spriteDegatSpike(hero) {
 }
 
 function spriteDegatLava(hero) {
-    if (!lavaDamage) {
+    if (!lavaDamage && hero.health > 0) {
         lavaDamage = true;
         setTimeout(() => {
             lavaDamage = false;
-        }, 100);
+        }, 300);
         hero.animations.play('getingHitFireLeft');
         heroFrame = true;
         setTimeout(() => {
@@ -583,7 +587,7 @@ PlayState._handleCollisions = function () {
     this.game.physics.arcade.collide(bullets, this.slims, this._onBulletVsMonster, null, this);
     this.game.physics.arcade.collide(bullets, this.boss, this._onBulletVsMonster, null, this);
     this.game.physics.arcade.collide(hero, this.trampos, this._onHerovsTrampos, null, this);
-    this.game.physics.arcade.collide(hero, plant, spriteMovinPlant, null, this);
+    // this.game.physics.arcade.collide(hero, plant, spriteMovinPlant, null, this);
     this.game.physics.arcade.collide(this.slims, this.enemyWalls);
     this.game.physics.arcade.collide(hero, laserTop);
     this.game.physics.arcade.collide(hero, laserTop2);
@@ -628,18 +632,18 @@ function fireLaser() {
             laser.body.setCircle(10, 5, 5);
             if (leftOrRight === 1) {
                 // If we have a laser, set it to the starting position
-                laser.reset(hero.x + 20, hero.y);
+                laser.reset(hero.x + 20, hero.y + 10);
 
                 // Give it a velocity of -500 so it starts shooting
                 laser.body.velocity.x = +400;
                 setTimeout(() => {
-                    if (laser.position.x >= hero.position.x + 300) {
+                    if (laser.position.x >= hero.position.x + 200) {
                         laser.kill()
                     }
-                }, 800);
+                }, 600);
             } else {
                 // If we have a laser, set it to the starting position
-                laser.reset(hero.x - 20, hero.y);
+                laser.reset(hero.x - 20, hero.y + 10);
                 // Give it a velocity of -500 so it starts shooting
                 laser.body.velocity.x = -400;
                 setTimeout(() => {
@@ -692,7 +696,7 @@ PlayState._spawnPlatform = function (platform) {
 PlayState._spawnSlime = function (nbr) {
     Slime.SPEED = 100;
     for (let i = 0; i < nbr; i++) {
-        let slime = new Slime(this.game, getRandomArbitrary(240, 360), 410, 'slime');
+        let slime = new Slime(this.game, getRandomArbitrary(1450, 1550), 580, 'slime');
         slime.body.setSize(slime.width, slime.height);
         this.game.add.existing(slime);
         slime.body.allowGravity = false;
@@ -737,7 +741,7 @@ PlayState._spawnCharacters = function (data) {
         minotaur.body.setSize(30, 40);
         this.boss.add(minotaur);
         //  creer le slime
-        slime = new Slime(this.game, 1530, 575, 'slime');
+        slime = new Slime(this.game, 1530, 580, 'slime');
         slime.body.setSize(slime.width, slime.height);
         this.game.add.existing(slime);
         slime.body.allowGravity = false;
@@ -935,7 +939,7 @@ PlayState._soundEffect = function (sound) {
         this.sfx.splash.play();
     } else if (sound === 'minotaurDie') {
         this.sfx.minotaurDie.play();
-    } else if (sound ==='gameover'){
+    } else if (sound === 'gameover') {
         this.sfx.gameover.play();
     }
 };

@@ -44,10 +44,10 @@ PlayState._loadLevel = function (data) {
         // Creation de toute les platforms/decoration/pieges
         // ==============================================
         movingGrasseYLeft = this.platformsMovable.create(280, 540, 'grass:2x1');
-        movingGrasseYRight = this.platformsMovable.create(520, 215, 'grass:2x1');
+        movingGrasseYRight = this.platformsMovable.create(530, 215, 'grass:2x1');
         portalTopRight = this.portal.create(270, 100, 'portalTop');
         portalBottomRight = this.portal.create(400, 410, 'portalBottom');
-        plant = this.platformsMovable.create(600, 700, 'plant');
+        //plant = this.platformsMovable.create(600, 700, 'plant');
         pizza = this.pizzas.create(2020, 350, 'pizza');
         pizza2 = this.pizzas.create(890, 490, 'pizza');
         movingGrasseX = this.platformsMovabl.create(240, 250, 'grass:2x1');
@@ -78,11 +78,11 @@ PlayState._loadLevel = function (data) {
         }, 1000, Phaser.Easing.Linear.None, true, 0, -1, true);
         pizza.body.setSize(star1.width, star1.height);
 
-        // PLANT MOVE
+        /* // PLANT MOVE
         this.game.add.tween(plant).to({
             y: plant.position.y - 45
         }, 1000, Phaser.Easing.Linear.None, true, 0, -1, true);
-        plant.body.setSize(plant.width, plant.height);
+        plant.body.setSize(plant.width, plant.height);*/
 
         // Platforme de haut en bas a coter du portail Moves
         this.game.add.tween(movingGrasseYLeft).to({
