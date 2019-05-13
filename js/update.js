@@ -2,8 +2,8 @@
 // Fontion qui s'active toute les 1ms pour update le jeux
 // ==============================================
 PlayState.update = function () {
-    this._handleInput();
     this._handleCollisions();
+    this._handleInput();
     this._handleBullet();
     healthBar.scale.setTo(hero.health / hero.maxHealth, 1);
 
@@ -13,7 +13,7 @@ PlayState.update = function () {
     if (this.level === 0) {
         this._handleLaser();
         // go to boss
-        KeyPickupCount = 5;
+        // KeyPickupCount = 5;
         keynumber.text = KeyPickupCount;
         if (KeyPickupCount >= 5) {
             level = 1;

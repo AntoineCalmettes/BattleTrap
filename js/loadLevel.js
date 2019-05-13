@@ -20,6 +20,8 @@ PlayState._loadLevel = function (data) {
         // ==============================================
         // create all the groups/layers that we need
         // ==============================================
+        this.sharpers = this.game.add.group();
+        this.platforms = this.game.add.group();
         this.portal = this.game.add.physicsGroup();
         this.key = this.game.add.group();
         this.grass3data = this.game.add.group();
@@ -37,8 +39,6 @@ PlayState._loadLevel = function (data) {
         this.trampos = this.game.add.group();
         this.boss = this.game.add.group();
         bullets = this.game.add.group();
-        this.sharpers = this.game.add.group();
-        this.platforms = this.game.add.group();
 
         // ==============================================
         // Creation de toute les platforms/decoration/pieges
@@ -130,13 +130,13 @@ PlayState._loadLevel = function (data) {
         // platforme qui bouge sur l'axe x a coter du portail animation (je sais pas a quoi sa sert mais c'est important)
         movingGrasseX.body.kinematic = true;
         movingGrasseXCastle.body.kinematic = true;
+        data.sharpers.forEach(this._spawnSharper, this);
         // Appelle la fonction qui spawn toute les platforms contenue dans le JSON passé en parametre de la fonction loadLevel
         data.platforms.forEach(this._spawnPlatform, this);
         // appel les donnée "fireBalls" dans JSON
         data.fireBalls.forEach(this._spawnFireBalls, this);
         // appel les donnée "passerelles" dans JSON
         data.passerelles.forEach(this._spawnPasserelles, this);
-        data.sharpers.forEach(this._spawnSharper, this);
         // appel les donnée "keys" dans JSON
         data.keys.forEach(this._spawnKeys, this);
         // appel les donnée "laserAsset" dans JSON

@@ -100,6 +100,7 @@ var fireworkYellow;
 var fireworkRed;
 var firePurple;
 var win = false;
+var test = false;
 // ==============================================
 // Initialisation du jeux
 // ==============================================

@@ -919,7 +919,6 @@ PlayState._onHerovsPasserelle = function (hero, passerelle) {
     setTimeout(() => {
         passerelle.body.allowGravity = true;
     }, 800);
-
 };
 
 PlayState._fireWork = function () {
