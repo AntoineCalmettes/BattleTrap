@@ -18,7 +18,6 @@ PlayState.preload = function () {
     this.game.load.image('grassx3', 'images/platforms/grass_3.png')
     this.game.load.image('invisible-wall', 'images/platforms/invisible_wall.png');
     this.game.load.spritesheet('fireBall', 'images/decorations/fireBall.png', 13.33, 15, 3);
-    this.game.load.image('rond', 'images/platforms/rond_line.png')
     this.game.load.spritesheet('trampo', 'images/decorations/trampo.png', 60, 51, 2);
     this.game.load.image('door-closed', 'images/decorations/door-closed.png');
     this.game.load.spritesheet('door', 'images/decorations/door.png', 44, 51, 2);
@@ -36,8 +35,8 @@ PlayState.preload = function () {
     this.game.load.spritesheet('sharper', 'images/decorations/sharper.png', 62, 68, 6);
     this.game.load.spritesheet('fireWorkRed', 'images/Fireworks/redshot.png', 64, 64, 8);
     this.game.load.spritesheet('fireWorkYellow', 'images/Fireworks/yellowshot.png', 64, 64, 8);
-    this.game.load.spritesheet('fireWorkYellow', 'images/Fireworks/violetshot.png', 64, 64, 8);
-    this.game.load.spritesheet('fireWorkYellow', 'images/Fireworks/blueshot.png', 64, 64, 8);
+    this.game.load.spritesheet('fireWorkPurple', 'images/Fireworks/violetshot.png', 64, 64, 8);
+    this.game.load.spritesheet('fireWorkBlue', 'images/Fireworks/blueshot.png', 64, 64, 8);
     this.game.load.image('arrow', 'images/decorations/arrow.png');
     this.game.load.spritesheet('boss', 'images/monstres/boss.png', 394, 403, 20);
     this.game.load.spritesheet('minotaur', 'images/minotaur/minotaur.png', 76, 65, 45);

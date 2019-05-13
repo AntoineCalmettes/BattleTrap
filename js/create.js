@@ -29,7 +29,11 @@ PlayState.create = function () {
         minotaurDie: this.game.add.audio('sfx:minotaurDie')
 
     };
+    
 
+
+    
+    
     // Creation de la map en parallax
     background = this.add.tileSprite(0, 0, 3410, 620, "bg_back");
     building = this.add.tileSprite(0, 0, 2210, 620, "buildinImg");
@@ -37,8 +41,6 @@ PlayState.create = function () {
     building.fixedToCamera = true; // Creer le parallax
     this.game.world.setBounds(0, 0, 2130, 620); // taille du monde
 
-    // rond de deco pour platfome bascule
-    var rond_line = this.game.add.image(1907, 300, 'rond');
     // Charge le fichier JSON du niveaux 1
     this._loadLevel(this.game.cache.getJSON(`level:${this.level}`));
 

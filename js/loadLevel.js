@@ -31,7 +31,6 @@ PlayState._loadLevel = function (data) {
         this.enemyWalls = this.game.add.group();
         this.enemyWalls.visible = false;
         this.fireBalls = this.game.add.physicsGroup();
-        this.doors = this.game.add.physicsGroup();
         this.passerelles = this.game.add.group();
         this.slims = this.game.add.group();
         this.laserAsset = this.game.add.group();
@@ -48,8 +47,6 @@ PlayState._loadLevel = function (data) {
         movingGrasseYRight = this.platformsMovable.create(520, 215, 'grass:2x1');
         portalTopRight = this.portal.create(270, 100, 'portalTop');
         portalBottomRight = this.portal.create(400, 410, 'portalBottom');
-        door = this.doors.create(1000, 250, 'door');
-        door.animations.add('open', [1], 1, true);
         plant = this.platformsMovable.create(600, 700, 'plant');
         pizza = this.pizzas.create(2020, 350, 'pizza');
         pizza2 = this.pizzas.create(890, 490, 'pizza');
@@ -64,7 +61,7 @@ PlayState._loadLevel = function (data) {
 
         // platfome qui se balance
         /*    this.game.add.tween(gameTitle.scale).from({x: 0, y: 0}, 1500, Phaser.Easing.Default, true, 0);*/
-        this.game.add.tween(grassx3).to({x: '-300'}, 3000, Phaser.Easing.Cubic.InOut, true, 0, -1, true);
+        this.game.add.tween(grassx3).to({x: '-300'}, 6000, Phaser.Easing.Linear.None, true, 0, -1, true);
         // PIZZA MOVE
         this.game.add.tween(pizza).to({
             y: pizza.position.y - 50
@@ -121,7 +118,6 @@ PlayState._loadLevel = function (data) {
         this.platformsMovabl.setAll('body.allowGravity', false);
         this.pizzas.setAll('body.allowGravity', false);
         this.stars.setAll('body.allowGravity', false);
-        this.doors.setAll('body.allowGravity', false);
         movingGrasseXCastle.body.allowGravity = false;
         // Desactive le fait de pouvoir bouger les platformes avec le perso
         this.portal.setAll('body.immovable', true);
@@ -129,7 +125,6 @@ PlayState._loadLevel = function (data) {
         this.platformsMovabl.setAll('body.immovable', true);
         this.pizzas.setAll('body.immovable', true);
         this.stars.setAll('body.immovable', true);
-        this.doors.setAll('body.immovable', true);
         movingGrasseXCastle.body.immovable = true;
 
         // platforme qui bouge sur l'axe x a coter du portail animation (je sais pas a quoi sa sert mais c'est important)

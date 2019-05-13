@@ -96,6 +96,9 @@ var bossCanAttack = true;
 var attackFinished = true;
 var bossAnimationAttackPLaying = false;
 var level = 0;
+var fireworkYellow;
+var fireworkRed;
+var firePurple;
 // ==============================================
 // Initialisation du jeux
 // ==============================================
