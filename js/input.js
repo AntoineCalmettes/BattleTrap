@@ -36,7 +36,7 @@ PlayState._handleInput = function () {
                 walking = false;
             }, 500)
         }
-    } else if (isDown || isDownX || ( isDownX && ((pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1)  )) || ( isDownX && ((pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1)  )) ){ // fighting
+    } else if (isDown || isDownX || (isDownX && ((pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) > 0.1))) || (isDownX && ((pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X) < -0.1)))) { // fighting
         if (hiting === false) {
             hiting = true;
             if (HEROCHOSEN === 'mage') {
@@ -56,7 +56,7 @@ PlayState._handleInput = function () {
         this.game.camera.y += 1;
     } else { // stop
         hero.move(0);
-        if (heroFrame === false && hero.health > 0) {
+        if (heroFrame === false && hero.health > 0 && hiting === false) {
             if (leftOrRight === 1) {
                 hero.animations.play('standRight');
             } else {
