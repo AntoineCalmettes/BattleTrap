@@ -38,8 +38,8 @@ PlayState._loadLevel = function (data) {
         this.trampos = this.game.add.group();
         this.boss = this.game.add.group();
         bullets = this.game.add.group();
-        this.platforms = this.game.add.group();
         this.sharpers = this.game.add.group();
+        this.platforms = this.game.add.group();
 
         // ==============================================
         // Creation de toute les platforms/decoration/pieges
