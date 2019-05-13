@@ -478,10 +478,10 @@ Slime.prototype.damage = function (amount) {
 
 Slime.prototype.update = function () {
     // check against walls and reverse direction if necessary
-    if (this.body.touching.right || this.body.blocked.right) {
+    if (this.body.touching.right || this.body.blocked.right || this.position.x >= 1670) {
         this.animations.play('left');
         this.body.velocity.x = -Slime.SPEED; // turn left
-    } else if (this.body.touching.left || this.body.blocked.left) {
+    } else if (this.body.touching.left || this.body.blocked.left || this.position.x <= 1470) {
         this.animations.play('right');
         this.body.velocity.x = Slime.SPEED; // turn right
     }
@@ -692,7 +692,7 @@ PlayState._spawnPlatform = function (platform) {
 PlayState._spawnSlime = function (nbr) {
     Slime.SPEED = 100;
     for (let i = 0; i < nbr; i++) {
-        let slime = new Slime(this.game, getRandomArbitrary(240, 360), 410, 'slime');
+        let slime = new Slime(this.game, getRandomArbitrary(1450, 1550), 580, 'slime');
         slime.body.setSize(slime.width, slime.height);
         this.game.add.existing(slime);
         slime.body.allowGravity = false;
@@ -737,7 +737,7 @@ PlayState._spawnCharacters = function (data) {
         minotaur.body.setSize(30, 40);
         this.boss.add(minotaur);
         //  creer le slime
-        slime = new Slime(this.game, 1530, 575, 'slime');
+        slime = new Slime(this.game, 1530, 580, 'slime');
         slime.body.setSize(slime.width, slime.height);
         this.game.add.existing(slime);
         slime.body.allowGravity = false;
@@ -935,7 +935,7 @@ PlayState._soundEffect = function (sound) {
         this.sfx.splash.play();
     } else if (sound === 'minotaurDie') {
         this.sfx.minotaurDie.play();
-    } else if (sound ==='gameover'){
+    } else if (sound === 'gameover') {
         this.sfx.gameover.play();
     }
 };
