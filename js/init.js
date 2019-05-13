@@ -99,6 +99,7 @@ var level = 0;
 var fireworkYellow;
 var fireworkRed;
 var firePurple;
+var win = false;
 // ==============================================
 // Initialisation du jeux
 // ==============================================

@@ -184,7 +184,6 @@ Hero.prototype.hit = function () {
 };
 
 
-
 //==================
 // Create new Boss
 // ==================
@@ -290,6 +289,10 @@ Boss.prototype.update = function () {
         }
         this.events.onAnimationComplete.add(function (event) {
             this.kill();
+            if (win === false) {
+                win = true;
+                PlayState._wingame();
+            }
         }, this);
     }
 };
@@ -932,6 +935,25 @@ PlayState._handleLaser = function () {
         }
     }
 };
+PlayState._wingame = function () {
+    minotaurKey = false;
+    var canvasTest = document.getElementsByTagName('canvas')[0];
+    canvasTest.hidden = true;
+    let containerGamewin = document.createElement("div")
+    document.body.appendChild(containerGamewin)
+    let buttonChoosePerso = document.createElement("button")
+
+
+    buttonChoosePerso.className = "pixel"
+    buttonChoosePerso.textContent = "Exit"
+    buttonChoosePerso.style.fontSize = "25px"
+
+    containerGamewin.appendChild(buttonChoosePerso)
+
+    buttonChoosePerso.addEventListener("click", () => {
+        document.location.reload(true);
+    }, false);
+};
 
 function runGame(persoChoose) {
     HEROCHOSEN = persoChoose;
@@ -940,5 +962,6 @@ function runGame(persoChoose) {
     game.state.start('play', true, false, {
         level: 0
     });
+
 }
 
