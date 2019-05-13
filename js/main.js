@@ -191,7 +191,7 @@ function Boss(game, x, y, sprites) {
     this.sprites = sprites;
     Phaser.Sprite.call(this, game, x, y, sprites);
     this.anchor.set(0.5, 0.5);
-    this.health = 1;
+    this.health = 5;
     this.attackSpeed = 1500;
     this.animations.add('movinLeft', [0, 1, 2, 3], 8, true);
     this.animations.add('movinRight', [6, 7, 8, 9], 8, true);
@@ -599,6 +599,7 @@ function fireLaser() {
             laser.animations.add('fire', [0, 1, 2], 10, true);
             laser.animations.play('fire');
             laser.body.setCircle(10, 5, 5);
+            console.log(laser.position.x);
             if (leftOrRight === 1) {
                 // If we have a laser, set it to the starting position
                 laser.reset(hero.x + 20, hero.y);
@@ -606,16 +607,21 @@ function fireLaser() {
                 // Give it a velocity of -500 so it starts shooting
                 laser.body.velocity.x = +400;
                 setTimeout(() => {
-                    laser.kill()
-                }, hero.range)
+                    console.log(laser.position.x)
+                    if (laser.position.x >= hero.position.x + 300) {
+                        laser.kill()
+                    }
+                }, 800);
             } else {
                 // If we have a laser, set it to the starting position
                 laser.reset(hero.x - 20, hero.y);
                 // Give it a velocity of -500 so it starts shooting
                 laser.body.velocity.x = -400;
                 setTimeout(() => {
-                    laser.kill()
-                }, hero.range)
+                    if (laser.position.x >= hero.position.x + 300) {
+                        laser.kill()
+                    }
+                }, 800);
             }
         }
     }
@@ -950,11 +956,11 @@ PlayState._handleLaser = function () {
         }
     }
     if (laser === 1) {
-        if (hero.position.x > 1830 && hero.position.x < 1895) {
+        if (hero.position.y < 50 && hero.position.x > 1830 && hero.position.x < 1895) {
             hero.damage(0.01, 'up');
         }
     } else if (laser === 0) {
-        if (hero.position.x > 1925 && hero.position.x < 1980) {
+        if (hero.position.y < 50 && hero.position.x > 1925 && hero.position.x < 1980) {
             hero.damage(0.01, 'up');
         }
     }
