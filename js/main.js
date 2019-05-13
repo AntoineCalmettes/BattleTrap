@@ -112,6 +112,8 @@ Hero.prototype.damage = function (amount, direction) {
             setTimeout(() => {
                 this.kill();
                 this.game.state.restart();
+                minotaurKey = false
+
 
                 var canvasTest = document.getElementsByTagName('canvas')[0];
                 canvasTest.hidden = true;
@@ -139,8 +141,10 @@ Hero.prototype.damage = function (amount, direction) {
                 buttonChoosePerso.addEventListener("click", () => {
                     buttonChoosePerso.onclick = screenChoosePerso.hidden = false;
                     canvasTest.remove();
+
                     containerGameOver.remove();
                     this.game.remove();
+
 
                 }, false);
 
@@ -666,7 +670,7 @@ PlayState._spawnCharacters = function (data) {
         case 'warrior':
             hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 150, 700, 5, 5, 60, 0.75);
             break;
-        case'assasin':
+        case 'assasin':
             hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 200, 400, 3, 3, 50, 0.5);
             break;
         case 'mage':
@@ -931,5 +935,11 @@ function runGame(persoChoose) {
     HEROCHOSEN = persoChoose;
     var game = new Phaser.Game(config);
     game.state.add('play', PlayState);
-    game.state.start('play', true, false, {level: 0});
+    game.state.start('play', true, false, {
+        level: 0
+    });
+}
+
+function callback(x) {
+    x();
 }
