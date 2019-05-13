@@ -135,6 +135,7 @@ Hero.prototype.damage = function (amount, direction) {
             }, 200, Phaser.Easing.Cubic.Out, true, 0, -1, true);
             setTimeout(() => {
                 this.kill();
+                PlayState._soundEffect('gameover')
                 this.game.state.restart();
                 minotaurKey = false
 
@@ -851,7 +852,7 @@ PlayState._onHeroVsStars = function (hero, star) {
     setTimeout(() => {
         hero.SPEED = heroSpeed;
         hero.health = heroHealtBefore;
-    }, 4000);
+    }, 10000);
     star.kill();
 };
 PlayState._onSpriteVsSharper = function (hero, sharper) {
@@ -934,6 +935,8 @@ PlayState._soundEffect = function (sound) {
         this.sfx.splash.play();
     } else if (sound === 'minotaurDie') {
         this.sfx.minotaurDie.play();
+    } else if (sound ==='gameover'){
+        this.sfx.gameover.play();
     }
 };
 

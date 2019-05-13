@@ -54,7 +54,8 @@ PlayState.preload = function () {
     //
     //
     //********************************************** */
-    this.game.load.audio('sfx:jump', 'audio/jump.wav');
+    this.game.load.audio('sfx:jump', 'audio/jump.wav')
+    this.game.load.audio('sfx:gameover', 'audio/gameover.wav')
     this.game.load.audio('sfx:coin', 'audio/coin.wav');
     this.game.load.audio('sfx:key', 'audio/key.wav');
     this.game.load.audio('sfx:lava', 'audio/lava.wav');

@@ -9,6 +9,7 @@ PlayState.create = function () {
     pad1 = this.game.input.gamepad.pad1;
     // creation des sons du jeux
     this.sfx = {
+        gameover: this.game.add.audio('gameover'),
         jump: this.game.add.audio('sfx:jump'),
         key: this.game.add.audio('sfx:key'),
         lava: this.game.add.audio('sfx:lava'),
