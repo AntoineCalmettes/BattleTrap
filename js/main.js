@@ -183,6 +183,8 @@ Hero.prototype.hit = function () {
     }
 };
 
+
+
 //==================
 // Create new Boss
 // ==================
@@ -232,6 +234,7 @@ Boss.prototype.damage = function (amount) {
         }
     }, this);
 };
+
 Boss.prototype.update = function () {
     if (this.health > 0) {
         if (this.game.physics.arcade.distanceBetween(this, hero) < 220) {
