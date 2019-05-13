@@ -29,7 +29,7 @@ PlayState.preload = function () {
     this.game.load.image('plant', 'images/decorations/plant.png');
     this.game.load.image('pizza', 'images/bonus/pizza.png');
     this.game.load.spritesheet('warrior', 'images/playerWarrior/warrior.png', 61.8, 48, 20);
-    this.game.load.spritesheet('assasin', 'images/playerAssasin/assasin.png', 54.7, 48, 20);
+    this.game.load.spritesheet('assasin', 'images/playerAssasin/assasin.png', 54.7, 48, 28);
     this.game.load.spritesheet('mage', 'images/playerMage/mage.png', 48.6, 48, 13);
     this.game.load.spritesheet('key', 'images/decorations/key.png', 25, 25, 8);
     this.game.load.spritesheet('sharper', 'images/decorations/sharper.png', 62, 68, 6);

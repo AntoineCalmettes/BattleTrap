@@ -19,12 +19,18 @@ function Hero(game, x, y, sprites, speed, attackSpeed, health, maxHealth, range,
         this.animations.add('fightLeft', [11], this.attackSpeed / 10, true);
     } else {
         this.animations.add('right', [4, 5], 3, true);
-        this.animations.add('standRight', [0, 1], 3, true);
+        this.animations.add('standRight', [2, 1], 3, true);
         this.animations.add('standLeft', [2, 3], 3, true);
         this.animations.add('left', [6, 7], 3, true);
         this.animations.add('up', [9], 3, true);
         this.animations.add('fightRight', [10, 12, 12, 13, 14], this.attackSpeed / 10, true);
         this.animations.add('fightLeft', [15, 16, 17, 18, 19], this.attackSpeed / 10, true);
+        this.animations.add('getingHitLeft', [20], 2, true);
+        this.animations.add('getingHitRight', [21], 2, true);
+        this.animations.add('getingHitFireLeft', [22, 23], 2, true);
+        this.animations.add('getingHitFireRight', [24, 25], 2, true);
+        this.animations.add('dieLeft', [26], 2, true);
+        this.animations.add('dieRight', [27], 2, true);
     }
     // hero heroSprite.animations.add('right', [4, 5], 10, true);
     this.animations.play('standRight');
@@ -86,12 +92,13 @@ Hero.prototype.damage = function (amount, direction) {
                 this.game.add.tween(this).to({
                     x: this.body.position.x - 50
                 }, 100, Phaser.Easing.Linear.None, true, 0);
+                this.animations.play('getingHitLeft');
                 break;
             case 'right':
-                console.log('right')
                 this.game.add.tween(this).to({
                     x: this.body.position.x + 70
                 }, 100, Phaser.Easing.Linear.None, true, 0);
+                this.animations.play('getingHitRight');
                 break;
             case 'up':
                 this.game.add.tween(this.body).to({
@@ -160,7 +167,6 @@ Hero.prototype.hit = function () {
     if (this.game.physics.arcade.distanceBetween(this, minotaur) < this.range) {
         if (this.position.y >= minotaur.position.y - 10 && this.position.y <= minotaur.position.y + 10) {
             if (this.sprites !== 'mage' && minotaur.health > 0) {
-                console.log('minotaur' + this.damageCount);
                 minotaur.damage(this.damageCount);
                 PlayState._soundEffect('splash');
             }
@@ -176,7 +182,6 @@ Hero.prototype.hit = function () {
     }
     if (this.game.physics.arcade.distanceBetween(this, slime) < this.range) {
         if (this.position.y >= slime.position.y - 10 && this.position.y <= slime.position.y + 10) {
-            console.log('slime' + this.damageCount);
             slime.damage(this.damageCount);
             PlayState._soundEffect('splash');
         }
@@ -470,10 +475,9 @@ Slime.prototype.update = function () {
 function spriteVsPlatform(hero) {
     if (jumpin) {
         if (leftOrRight === 1) {
-            hero.animations.play('standRight');
+            //hero.animations.play('standRight');
         } else {
-            hero.animations.play('standLeft');
-
+            //hero.animations.play('standLeft');
         }
         jumpin = false;
     }
@@ -599,7 +603,6 @@ function fireLaser() {
             laser.animations.add('fire', [0, 1, 2], 10, true);
             laser.animations.play('fire');
             laser.body.setCircle(10, 5, 5);
-            console.log(laser.position.x);
             if (leftOrRight === 1) {
                 // If we have a laser, set it to the starting position
                 laser.reset(hero.x + 20, hero.y);
@@ -607,7 +610,6 @@ function fireLaser() {
                 // Give it a velocity of -500 so it starts shooting
                 laser.body.velocity.x = +400;
                 setTimeout(() => {
-                    console.log(laser.position.x)
                     if (laser.position.x >= hero.position.x + 300) {
                         laser.kill()
                     }
