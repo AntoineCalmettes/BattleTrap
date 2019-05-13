@@ -13,10 +13,9 @@ PlayState.update = function () {
     if (this.level === 0) {
         this._handleLaser();
         // go to boss
-        //KeyPickupCount = 5;
+        KeyPickupCount = 5;
         keynumber.text = KeyPickupCount;
         if (KeyPickupCount >= 5) {
-            door.animations.play('open');
             level = 1;
             this.game.state.restart(true, false, {level: 1});
         }
