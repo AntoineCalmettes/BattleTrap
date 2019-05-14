@@ -168,13 +168,7 @@ Hero.prototype.damage = function (amount, direction) {
                 }, false);
 
                 buttonChoosePerso.addEventListener("click", () => {
-                    buttonChoosePerso.onclick = screenChoosePerso.hidden = false;
-                    canvasTest.remove();
-
-                    containerGameOver.remove();
-                    this.game.remove();
-
-
+                    document.location.reload(true);
                 }, false);
 
                 laser = 1;
