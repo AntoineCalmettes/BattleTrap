@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+<<<<<<< Updated upstream
+    <list default="true" id="adefe66b-ca4f-4d21-bb4a-7a0264a6d6e2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+=======
+    <list default="true" id="adefe66b-ca4f-4d21-bb4a-7a0264a6d6e2" name="Default Changelist" comment="" />
+>>>>>>> Stashed changes
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state relative-caret-position="50">
+              <caret line="244" lean-forward="true" selection-start-line="244" selection-end-line="244" />
+=======
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+            <state relative-caret-position="124">
+              <caret line="793" column="39" lean-forward="true" selection-start-line="793" selection-start-column="39" selection-end-line="793" selection-end-column="39" />
+=======
+            <state relative-caret-position="91">
+              <caret line="93" column="28" lean-forward="true" selection-start-line="93" selection-start-column="28" selection-end-line="93" selection-end-column="28" />
+>>>>>>> Stashed changes
+=======
+            <state relative-caret-position="83">
+              <caret line="236" column="27" lean-forward="true" selection-start-line="236" selection-start-column="27" selection-end-line="236" selection-end-column="27" />
+>>>>>>> Julien
+>>>>>>> GAMEPAD
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/css/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="166">
+              <caret line="172" column="32" lean-forward="true" selection-start-line="172" selection-start-column="32" selection-end-line="172" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/level01.json">
+          <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state relative-caret-position="29">
+              <caret line="333" column="5" lean-forward="true" selection-start-line="333" selection-start-column="5" selection-end-line="333" selection-end-column="5" />
+=======
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+            <state relative-caret-position="259">
+              <caret line="351" column="14" selection-start-line="351" selection-start-column="14" selection-end-line="351" selection-end-column="14" />
+=======
+            <state relative-caret-position="10488">
+              <caret line="456" column="14" selection-start-line="456" selection-start-column="14" selection-end-line="456" selection-end-column="14" />
+>>>>>>> Stashed changes
+=======
+            <state relative-caret-position="1066">
+              <caret line="422" column="4" lean-forward="true" selection-start-line="422" selection-start-column="4" selection-end-line="422" selection-end-column="4" />
+>>>>>>> Julien
+>>>>>>> GAMEPAD
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
+      <find>Bul</find>
+      <find>collide</find>
+>>>>>>> Stashed changes
+      <find>space</find>
+=======
+>>>>>>> Julien
+      <find>fireLas</find>
+      <find>direction</find>
+      <find>fire</find>
+      <find>hero.move</find>
+      <find>fireLa</find>
+      <find>fightRight</find>
+      <find>fireL</find>
+      <find>fight</find>
+      <find>left</find>
+      <find>canJum</find>
+      <find>stand</find>
+>>>>>>> GAMEPAD
+      <find>boss.damage</find>
+      <find>.setSize</find>
+      <find>hero.body.set</find>
+      <find>bullet</find>
+      <find>pizza</find>
+      <find>fireB</find>
+      <find>update</find>
+      <find>play</find>
+      <find>this.key</find>
+      <find>door-clo</find>
+      <find>door</find>
+      <find>velocity</find>
+      <find>SPEED</find>
+      <find>attackSpeed</find>
+<<<<<<< Updated upstream
+      <find>mapStar</find>
+      <find>portal</find>
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+=======
+      <find>Mi</find>
+<<<<<<< HEAD
+      <find>Boss</find>
+      <find>boss</find>
+      <find>healthLabel</find>
+      <find>key</find>
+      <find>debug</find>
+      <find>trampos</find>
+      <find>this.trampos</find>
+      <find>rampos</find>
+      <find>jump</find>
+      <find>fire</find>
+      <find>slims</find>
+      <find>slim</find>
+      <find>trampo</find>
+=======
+>>>>>>> Julien
+>>>>>>> GAMEPAD
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/js/music.js" />
+        <option value="$PROJECT_DIR$/js/script.js" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/data/level01.json" />
+        <option value="$PROJECT_DIR$/js/main.js" />
+        <option value="$PROJECT_DIR$/css/style.css" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="292" />
+    <option name="y" value="24" />
+    <option name="width" value="988" />
+    <option name="height" value="698" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="BattleTrap" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BattleTrap" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="BattleTrap" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BattleTrap" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="BattleTrap" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BattleTrap" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="BattleTrap" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BattleTrap" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/BattleTrap/index.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.index.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="adefe66b-ca4f-4d21-bb4a-7a0264a6d6e2" name="Default Changelist" comment="" />
+      <created>1556884653424</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1556884653424</updated>
+      <workItem from="1556884654867" duration="7916000" />
+      <workItem from="1556899037816" duration="5366000" />
+      <workItem from="1556912729560" duration="13157000" />
+      <workItem from="1556981615774" duration="8980000" />
+      <workItem from="1557068982881" duration="7623000" />
+      <workItem from="1557084295672" duration="5318000" />
+      <workItem from="1557125276870" duration="10427000" />
+      <workItem from="1557172607259" duration="3516000" />
+      <workItem from="1557210716112" duration="1068000" />
+      <workItem from="1557225685500" duration="16117000" />
+<<<<<<< HEAD
+      <workItem from="1557384920586" duration="22875000" />
+=======
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+      <workItem from="1557384920586" duration="1642000" />
+=======
+      <workItem from="1557384920586" duration="201000" />
+>>>>>>> Stashed changes
+=======
+      <workItem from="1557384920586" duration="6327000" />
+>>>>>>> Julien
+>>>>>>> GAMEPAD
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+<<<<<<< HEAD
+    <option name="totallyTimeSpent" value="117313000" />
+=======
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+    <option name="totallyTimeSpent" value="96080000" />
+=======
+    <option name="totallyTimeSpent" value="94639000" />
+>>>>>>> Stashed changes
+=======
+    <option name="totallyTimeSpent" value="100765000" />
+>>>>>>> Julien
+>>>>>>> GAMEPAD
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="292" y="24" width="988" height="698" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24922441" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32881355" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.1440678" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/js/music.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/phaser.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" column="34" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/script2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="6" lean-forward="true" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="118" column="43" lean-forward="true" selection-start-line="118" selection-start-column="43" selection-end-line="118" selection-end-column="43" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#section#0;n#div#1;n#body#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/script.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="24" column="16" lean-forward="true" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="16" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/step06.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="16" column="29" lean-forward="true" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/step15.js">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+        <state relative-caret-position="124">
+          <caret line="793" column="39" lean-forward="true" selection-start-line="793" selection-start-column="39" selection-end-line="793" selection-end-column="39" />
+=======
+        <state relative-caret-position="91">
+          <caret line="93" column="28" lean-forward="true" selection-start-line="93" selection-start-column="28" selection-end-line="93" selection-end-column="28" />
+>>>>>>> Stashed changes
+=======
+        <state relative-caret-position="30">
+          <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
+>>>>>>> Julien
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/level01.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="29">
+          <caret line="333" column="5" lean-forward="true" selection-start-line="333" selection-start-column="5" selection-end-line="333" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="50">
+          <caret line="244" lean-forward="true" selection-start-line="244" selection-end-line="244" />
+=======
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+        <state relative-caret-position="259">
+          <caret line="351" column="14" selection-start-line="351" selection-start-column="14" selection-end-line="351" selection-end-column="14" />
+=======
+        <state relative-caret-position="10488">
+          <caret line="456" column="14" selection-start-line="456" selection-start-column="14" selection-end-line="456" selection-end-column="14" />
+>>>>>>> Stashed changes
+=======
+        <state relative-caret-position="83">
+          <caret line="236" column="27" lean-forward="true" selection-start-line="236" selection-start-column="27" selection-end-line="236" selection-end-column="27" />
+>>>>>>> GAMEPAD
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+>>>>>>> Julien
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="172" column="32" lean-forward="true" selection-start-line="172" selection-start-column="32" selection-end-line="172" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

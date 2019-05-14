@@ -1,20 +1,186 @@
 <!doctype html>
+
 <head>
-    <title>HTML5 games workshop: One-screen platformer</title>
+    <title>BATTLE TRAP</title>
     <meta charset="utf-8">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="css/style.css">
 
-    <script src="js/phaser.min.js"></script>
-    <script src="js/main.js"></script>
 
-    <style>
-    body {
-        background-color: black;
-    }
-        canvas {
-            margin: 0 auto;
-        }
-    </style>
 </head>
+
 <body>
-    <div id="game"></div>
+
+<!-- HOME PAGE -->
+
+<div id="screen-home">
+    <section class="container">
+        <article class="row">
+            <div class=" mt-5 col-lg-12 text-center">
+                <h1>BATTLE TRAP </h1>
+            </div>
+
+            <div class="col-lg-4 offset"></div>
+
+            <div class="text-center">
+                <button onclick="screenChoosePerso.hidden = false;screenHome.hidden = true;"
+                        class="pixel">START
+                </button>
+            </div>
+
+            <!-- <div class="col-lg-12 text-center pt-5" style="color: white; margin-left: -40px;">
+                <p>BIENVENUE </p>
+                <p>5 CLEFS <img style="height:30px;" src="images/key.png" alt=""></p>
+                <p>1 BOSS <img src="images/boss.png" style="height:30px;" alt=""> </p>
+            </div> -->
+
+
+
+        </article>
+    </section>
+</div>
+
+<!-- SCREEN CHOOSE PERSO -->
+
+<div id="screen-choose-perso">
+    <section class="container">
+        <article class="row">
+            <div class=" mt-5 col-lg-12 text-center">
+            </div>
+            <div class="col-lg-12 text-center mt-1">
+                <p style="color:white;">CHOOSE YOUR PLAYER</p>
+            </div>
+            <div class="col-lg-4"
+                 id="caracteristique">
+                <p style="color:white"
+                   id="titleCaracteristique"> CARACTERISTIQUE</p>
+                <p id="contenuCaracteristique"
+                   class="pt-2">
+                <p style="color:white; font-size:8px;">VIE</p>
+                <div class="progress">
+
+                    <div class="progress-bar progress-bar-striped bg-danger progress-bar-animated"
+                         role="progressbar"
+                         id="progressLife"></div>
+                </div>
+
+                <p style="color:white; font-size:8px;"
+                   class="pt-5">RAPIDITER</p>
+                <div class="progress">
+
+                    <div class="progress-bar progress-bar-striped bg-success progress-bar-animated"
+                         role="progressbar"
+                         id="progressSpeed"></div>
+                </div>
+                <p style="color:white; font-size:8px;"
+                   class="pt-5">DOMMAGE</p>
+                <div class="progress">
+
+                    <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated"
+                         role="progressbar"
+                         id="progressDommage"></div>
+                </div>
+
+                <p style="color:white; font-size:8px;"
+                   class="pt-5">VITESSE ATTAQUE</p>
+                <div class="progress">
+
+                    <div class="progress-bar progress-bar-striped bg-info progress-bar-animated"
+                         role="progressbar"
+                         id="progressSpeedAttaque"></div>
+                </div>
+
+
+            </div>
+            <div style="padding-top: 30px; margin-left:15px;"
+                 class="col-lg-4 mt-5 text-center">
+
+                <div class="pisxel git"
+                     id="mageChoose">
+                    <i class="icon-github"></i>
+                </div>
+
+                <div class="pisxel twitter"
+                     id="voleurChoose">
+                    <i class="icon-twitter"></i>
+                </div>
+
+                <div class="pisxel linkedin"
+                     id="guerrierChoose">
+                    <i class="icon-linkedin"></i>
+                </div>
+            </div>
+            <div class="col-lg-3 text-center">
+                <p style="color:white;">HISTOIRE</p>
+                <p style="color:white;
+                 font-family: 'Times New Roman', Times, serif;" id="historyPerso"></p>
+            </div>
+
+        </article>
+        <div class="col-lg-12 text-center">
+            <h3 id="text-choose"></h3>
+        </div>
+        <div class="text-center" style="transform: translateY(-100px)">
+            <button onclick="if (persoChoose){runGame(persoChoose);screenChoosePerso.hidden = true;} "
+                    class="pixel">PLAY
+            </button>
+        </div>
+    </section>
+</div>
+
+<!-- GAME -->
+
+<div id="screen-game">
+    <div id="game">
+
+    </div>
+</div>
+
+<!-- GAME OVER -->
+
+<div id="screen-gameOver">
+    <div class="container">
+        <a id="button-restart">
+            <button class="pixel">RESTART</button>
+        </a>
+        <a id="button-return-home">
+            <button class="pixel">HOME</button>
+        </a>
+    </div>
+</div>
+
+<audio autoplay
+       loop
+       id="playAudio">
+    <source src="audio/bgm.mp3">
+</audio>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="js/phaser.min.js"></script>
+<script src="js/preload.js"></script>
+<script src="js/init.js"></script>
+<script src="js/create.js"></script>
+<script src="js/input.js"></script>
+<script src="js/loadLevel.js"></script>
+<script src="js/update.js"></script>
+<script src="js/main.js"></script>
+<script src="js/music.js"></script>
+<script src="js/script2.js"></script>
+<script src="js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
+
