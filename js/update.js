@@ -28,5 +28,5 @@ PlayState.update = function () {
         }
     }
     // debug
-    this.game.debug.spriteInfo(hero, 40, 50);
+    //this.game.debug.spriteInfo(hero, 40, 50);
 };
