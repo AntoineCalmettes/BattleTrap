@@ -143,7 +143,6 @@ Hero.prototype.damage = function (amount, direction) {
                 this.game.state.restart();
                 minotaurKey = false
 
-
                 var canvasTest = document.getElementsByTagName('canvas')[0];
                 canvasTest.hidden = true;
                 let containerGameOver = document.createElement("div")
@@ -165,6 +164,7 @@ Hero.prototype.damage = function (amount, direction) {
                 buttonRestart.addEventListener("click", () => {
                     canvasTest.hidden = false;
                     containerGameOver.remove();
+                    PlayState._restart()
                 }, false);
 
                 buttonChoosePerso.addEventListener("click", () => {
@@ -995,6 +995,12 @@ PlayState._handleLaser = function () {
         }
     }
 };
+
+PlayState._restart = function () {
+    level = 0;
+    this.game.state.restart(true, false, {level: 0});
+};
+
 PlayState._wingame = function () {
     minotaurKey = false;
     var canvasTest = document.getElementsByTagName('canvas')[0];
