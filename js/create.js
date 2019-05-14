@@ -28,14 +28,12 @@ PlayState.create = function () {
         blade: this.game.add.audio('sfx:blade'),
         splash: this.game.add.audio('sfx:splash'),
         minotaurDie: this.game.add.audio('sfx:minotaurDie'),
-        win: this.game.add.audio('sfx:win')
-
+        win: this.game.add.audio('sfx:win'),
+        laser: this.game.add.audio('sfx:laser'),
+        orcLaugh: this.game.add.audio('sfx:orcLaugh')
     };
-    
 
 
-    
-    
     // Creation de la map en parallax
     background = this.add.tileSprite(0, 0, 3410, 620, "bg_back");
     building = this.add.tileSprite(0, 0, 2210, 620, "buildinImg");

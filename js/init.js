@@ -94,6 +94,7 @@ var bossAnimationAttackPLaying = false;
 var level = 0;
 var win = false;
 var heroFrame = false;
+var laserSound = false;
 // ==============================================
 // Initialisation du jeux
 // ==============================================

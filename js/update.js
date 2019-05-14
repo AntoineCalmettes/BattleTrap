@@ -13,7 +13,7 @@ PlayState.update = function () {
     if (this.level === 0) {
         this._handleLaser();
         // go to boss
-        // KeyPickupCount = 5;
+        KeyPickupCount = 5;
         keynumber.text = KeyPickupCount;
         if (KeyPickupCount >= 5) {
             level = 1;

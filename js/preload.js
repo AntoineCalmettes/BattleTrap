@@ -76,6 +76,8 @@ PlayState.preload = function () {
     this.game.load.audio('sfx:splash', 'audio/splash.wav');
     this.game.load.audio('sfx:minotaurDie', 'audio/minotaurDie.wav');
     this.game.load.audio('sfx:win', 'audio/win.wav');
+    this.game.load.audio('sfx:laser', 'audio/laser.wav');
+    this.game.load.audio('sfx:orcLaugh', 'audio/orcLaugh.wav');
     this.game.scale.pageAlignVertically = true;
     this.game.scale.refresh();
 };

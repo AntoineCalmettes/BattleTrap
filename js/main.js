@@ -141,7 +141,7 @@ Hero.prototype.damage = function (amount, direction) {
                 this.kill();
                 PlayState._soundEffect('gameover')
                 this.game.state.restart();
-                minotaurKey = false
+                minotaurKey = false;
 
                 var canvasTest = document.getElementsByTagName('canvas')[0];
                 canvasTest.hidden = true;
@@ -213,7 +213,7 @@ function Boss(game, x, y, sprites) {
     Phaser.Sprite.call(this, game, x, y, sprites);
     this.anchor.set(0.5, 0.5);
     this.health = 5;
-    this.attackSpeed = 1500;
+    this.attackSpeed = 1000;
     this.animations.add('movinLeft', [0, 1, 2, 3], 8, true);
     this.animations.add('movinRight', [6, 7, 8, 9], 8, true);
     this.animations.add('attackLeft', [12, 13], 10, true);
@@ -229,6 +229,7 @@ function Boss(game, x, y, sprites) {
     this.events.onAnimationComplete.add(function (event) {
         bossAnimationAttackPLaying = false;
     }, this);
+    PlayState._soundEffect('orcLaugh')
 }
 
 Boss.SPEED = 70;
@@ -933,8 +934,10 @@ PlayState._soundEffect = function (sound) {
         this.sfx.splash.play();
     } else if (sound === 'minotaurDie') {
         this.sfx.minotaurDie.play();
-    } else if (sound === 'gameover') {
-        this.sfx.gameover.play();
+    } else if (sound === 'laser') {
+        this.sfx.laser.play();
+    } else if (sound === 'orcLaugh') {
+        this.sfx.orcLaugh.play();
     }
 };
 
@@ -982,10 +985,24 @@ PlayState._handleLaser = function () {
     if (laser === 1) {
         if (hero.position.y < 50 && hero.position.x > 1830 && hero.position.x < 1895) {
             hero.damage(0.01, 'up');
+            if (laserSound === false) {
+                laserSound = true;
+                PlayState._soundEffect('laser')
+                setTimeout(() => {
+                    laserSound = false;
+                }, 500)
+            }
         }
     } else if (laser === 0) {
         if (hero.position.y < 50 && hero.position.x > 1925 && hero.position.x < 1980) {
             hero.damage(0.01, 'up');
+            if (laserSound === false) {
+                laserSound = true;
+                PlayState._soundEffect('laser')
+                setTimeout(() => {
+                    laserSound = false;
+                }, 500)
+            }
         }
     }
 };
