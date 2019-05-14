@@ -709,13 +709,13 @@ PlayState._spawnCharacters = function (data) {
     // spawn hero
     switch (HEROCHOSEN) {
         case 'warrior':
-            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 150, 600, 5, 5, 60, 0.75);
+            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 150, 600, 5, 5, 60, 1);
             break;
         case 'assasin':
-            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 200, 400, 3, 3, 50, 0.5);
+            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 200, 400, 3, 3, 50, 0.65);
             break;
         case 'mage':
-            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 170, 500, 2, 2, 600, 0.5);
+            hero = new Hero(this.game, data.hero.x, data.hero.y, HEROCHOSEN, 170, 500, 2, 2, 600, 0.75);
             break;
         default:
     }
