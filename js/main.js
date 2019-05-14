@@ -632,7 +632,7 @@ function fireLaser() {
             laser.body.setCircle(10, 5, 5);
             if (leftOrRight === 1) {
                 // If we have a laser, set it to the starting position
-                laser.reset(hero.x + 20, hero.y + 10);
+                laser.reset(hero.x + 20, hero.y);
 
                 // Give it a velocity of -500 so it starts shooting
                 laser.body.velocity.x = +400;
@@ -643,7 +643,7 @@ function fireLaser() {
                 }, 600);
             } else {
                 // If we have a laser, set it to the starting position
-                laser.reset(hero.x - 20, hero.y + 10);
+                laser.reset(hero.x - 20, hero.y);
                 // Give it a velocity of -500 so it starts shooting
                 laser.body.velocity.x = -400;
                 setTimeout(() => {
@@ -888,10 +888,10 @@ PlayState._onBulletVsMonster = function (bullet, monster) {
         bullet.animations.play('explode');
         setTimeout(() => {
             bullet.kill();
-        }, 100)
+        }, 100);
         setTimeout(() => {
             bulletDamage = false;
-        }, 100)
+        }, 100);
     }
 };
 
