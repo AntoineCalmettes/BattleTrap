@@ -47,14 +47,14 @@ PlayState.create = function () {
     this._loadLevel(this.game.cache.getJSON(`level:${this.level}`));
 
     // change position if needed (but use same position for both images)
-    var backgroundBar = this.game.add.image(100, 20, 'red-bar');
+    var backgroundBar = this.game.add.image(70, 20, 'red-bar');
     backgroundBar.fixedToCamera = true;
 
-    healthBar = this.game.add.image(100, 20, 'green-bar');
+    healthBar = this.game.add.image(70, 20, 'green-bar');
     healthBar.fixedToCamera = true;
 
     // add text label to left of bar
-    var healthLabel = this.game.add.text(10, 20, 'Health', {
+    var healthLabel = this.game.add.text(20, 20, 'Vie', {
         fontSize: '20px',
         fill: '#ffffff'
     });
