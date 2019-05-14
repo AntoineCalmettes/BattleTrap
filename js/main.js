@@ -256,7 +256,7 @@ Boss.prototype.damage = function (amount) {
 };
 
 Boss.prototype.update = function () {
-    if (this.health > 0) {
+    if (this.health >= 0) {
         if (this.game.physics.arcade.distanceBetween(this, hero) < 220) {
             if (bossCanAttack === true) {
                 bossCanAttack = false;
