@@ -48,12 +48,12 @@ mageChoose.addEventListener("click", () => {
     progressSpeed.addariaValuenow="75";
     progressSpeed.ariaValuemin="0"
     progressSpeed.ariaValuemax="100"
-    progressSpeed.style.width="20%"
+    progressSpeed.style.width="50%"
 
     progressDommage.addariaValuenow="75";
     progressDommage.ariaValuemin="0"
     progressDommage.ariaValuemax="100"
-    progressDommage.style.width="100%"
+    progressDommage.style.width="50%"
 
     progressSpeedAttaque.addariaValuenow="75";
     progressSpeedAttaque.ariaValuemin="0"
@@ -83,7 +83,7 @@ voleurChoose.addEventListener("click", () => {
     progressDommage.addariaValuenow="75";
     progressDommage.ariaValuemin="0"
     progressDommage.ariaValuemax="100"
-    progressDommage.style.width="20%"
+    progressDommage.style.width="30%"
 
     progressSpeedAttaque.addariaValuenow="75";
     progressSpeedAttaque.ariaValuemin="0"
@@ -107,12 +107,12 @@ guerrierChoose.addEventListener("click", () => {
     progressSpeed.addariaValuenow="75";
     progressSpeed.ariaValuemin="0"
     progressSpeed.ariaValuemax="100"
-    progressSpeed.style.width="50%"
+    progressSpeed.style.width="35%"
 
     progressDommage.addariaValuenow="75";
     progressDommage.ariaValuemin="0"
     progressDommage.ariaValuemax="100"
-    progressDommage.style.width="20%"
+    progressDommage.style.width="50%"
 
     progressSpeedAttaque.addariaValuenow="75";
     progressSpeedAttaque.ariaValuemin="0"
